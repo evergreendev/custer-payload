@@ -7,6 +7,7 @@ import React from 'react'
 import { Post } from '@/payload-types'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
+import FuzzySearch from 'fuzzy-search'
 
 type Args = {
   searchParams: Promise<{
@@ -20,36 +21,16 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
   const posts = await payload.find({
     collection: 'search',
     depth: 1,
-    limit: 12,
+    limit: 200,
     ...(query
       ? {
-          where: {
-            or: [
-              {
-                title: {
-                  like: query,
-                },
-              },
-              {
-                'meta.description': {
-                  like: query,
-                },
-              },
-              {
-                'meta.title': {
-                  like: query,
-                },
-              },
-              {
-                slug: {
-                  like: query,
-                },
-              },
-            ],
-          },
         }
       : {}),
   })
+
+  const searcher = new FuzzySearch(posts.docs, ['title'])
+
+  const result = searcher.search(query);
 
   return (
     <div className="pt-24 pb-24">
@@ -61,8 +42,8 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
         </div>
       </div>
 
-      {posts.totalDocs > 0 ? (
-        <CollectionArchive posts={posts.docs as unknown as Post[]} />
+      {result.length > 0 ? (
+        <CollectionArchive posts={result as unknown as Post[]} />
       ) : (
         <div className="container">No results found.</div>
       )}
