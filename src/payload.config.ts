@@ -26,7 +26,6 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import Users from './collections/Users'
-import { seedHandler } from './endpoints/seedHandler'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { revalidateRedirects } from './hooks/revalidateRedirects'
@@ -35,6 +34,7 @@ import { Page, Post } from 'src/payload-types'
 
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
+import { Members } from '@/collections/Members'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -55,9 +55,6 @@ export default buildConfig({
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       beforeLogin: ['@/components/BeforeLogin'],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
-      beforeDashboard: ['@/components/BeforeDashboard'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -94,11 +91,11 @@ export default buildConfig({
         BoldFeature(),
         ItalicFeature(),
         LinkFeature({
-          enabledCollections: ['pages', 'posts'],
+          enabledCollections: ['pages', 'posts', 'members'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              if ('name' in field && field.name === 'url') return false
-              return true
+              return !('name' in field && field.name === 'url');
+
             })
 
             return [
@@ -123,22 +120,13 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Media, Categories, Users, Members],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
-  endpoints: [
-    // The seed endpoint is used to populate the database with some example data
-    // You should delete this endpoint before deploying your site to production
-    {
-      handler: seedHandler,
-      method: 'get',
-      path: '/seed',
-    },
-  ],
   globals: [Header, Footer],
   plugins: [
     redirectsPlugin({
-      collections: ['pages', 'posts'],
+      collections: ['pages', 'posts', 'members'],
       overrides: {
         // @ts-expect-error
         fields: ({ defaultFields }) => {
@@ -193,7 +181,7 @@ export default buildConfig({
       },
     }),
     searchPlugin({
-      collections: ['posts'],
+      collections: ['members'],
       beforeSync: beforeSyncWithSearch,
       searchOverrides: {
         fields: ({ defaultFields }) => {
