@@ -46,10 +46,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    siteOptions: SiteOption;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    siteOptions: SiteOptionsSelect<false> | SiteOptionsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -87,40 +89,12 @@ export interface Page {
   title: string;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?: {
-              relationTo: 'pages';
-              value: number | Page;
-            } | null;
-            url?: string | null;
-            label: string;
-            appearance?: ('default' | 'outline') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
+    showLogo?: boolean | null;
+    headline?: string | null;
+    subheading?: string | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ButtonBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
     title?: string | null;
     image?: (number | null) | Media;
@@ -206,6 +180,46 @@ export interface CallToActionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ButtonBlock".
+ */
+export interface ButtonBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: number | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          appearance?: ('default' | 'highlight') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'buttonGroup';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -778,22 +792,9 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
-        richText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                  };
-              id?: T;
-            };
+        showLogo?: T;
+        headline?: T;
+        subheading?: T;
         media?: T;
       };
   layout?:
@@ -803,6 +804,28 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               richText?: T;
+              links?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        buttonGroup?:
+          | T
+          | {
+              introContent?: T;
               links?:
                 | T
                 | {
@@ -1281,6 +1304,18 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteOptions".
+ */
+export interface SiteOption {
+  id: number;
+  siteTitle: string;
+  siteLogo: number | Media;
+  siteLogoLight?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1321,6 +1356,18 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteOptions_select".
+ */
+export interface SiteOptionsSelect<T extends boolean = true> {
+  siteTitle?: T;
+  siteLogo?: T;
+  siteLogoLight?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

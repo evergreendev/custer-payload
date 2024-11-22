@@ -2,7 +2,7 @@ import type { Field } from 'payload'
 
 import deepMerge from '@/utilities/deepMerge'
 
-export type LinkAppearances = 'default' | 'outline'
+export type LinkAppearances = 'default' | 'outline' | 'highlight'
 
 export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
   default: {
@@ -13,6 +13,10 @@ export const appearanceOptions: Record<LinkAppearances, { label: string; value: 
     label: 'Outline',
     value: 'outline',
   },
+  highlight: {
+    label: 'Highlight',
+    value: 'highlight',
+  }
 }
 
 type LinkType = (options?: {

@@ -35,6 +35,7 @@ import { Page, Post } from 'src/payload-types'
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Members } from '@/collections/Members'
+import { SiteOptions } from '@/SiteOptions/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -120,7 +121,7 @@ export default buildConfig({
   collections: [Pages, Posts, Media, Categories, Users, Members],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, SiteOptions],
   plugins: [
     redirectsPlugin({
       collections: ['pages', 'posts', 'members'],

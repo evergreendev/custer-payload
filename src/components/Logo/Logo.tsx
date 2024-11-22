@@ -1,12 +1,26 @@
 import React from 'react'
+import { Media } from '@/payload-types'
+import Image from 'next/image'
+import { Theme } from '@/providers/Theme/ThemeSelector/types'
 
-export const Logo = () => {
+interface LogoProps {
+  logo?: Media | null
+  lightLogo?: Media | null
+  theme?: Theme | null | undefined
+}
+
+export const Logo = ({ logo, lightLogo, theme }: LogoProps) => {
+  const currLogo = theme === "light" ? logo : lightLogo||logo;
+
+  if (!currLogo) return null
+
   return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      alt="Payload Logo"
-      className="max-w-[9.375rem] invert dark:invert-0"
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/payload/src/admin/assets/images/payload-logo-light.svg"
+    <Image
+      className="w-full"
+      src={currLogo.url || ''}
+      alt={currLogo.alt || ''}
+      height={currLogo.height || 0}
+      width={currLogo.width || 0}
     />
   )
 }

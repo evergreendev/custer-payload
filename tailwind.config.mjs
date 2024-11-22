@@ -53,6 +53,12 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        brand: {
+          red: '#af3827',
+          redPale: '#e2ab9b',
+          blue: '#304050',
+          blueBright: '#24418f'
+        },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
@@ -92,7 +98,7 @@ export default {
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)'],
+        sans: ['var(--font-roboto)'],
         display: ['var(--font-playball)'],
       },
       keyframes: {
