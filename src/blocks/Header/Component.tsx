@@ -14,13 +14,21 @@ export const Header: React.FC<
 }
 > = ({ links, introContent, backgroundImage, type}) => {
   return (
-    <div className="flex relative flex-wrap gap-8 md:flex-row md:justify-between md:items-center pt-7 pb-20">
-      {backgroundImage ? <Media fill imgClassName="-z-10 object-cover object-center" resource={backgroundImage} /> : ""}
+    <div
+      className={
+        `${type === "tall" ? "min-h-screen" : "min-h-[45vh]"} flex relative flex-wrap gap-8 md:flex-row md:justify-between md:items-center py-7`
+      }
+    >
+      {backgroundImage ? (
+        <Media fill imgClassName="-z-10 object-cover object-center" resource={backgroundImage} />
+      ) : (
+        ''
+      )}
       <div className="container flex flex-col items-center">
         <div className="max-w-[48rem] flex items-center">
           {introContent && (
             <RichText
-              className="mb-4 text-center prose-xl prose-h2:font-normal"
+              className="mb-4 text-center prose-xl prose-h2:font-normal prose-h2:text-6xl prose-h3:mb-0"
               content={introContent}
               enableGutter={false}
             />
