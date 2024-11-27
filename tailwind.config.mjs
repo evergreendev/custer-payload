@@ -55,7 +55,7 @@ export default {
       colors: {
         brand: {
           red: '#af3827',
-          redPale: '#e2ab9b',
+          redPale: '#dda898',
           blue: '#304050',
           blueBright: '#24418f'
         },

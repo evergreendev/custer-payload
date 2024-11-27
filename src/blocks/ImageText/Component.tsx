@@ -31,7 +31,7 @@ const LeftCol: React.FC<
       )}
       {content && (
         <RichText
-          className="mb-4 max-w-prose px-14 text-inherit prose-xl prose-h2:font-normal prose-h2:text-6xl prose-h3:mb-0"
+          className="mb-4 max-w-prose px-14 text-inherit prose-xl prose-h2:text-6xl prose-h3:mb-0 prose-h2:mb-0 prose-h2:font-display prose-h2:font-bold"
           content={content}
           enableGutter={false}
         />
@@ -65,10 +65,10 @@ export const ImageText: React.FC<
     id?: string
   }
 > = (props) => {
-  const { reverseColumns, backgroundImage, type, background, content, image, images } = props
+  const { reverseColumns, backgroundImage, background } = props
   const backgroundClasses = {
     white: 'bg-yellow-50 text-gray-800',
-    red: 'bg-brand-red text-white',
+    red: 'bg-brand-red text-white border-t-[16px] border-t-brand-redPale',
     blue: 'bg-brand-blue text-white',
   }
 
