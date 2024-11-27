@@ -9,6 +9,7 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ButtonGroup } from '@/blocks/ButtonGroup/Component'
 import { Header } from '@/blocks/Header/Component'
+import { ImageText } from '@/blocks/ImageText/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -17,7 +18,8 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   buttonGroup: ButtonGroup,
-  header: Header
+  header: Header,
+  imageText: ImageText,
 }
 
 export const RenderBlocks: React.FC<{

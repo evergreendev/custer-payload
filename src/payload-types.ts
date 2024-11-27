@@ -94,7 +94,16 @@ export interface Page {
     subheading?: string | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ButtonBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | HeaderBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ButtonBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | HeaderBlock
+    | ImageTextBlock
+  )[];
   meta?: {
     title?: string | null;
     image?: (number | null) | Media;
@@ -622,6 +631,75 @@ export interface HeaderBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageTextBlock".
+ */
+export interface ImageTextBlock {
+  type: 'twoImage' | 'oneImage' | 'overlap';
+  image?: {
+    image?: (number | null) | Media;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            appearance?: ('default' | 'highlight' | 'outline') | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  images?:
+    | {
+        image?: (number | null) | Media;
+        links?:
+          | {
+              link: {
+                type?: ('reference' | 'custom') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: number | Page;
+                } | null;
+                url?: string | null;
+                label: string;
+                appearance?: 'default' | null;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  background?: ('white' | 'red' | 'blue' | 'image') | null;
+  backgroundImage?: (number | null) | Media;
+  reverseColumns?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageText';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
 export interface Member {
@@ -960,6 +1038,58 @@ export interface PagesSelect<T extends boolean = true> {
                     id?: T;
                   };
               backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageText?:
+          | T
+          | {
+              type?: T;
+              image?:
+                | T
+                | {
+                    image?: T;
+                    links?:
+                      | T
+                      | {
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                                appearance?: T;
+                              };
+                          id?: T;
+                        };
+                  };
+              images?:
+                | T
+                | {
+                    image?: T;
+                    links?:
+                      | T
+                      | {
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                                appearance?: T;
+                              };
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              content?: T;
+              background?: T;
+              backgroundImage?: T;
+              reverseColumns?: T;
               id?: T;
               blockName?: T;
             };

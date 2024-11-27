@@ -22,6 +22,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { ButtonGroup } from '@/blocks/ButtonGroup/config'
 import { Header } from '@/blocks/Header/config'
+import { ImageText } from '@/blocks/ImageText/config'
 export const Pages: CollectionConfig = {
   slug: 'pages',
   access: {
@@ -70,7 +71,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, ButtonGroup, Content, MediaBlock, Archive, FormBlock, Header],
+              blocks: [CallToAction, ButtonGroup, Content, MediaBlock, Archive, FormBlock, Header,ImageText],
               required: true,
             },
           ],
