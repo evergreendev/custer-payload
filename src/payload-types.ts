@@ -691,6 +691,39 @@ export interface ImageTextBlock {
     };
     [k: string]: unknown;
   } | null;
+  cta?: {
+    text?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: number | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            appearance?: 'default' | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
   background?: ('white' | 'red' | 'blue' | 'image') | null;
   backgroundImage?: (number | null) | Media;
   reverseColumns?: boolean | null;
@@ -1087,6 +1120,26 @@ export interface PagesSelect<T extends boolean = true> {
                     id?: T;
                   };
               content?: T;
+              cta?:
+                | T
+                | {
+                    text?: T;
+                    links?:
+                      | T
+                      | {
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                                appearance?: T;
+                              };
+                          id?: T;
+                        };
+                  };
               background?: T;
               backgroundImage?: T;
               reverseColumns?: T;

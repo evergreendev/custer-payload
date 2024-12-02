@@ -17,16 +17,18 @@ const buttonVariants = cva(
         icon: 'h-10 w-10',
         lg: 'h-11 px-8',
         sm: 'h-9 px-3',
+        full: 'w-full'
       },
       variant: {
         default: 'bg-brand-blue text-white hover:bg-brand-blue/90 border-white border-2',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         ghost: 'hover:bg-card hover:text-accent-foreground',
         link: 'text-primary items-start justify-start underline-offset-4 hover:underline',
-        outline: 'border border-border bg-background hover:bg-card hover:text-accent-foreground',
+        outline: 'border border-border bg-transparent hover:bg-card hover:text-accent-foreground',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         highlight: 'bg-brand-red hover:bg-brand-red/90 border-white border-2',
         full: 'text-white hover:bg-brand-blue/80 w-full border-0 text-xl flex font-normal bg-brand-blue py-3 px-4 pl-16 text-left justify-start',
+        fullOrange: 'text-white hover:bg-brand-red/80 w-full border-0 text-xl flex font-normal bg-brand-red py-3 px-4 pl-16 text-left justify-start'
       },
     },
   },

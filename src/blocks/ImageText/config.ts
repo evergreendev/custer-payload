@@ -91,6 +91,36 @@ export const ImageText: Block = {
       label: 'Content',
     },
     {
+      name: 'cta',
+      label: 'Call to Action',
+      type: 'group',
+      admin: {
+        condition: (data, siblingData) => {
+          return siblingData.type === 'overlap'
+        },
+      },
+      fields: [
+        {
+          name: 'text',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => {
+              return [
+                ...rootFeatures,
+                HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                FixedToolbarFeature(),
+                InlineToolbarFeature(),
+              ]
+            },
+          })
+        },
+        linkGroup({
+          appearances: ['default'],
+          overrides: { maxRows: 1 },
+        }),
+      ],
+    },
+    {
       name: 'background',
       type: 'select',
       options: ['white','red','blue','image']
