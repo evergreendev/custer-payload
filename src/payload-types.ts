@@ -103,6 +103,7 @@ export interface Page {
     | FormBlock
     | HeaderBlock
     | ImageTextBlock
+    | Seasons
   )[];
   meta?: {
     title?: string | null;
@@ -733,6 +734,95 @@ export interface ImageTextBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Seasons".
+ */
+export interface Seasons {
+  springImage: number | Media;
+  summerImage: number | Media;
+  autumnImage: number | Media;
+  winterImage: number | Media;
+  yearRoundImage: number | Media;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  springItems?:
+    | (
+        | {
+            relationTo: 'members';
+            value: number | Member;
+          }
+        | {
+            relationTo: 'pages';
+            value: number | Page;
+          }
+      )[]
+    | null;
+  summerItems?:
+    | (
+        | {
+            relationTo: 'members';
+            value: number | Member;
+          }
+        | {
+            relationTo: 'pages';
+            value: number | Page;
+          }
+      )[]
+    | null;
+  autumnItems?:
+    | (
+        | {
+            relationTo: 'members';
+            value: number | Member;
+          }
+        | {
+            relationTo: 'pages';
+            value: number | Page;
+          }
+      )[]
+    | null;
+  winterItems?:
+    | (
+        | {
+            relationTo: 'members';
+            value: number | Member;
+          }
+        | {
+            relationTo: 'pages';
+            value: number | Page;
+          }
+      )[]
+    | null;
+  yearRoundItems?:
+    | (
+        | {
+            relationTo: 'members';
+            value: number | Member;
+          }
+        | {
+            relationTo: 'pages';
+            value: number | Page;
+          }
+      )[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'seasons';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
 export interface Member {
@@ -1143,6 +1233,23 @@ export interface PagesSelect<T extends boolean = true> {
               background?: T;
               backgroundImage?: T;
               reverseColumns?: T;
+              id?: T;
+              blockName?: T;
+            };
+        seasons?:
+          | T
+          | {
+              springImage?: T;
+              summerImage?: T;
+              autumnImage?: T;
+              winterImage?: T;
+              yearRoundImage?: T;
+              content?: T;
+              springItems?: T;
+              summerItems?: T;
+              autumnItems?: T;
+              winterItems?: T;
+              yearRoundItems?: T;
               id?: T;
               blockName?: T;
             };

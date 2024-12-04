@@ -10,6 +10,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ButtonGroup } from '@/blocks/ButtonGroup/Component'
 import { Header } from '@/blocks/Header/Component'
 import { ImageText } from '@/blocks/ImageText/Component'
+import { Seasons } from '@/blocks/Seasons/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -20,6 +21,7 @@ const blockComponents = {
   buttonGroup: ButtonGroup,
   header: Header,
   imageText: ImageText,
+  seasons: Seasons
 }
 
 export const RenderBlocks: React.FC<{
