@@ -61,27 +61,27 @@ export const Seasons: React.FC<
     <div className="w-full relative aspect-[16/7] sm:pt-0 flex flex-col items-center justify-center gap-8">
       <Media
         fill
-        imgClassName={`-z-20 object-cover object-center bg-white transition-all ${currentSeason === 'spring' ? 'opacity-1' : 'opacity-0'}`}
+        imgClassName={`duration-700 -z-20 object-cover object-center bg-white transition-all ${currentSeason === 'spring' ? 'opacity-1' : 'opacity-0'}`}
         resource={props.springImage}
       />
       <Media
         fill
-        imgClassName={`-z-20 object-cover object-center bg-white transition-all ${currentSeason === 'autumn' ? 'opacity-1' : 'opacity-0'}`}
+        imgClassName={`duration-700 -z-20 object-cover object-center bg-white transition-all ${currentSeason === 'autumn' ? 'opacity-1' : 'opacity-0'}`}
         resource={props.autumnImage}
       />
       <Media
         fill
-        imgClassName={`-z-20 object-cover object-center bg-white transition-all ${currentSeason === 'summer' ? 'opacity-1' : 'opacity-0'}`}
+        imgClassName={`duration-700 -z-20 object-cover object-center bg-white transition-all ${currentSeason === 'summer' ? 'opacity-1' : 'opacity-0'}`}
         resource={props.summerImage}
       />
       <Media
         fill
-        imgClassName={`-z-20 object-cover object-center bg-white transition-all ${currentSeason === 'winter' ? 'opacity-1' : 'opacity-0'}`}
+        imgClassName={`duration-700 -z-20 object-cover object-center bg-white transition-all ${currentSeason === 'winter' ? 'opacity-1' : 'opacity-0'}`}
         resource={props.winterImage}
       />
       <Media
         fill
-        imgClassName={`-z-20 object-cover object-center bg-white transition-all ${currentSeason === 'year-round' ? 'opacity-1' : 'opacity-0'}`}
+        imgClassName={`duration-700 -z-20 object-cover object-center bg-white transition-all ${currentSeason === 'year-round' ? 'opacity-1' : 'opacity-0'}`}
         resource={props.yearRoundImage}
       />
 
