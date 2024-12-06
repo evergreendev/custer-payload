@@ -11,6 +11,7 @@ import { ButtonGroup } from '@/blocks/ButtonGroup/Component'
 import { Header } from '@/blocks/Header/Component'
 import { ImageText } from '@/blocks/ImageText/Component'
 import { Seasons } from '@/blocks/Seasons/Component'
+import { LargeImage } from '@/blocks/LargeImage/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -21,7 +22,8 @@ const blockComponents = {
   buttonGroup: ButtonGroup,
   header: Header,
   imageText: ImageText,
-  seasons: Seasons
+  seasons: Seasons,
+  largeImage: LargeImage
 }
 
 export const RenderBlocks: React.FC<{
