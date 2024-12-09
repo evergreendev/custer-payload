@@ -1,7 +1,6 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 import type { Header, Media } from '@/payload-types'
@@ -28,13 +27,15 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header, logo, lightL
 
   return (
     <header
-      className="container relative z-20 py-8 flex justify-between text-3xl"
+      className={`${centerNav ? "" : "bg-brand-blue text-white"}`}
       {...(theme ? { 'data-theme': theme } : {})}
     >
-      <Link href="/" className={`w-36 ${centerNav ? "hidden" : ""}`}>
-        <Logo logo={logo} lightLogo={lightLogo}  theme={headerTheme}/>
-      </Link>
-      <HeaderNav header={header} centerNav={centerNav}/>
+      <div className="container relative z-20 py-8 flex justify-between text-3xl">
+        <Link href="/" className={`w-36 ${centerNav ? 'hidden' : ''}`}>
+          <Logo logo={logo} lightLogo={lightLogo} theme={headerTheme} />
+        </Link>
+        <HeaderNav header={header} centerNav={centerNav} />
+      </div>
     </header>
   )
 }

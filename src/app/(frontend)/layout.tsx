@@ -30,7 +30,7 @@ const robotoCondensed = Roboto_Condensed({
   display: "swap"
 })
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode, params: any }) {
   const { isEnabled } = await draftMode()
 
   return (

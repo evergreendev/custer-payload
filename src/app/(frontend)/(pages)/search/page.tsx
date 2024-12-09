@@ -4,7 +4,6 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import React from 'react'
-import { Post } from '@/payload-types'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
 import FuzzySearch from 'fuzzy-search'
@@ -27,8 +26,11 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
         }
       : {}),
   })
+  const postsWithTypes = posts.docs.map(doc => {
+    return { ...doc, relationTo: doc.doc?.relationTo };
+  })
 
-  const searcher = new FuzzySearch(posts.docs, ['title'])
+  const searcher = new FuzzySearch(postsWithTypes, ['title'])
 
   const result = searcher.search(query);
 
@@ -43,7 +45,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       </div>
 
       {result.length > 0 ? (
-        <CollectionArchive posts={result as unknown as Post[]} />
+        <CollectionArchive posts={result} />
       ) : (
         <div className="container">No results found.</div>
       )}
