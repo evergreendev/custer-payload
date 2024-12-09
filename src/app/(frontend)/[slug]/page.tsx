@@ -64,7 +64,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   return (
 <>
   <Header centerNav={slug === 'home'}/>
-  <article className="pt-16 pb-24">
+  <article className="pt-16">
     <PageClient />
     {/* Allows redirects for valid pages too */}
     <PayloadRedirects disableNotFound url={url} />
