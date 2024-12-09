@@ -1,32 +1,30 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
 import React from 'react'
+import Image from 'next/image'
 
-import type { Footer } from '@/payload-types'
+import type { Footer, SiteOption } from '@/payload-types'
 
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { CMSLink } from '@/components/Link'
 
 export async function Footer() {
   const footer: Footer = await getCachedGlobal('footer')()
+  const siteOptions: SiteOption = await getCachedGlobal('siteOptions', 1)() as SiteOption;
+  const siteLogo = (siteOptions.siteLogoLight ? siteOptions.siteLogoLight : siteOptions.siteLogo);
 
   const navItems = footer?.navItems || []
 
   return (
-    <footer className="border-t border-border bg-card text-white">
+    <footer className="border-t border-border bg-brand-red text-white">
       <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-        <Link className="flex items-center" href="/">
-          <picture>
-            <img
-              alt="Payload Logo"
-              className="max-w-[6rem] invert-0"
-              src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/payload/src/admin/assets/images/payload-logo-light.svg"
-            />
-          </picture>
-        </Link>
+          {
+            typeof siteLogo !== 'number' && (
+              <Link className="flex items-center" href="/">
+                <Image src={siteLogo.url||""} alt="Description" width={200} height={200} />
+              </Link>
+            )}
 
         <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
-          <ThemeSelector />
           <nav className="flex flex-col md:flex-row gap-4">
             {navItems.map(({ link }, i) => {
               return <CMSLink className="text-white" key={i} {...link} />
