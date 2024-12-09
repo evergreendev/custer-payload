@@ -36,7 +36,7 @@ export const Card: React.FC<{
       ref={card.ref}
     >
       <div className="relative w-full ">
-        {!metaImage && <div className="">No image</div>}
+        {!metaImage && <div className="aspect-video w-full bg-brand-blueBright/20" />}
         {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="360px" />}
       </div>
       <div className="p-4">
@@ -44,24 +44,25 @@ export const Card: React.FC<{
           <div className="uppercase text-sm mb-4">
             {showCategories && hasCategories && (
               <div>
-                {hasCategories && doc.categories?.map((category, index) => {
-                  if (typeof category === 'object') {
-                    const { title: titleFromCategory } = category
+                {hasCategories &&
+                  doc.categories?.map((category, index) => {
+                    if (typeof category === 'object') {
+                      const { title: titleFromCategory } = category
 
-                    const categoryTitle = titleFromCategory || 'Untitled category'
+                      const categoryTitle = titleFromCategory || 'Untitled category'
 
-                    const isLast = index === (doc?.categories?.length||0) - 1
+                      const isLast = index === (doc?.categories?.length || 0) - 1
 
-                    return (
-                      <Fragment key={index}>
-                        {categoryTitle}
-                        {!isLast && <Fragment>, &nbsp;</Fragment>}
-                      </Fragment>
-                    )
-                  }
+                      return (
+                        <Fragment key={index}>
+                          {categoryTitle}
+                          {!isLast && <Fragment>, &nbsp;</Fragment>}
+                        </Fragment>
+                      )
+                    }
 
-                  return null
-                })}
+                    return null
+                  })}
               </div>
             )}
           </div>

@@ -80,7 +80,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       },
       label: 'Document to link to',
       maxDepth: 1,
-      relationTo: ['pages'],
+      relationTo: ['pages','members','posts','categories'],
       required: true,
     },
     {

@@ -3,7 +3,6 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
-import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
@@ -144,9 +143,6 @@ export default buildConfig({
           afterChange: [revalidateRedirects],
         },
       },
-    }),
-    nestedDocsPlugin({
-      collections: ['categories'],
     }),
     seoPlugin({
       generateTitle,
