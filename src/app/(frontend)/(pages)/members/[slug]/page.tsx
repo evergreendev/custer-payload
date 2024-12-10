@@ -39,18 +39,20 @@ export default async function Post({ params: paramsPromise }: Args) {
   if (!member) return <PayloadRedirects url={url} />
 
   return (
-    <article className="pt-16 pb-16">
+    <article className="pb-16">
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
-      <PostHero post={member} />
+      <PostHero post={member} showPublishedAt={false} />
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container lg:mx-0 lg:grid lg:grid-cols-[1fr_48rem_1fr] grid-rows-[1fr]">
           <RichText
-            className="lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[1fr]"
+            className={
+              'lg:grid text-slate-950 text-xl lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[1fr]'
+            }
             content={member.content}
             enableGutter={false}
           />
