@@ -4,16 +4,17 @@ import RichText from '@/components/RichText'
 
 import type { Member, Post } from '@/payload-types'
 
-import { Card } from '../../components/Card'
+import { Card } from '@/components/Card'
 
 export type RelatedPostsProps = {
   className?: string
   docs?: Post[]|Member[]
+  relationTo?: 'posts' | 'members' | 'pages'
   introContent?: any
 }
 
 export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
-  const { className, docs, introContent } = props
+  const { className, docs, introContent, relationTo } = props
 
   return (
     <div className={clsx('container', className)}>
@@ -23,7 +24,7 @@ export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
         {docs?.map((doc, index) => {
           if (typeof doc === 'string') return null
 
-          return <Card key={index} doc={doc} relationTo="posts" showCategories />
+          return <Card key={index} doc={doc} relationTo={relationTo ? relationTo : 'posts'} showCategories />
         })}
       </div>
     </div>

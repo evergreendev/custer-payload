@@ -57,7 +57,7 @@ export default async function Post({ params: paramsPromise }: Args) {
             />
           )}
         </div>
-        {members && <RelatedPosts docs={members} />}
+        {members && <RelatedPosts relationTo="members" docs={members} />}
       </div>
     </article>
   )
