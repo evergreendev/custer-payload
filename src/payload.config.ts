@@ -35,12 +35,13 @@ import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Members } from '@/collections/Members'
 import { SiteOptions } from '@/SiteOptions/config'
+import { Events } from '@/collections/Events'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title ? `${doc.title} | Custer Chamber of Commerce` : 'Custer Chamber of Commerce'
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
@@ -88,7 +89,7 @@ export default buildConfig({
         BoldFeature(),
         ItalicFeature(),
         LinkFeature({
-          enabledCollections: ['pages', 'posts', 'members'],
+          enabledCollections: ['pages', 'posts', 'members','events','categories'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
               return !('name' in field && field.name === 'url');
@@ -117,7 +118,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Members],
+  collections: [Pages, Posts, Media, Categories, Users, Members, Events],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer, SiteOptions],
