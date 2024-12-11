@@ -51,7 +51,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         <div className="container lg:mx-0 lg:grid lg:grid-cols-[1fr_48rem_1fr] grid-rows-[1fr]">
           {category.content && (
             <RichText
-              className="lg:grid text-slate-950 lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[1fr]"
+              className='lg:grid text-slate-950 text-xl lg:grid-cols-subgrid col-start-2 col-span-1 grid-rows-[1fr]'
               content={category.content}
               enableGutter={false}
             />

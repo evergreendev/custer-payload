@@ -91,21 +91,49 @@ export const Members: CollectionConfig = {
         {
           fields: [
             {
-              name: 'relatedPosts',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              filterOptions: ({ id }) => {
-                return {
-                  id: {
-                    not_in: [id],
-                  },
-                }
-              },
-              hasMany: true,
-              relationTo: 'posts',
+              name: 'website',
+              type: 'text',
             },
+            {
+              name: 'email',
+              type: 'email',
+            },
+            {
+              name: 'phone',
+              type: 'text'
+            },
+            {
+              name: 'address',
+              type: 'textarea',
+            },
+            {
+              name: 'socials',
+              type: 'group',
+
+              fields: [
+                {
+                  name: 'facebook',
+                  type: 'text',
+                },
+                {
+                  name: 'instagram',
+                  type: 'text',
+                },
+                {
+                  name: 'twitter',
+                  type: 'text',
+                },
+                {
+                  name: 'youtube',
+                  type: 'text',
+                },
+              ],
+            },
+          ],
+          label: 'Contact Info'
+        },
+        {
+          fields: [
             {
               name: 'categories',
               type: 'relationship',
@@ -166,39 +194,6 @@ export const Members: CollectionConfig = {
           },
         ],
       },
-    },
-    {
-      name: 'authors',
-      type: 'relationship',
-      admin: {
-        position: 'sidebar',
-      },
-      hasMany: true,
-      relationTo: 'users',
-    },
-    // This field is only used to populate the user data via the `populateAuthors` hook
-    // This is because the `user` collection has access control locked to protect user privacy
-    // GraphQL will also not return mutated user data that differs from the underlying schema
-    {
-      name: 'populatedAuthors',
-      type: 'array',
-      access: {
-        update: () => false,
-      },
-      admin: {
-        disabled: true,
-        readOnly: true,
-      },
-      fields: [
-        {
-          name: 'id',
-          type: 'text',
-        },
-        {
-          name: 'name',
-          type: 'text',
-        },
-      ],
     },
     ...slugField(),
   ],

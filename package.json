@@ -18,6 +18,10 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
+    "@awesome.me/kit-45560c6e49": "^1.0.22",
+    "@fortawesome/fontawesome-pro": "^6.7.1",
+    "@fortawesome/fontawesome-svg-core": "^6.7.1",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@payloadcms/db-postgres": "latest",
     "@payloadcms/live-preview-react": "latest",
     "@payloadcms/next": "latest",
@@ -48,6 +52,7 @@
     "prism-react-renderer": "^2.3.1",
     "react": "19.0.0-rc-65a56d0e-20241020",
     "react-dom": "19.0.0-rc-65a56d0e-20241020",
+    "react-fontawesome": "^1.7.1",
     "react-hook-form": "7.45.4",
     "sharp": "0.32.6",
     "tailwind-merge": "^2.3.0",
