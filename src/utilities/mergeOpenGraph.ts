@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'An open-source website built with Payload and Next.js.',
+  description:
+    'Custer, in the heart of the Black Hills National Forest, is just minutes from the adventures of Custer State Park, Crazy Horse Memorial, Mount Rushmore and two national caves.',
   images: [
     {
       url: process.env.NEXT_PUBLIC_SERVER_URL
@@ -10,8 +11,8 @@ const defaultOpenGraph: Metadata['openGraph'] = {
         : '/website-template-OG.webp',
     },
   ],
-  siteName: 'Payload Website Template',
-  title: 'Payload Website Template',
+  siteName: 'Custer Chamber of Commerce',
+  title: 'Custer Chamber of Commerce',
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {
