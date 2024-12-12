@@ -1,12 +1,13 @@
 import { formatDateTime } from 'src/utilities/formatDateTime'
 import React from 'react'
 
-import type { Category, Post } from '@/payload-types'
+import type { Category, Post, Event } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import EventHeroSection from '@/heros/PostHero/EventHeroSection'
 
 export const PostHero: React.FC<{
-  post: Post | Category
+  post: Post | Category | Event
   showPublishedAt?: boolean
 }> = ({ post, showPublishedAt = true }) => {
   const { meta: { image: metaImage } = {}, title } = post
@@ -14,8 +15,10 @@ export const PostHero: React.FC<{
   return (
     <div className="relative flex items-end overflow-hidden">
       <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-white pb-8">
+
         <div className="col-start-1 col-span-1 md:col-start-2 md:col-span-2">
-          <div className="">
+          <div className="flex flex-col items-start">
+            {'startDate' in post && <EventHeroSection event={post} />}
             <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl">{title}</h1>
           </div>
 
@@ -54,11 +57,11 @@ export const PostHero: React.FC<{
           <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent" />
         </div>
       )}
-      {
-        !metaImage && <div className="min-h-[50vh]" >
+      {!metaImage && (
+        <div className="min-h-[50vh]">
           <div className="select-none bg-brand-blue/50 w-full absolute inset-0"></div>
         </div>
-      }
+      )}
     </div>
   )
 }

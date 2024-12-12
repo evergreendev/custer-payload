@@ -1044,18 +1044,29 @@ export interface LargeImageBlock {
 export interface Event {
   id: number;
   title: string;
-  layout: (
-    | CallToActionBlock
-    | ButtonBlock
-    | ContentBlock
-    | MediaBlock
-    | ArchiveBlock
-    | FormBlock
-    | HeaderBlock
-    | ImageTextBlock
-    | Seasons
-    | LargeImageBlock
-  )[];
+  location?: string | null;
+  startDate?: string | null;
+  allDayEvent?: boolean | null;
+  startTime?: string | null;
+  endTime?: string | null;
+  multiDayEvent?: boolean | null;
+  endDate?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  connectedPages?: (number | Page)[] | null;
   meta?: {
     title?: string | null;
     image?: (number | null) | Media;
@@ -1631,244 +1642,15 @@ export interface MembersSelect<T extends boolean = true> {
  */
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
-  layout?:
-    | T
-    | {
-        cta?:
-          | T
-          | {
-              richText?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        buttonGroup?:
-          | T
-          | {
-              introContent?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        content?:
-          | T
-          | {
-              columns?:
-                | T
-                | {
-                    size?: T;
-                    richText?: T;
-                    enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        mediaBlock?:
-          | T
-          | {
-              position?: T;
-              media?: T;
-              id?: T;
-              blockName?: T;
-            };
-        archive?:
-          | T
-          | {
-              introContent?: T;
-              populateBy?: T;
-              relationTo?: T;
-              categories?: T;
-              limit?: T;
-              selectedDocs?: T;
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              enableIntro?: T;
-              introContent?: T;
-              id?: T;
-              blockName?: T;
-            };
-        header?:
-          | T
-          | {
-              type?: T;
-              introContent?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageText?:
-          | T
-          | {
-              type?: T;
-              image?:
-                | T
-                | {
-                    image?: T;
-                    links?:
-                      | T
-                      | {
-                          link?:
-                            | T
-                            | {
-                                type?: T;
-                                newTab?: T;
-                                reference?: T;
-                                url?: T;
-                                label?: T;
-                                appearance?: T;
-                              };
-                          id?: T;
-                        };
-                  };
-              images?:
-                | T
-                | {
-                    image?: T;
-                    links?:
-                      | T
-                      | {
-                          link?:
-                            | T
-                            | {
-                                type?: T;
-                                newTab?: T;
-                                reference?: T;
-                                url?: T;
-                                label?: T;
-                                appearance?: T;
-                              };
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-              content?: T;
-              cta?:
-                | T
-                | {
-                    text?: T;
-                    links?:
-                      | T
-                      | {
-                          link?:
-                            | T
-                            | {
-                                type?: T;
-                                newTab?: T;
-                                reference?: T;
-                                url?: T;
-                                label?: T;
-                                appearance?: T;
-                              };
-                          id?: T;
-                        };
-                  };
-              background?: T;
-              backgroundImage?: T;
-              reverseColumns?: T;
-              id?: T;
-              blockName?: T;
-            };
-        seasons?:
-          | T
-          | {
-              springImage?: T;
-              summerImage?: T;
-              autumnImage?: T;
-              winterImage?: T;
-              yearRoundImage?: T;
-              content?: T;
-              springItems?: T;
-              summerItems?: T;
-              autumnItems?: T;
-              winterItems?: T;
-              yearRoundItems?: T;
-              id?: T;
-              blockName?: T;
-            };
-        largeImage?:
-          | T
-          | {
-              type?: T;
-              content?: T;
-              backgroundImage?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-      };
+  location?: T;
+  startDate?: T;
+  allDayEvent?: T;
+  startTime?: T;
+  endTime?: T;
+  multiDayEvent?: T;
+  endDate?: T;
+  content?: T;
+  connectedPages?: T;
   meta?:
     | T
     | {

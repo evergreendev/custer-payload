@@ -25,21 +25,25 @@ export const Card: React.FC<{
   const hasCategories = (doc && "categories" in doc) && doc.categories && Array.isArray(doc.categories) && doc.categories.length > 0
   const titleToUse = titleFromProps || title
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
-  const href = relationTo === "pages" ? `${slug}` : `/${relationTo}/${slug}`
+  const href = relationTo === "pages" ? `/${slug}` : `/${relationTo}/${slug}`
+  let imageToUse = metaImage;
+  if (doc && 'hero' in doc) {
+    imageToUse = metaImage || doc && 'hero' in doc ? doc.hero.media : null
+  }
 
   return (
     <article
       className={cn(
-        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+        'border flex flex-col border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
         className,
       )}
       ref={card.ref}
     >
-      <div className="relative w-full ">
-        {!metaImage && <div className="aspect-video w-full bg-brand-blueBright/20" />}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="360px" />}
+      <div className="relative w-full flex justify-center">
+        {!imageToUse && <div className="aspect-video w-full bg-brand-blueBright/20" />}
+        {imageToUse && typeof imageToUse !== 'string' && <Media resource={imageToUse} size="360px" />}
       </div>
-      <div className="p-4">
+      <div className="p-4 mt-auto">
         {showCategories && hasCategories && (
           <div className="uppercase text-sm mb-4">
             {showCategories && hasCategories && (
@@ -68,7 +72,7 @@ export const Card: React.FC<{
           </div>
         )}
         {titleToUse && (
-          <div className="prose">
+          <div className="prose text-white">
             <h3>
               <Link className="not-prose" href={href} ref={link.ref}>
                 {titleToUse}
