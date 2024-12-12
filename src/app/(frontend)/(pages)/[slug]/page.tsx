@@ -45,9 +45,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { slug = 'home' } = await paramsPromise
   const url = '/' + slug
 
-
-  const siteOptions: SiteOption = await getCachedGlobal('siteOptions', 1)() as SiteOption;
-
+  const siteOptions: SiteOption = (await getCachedGlobal('siteOptions', 1)()) as SiteOption
 
   let page: PageType | null
 
@@ -62,17 +60,21 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { hero, layout } = page
 
   return (
-<>
-  <Header centerNav={slug === 'home'}/>
-  <article className="pt-16">
-    <PageClient />
-    {/* Allows redirects for valid pages too */}
-    <PayloadRedirects disableNotFound url={url} />
-
-    <RenderHero {...hero} fallbackTitle={page.title} siteOptions={siteOptions}/>
-    <RenderBlocks blocks={layout} />
-  </article>
-</>
+    <>
+      {slug === 'home' ? <Header centerNav={true} /> : null}
+      <article className={`${slug === 'home' ? 'pt-16' : ''}`}>
+        <PageClient />
+        {/* Allows redirects for valid pages too */}
+        <PayloadRedirects disableNotFound url={url} />
+        <RenderHero
+          {...hero}
+          fallbackTitle={page.title}
+          siteOptions={siteOptions}
+          centerNav={slug === 'home'}
+        />
+        <RenderBlocks blocks={layout} />
+      </article>
+    </>
   )
 }
 

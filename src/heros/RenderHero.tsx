@@ -12,8 +12,8 @@ const heroes = {
   mediumImpact: MediumImpactHero,
 }
 
-export const RenderHero: React.FC<Page['hero'] & {fallbackTitle:string, siteOptions:SiteOption}> = (props) => {
-  const { type,fallbackTitle,siteOptions } = props || {}
+export const RenderHero: React.FC<Page['hero'] & {fallbackTitle:string, siteOptions:SiteOption, centerNav?:boolean}> = (props) => {
+  const { type,fallbackTitle,siteOptions,centerNav } = props || {}
 
   if (!type || type === 'none') return null
 
@@ -22,5 +22,5 @@ export const RenderHero: React.FC<Page['hero'] & {fallbackTitle:string, siteOpti
   if (!HeroToRender) return null
 
 
-  return <HeroToRender {...props} fallbackTitle={fallbackTitle} siteOptions={siteOptions} />
+  return <HeroToRender {...props} fallbackTitle={fallbackTitle} siteOptions={siteOptions} centerNav={centerNav} />
 }

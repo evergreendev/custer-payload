@@ -27,11 +27,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header, logo, lightL
 
   return (
     <header
-      className={`${centerNav ? "" : "bg-brand-blue text-white"}`}
+      className={`${centerNav ? "" : "bg-brand-blue text-white border-b border-blue-950"}`}
       {...(theme ? { 'data-theme': theme } : {})}
     >
-      <div className="container relative z-20 py-8 flex justify-between text-3xl">
-        <Link href="/" className={`w-36 ${centerNav ? 'hidden' : ''}`}>
+      <div className="container relative z-20 py-2 flex justify-between text-3xl ">
+        <Link href="/" className={`w-32 ${centerNav ? 'hidden' : ''}`}>
           <Logo logo={logo} lightLogo={lightLogo} theme={headerTheme} />
         </Link>
         <HeaderNav header={header} centerNav={centerNav} />
