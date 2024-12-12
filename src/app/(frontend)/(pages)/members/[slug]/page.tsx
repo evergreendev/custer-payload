@@ -58,8 +58,10 @@ export default async function Post({ params: paramsPromise }: Args) {
   if (!member) return <PayloadRedirects url={url} />
 
   const socials = (member.socials ? Object.entries(member.socials) : []).filter((x) => {
-    return x[1] !== ''
+    return x[1] !== '' && x[1]
   })
+
+  console.log(socials)
 
   return (
     <article className="pb-16">
