@@ -22,9 +22,9 @@ export default async function Page() {
   })
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="pt-24 pb-24 text-slate-950">
       <PageClient />
-      <div className="container mb-16">
+      <div className="container mb-16 ">
         <div className="prose max-w-none">
           <h1>Posts</h1>
         </div>
