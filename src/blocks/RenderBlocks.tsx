@@ -12,6 +12,7 @@ import { Header } from '@/blocks/Header/Component'
 import { ImageText } from '@/blocks/ImageText/Component'
 import { Seasons } from '@/blocks/Seasons/Component'
 import { LargeImage } from '@/blocks/LargeImage/Component'
+import { EventsBlock } from '@/blocks/EventsBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -23,7 +24,8 @@ const blockComponents = {
   header: Header,
   imageText: ImageText,
   seasons: Seasons,
-  largeImage: LargeImage
+  largeImage: LargeImage,
+  events: EventsBlock
 }
 
 export const RenderBlocks: React.FC<{
