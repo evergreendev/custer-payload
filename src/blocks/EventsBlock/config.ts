@@ -12,15 +12,6 @@ export const Events: Block = {
   interfaceName: 'Events',
   fields: [
     {
-      name: 'type',
-      type: 'select',
-      defaultValue: 'horizontal',
-      options: [
-        'horizontal',
-        'vertical',
-      ]
-    },
-    {
       name: 'content',
       type: 'richText',
       editor: lexicalEditor({

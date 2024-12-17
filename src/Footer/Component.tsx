@@ -20,7 +20,7 @@ export async function Footer() {
           {
             typeof siteLogo !== 'number' && (
               <Link className="flex items-center" href="/">
-                <Image src={siteLogo.url||""} alt="Description" width={200} height={200} />
+                <Image src={siteLogo?.url||""} alt="Description" width={200} height={200} />
               </Link>
             )}
 
