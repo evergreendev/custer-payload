@@ -4,15 +4,17 @@ import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
 
-import type { Member, Page, Post } from '@/payload-types'
+import type { Member, Page, Post, Event } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import { formatDateTime } from '@/utilities/dateToPretty'
+import { getHoursFromSchedule } from '@/heros/PostHero/EventHeroSection'
 
 export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
-  doc?: Post|Member|Page
-  relationTo?: 'posts'| 'members' | 'pages'
+  doc?: Post|Member|Page|Event
+  relationTo?: 'posts'| 'members' | 'pages' | 'events'
   showCategories?: boolean
   title?: string
 }> = (props) => {
@@ -34,14 +36,16 @@ export const Card: React.FC<{
   return (
     <article
       className={cn(
-        'border flex flex-col border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+        'border flex flex-col border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer relative',
         className,
       )}
       ref={card.ref}
     >
       <div className="relative w-full flex justify-center">
         {!imageToUse && <div className="aspect-video w-full bg-brand-blueBright/20" />}
-        {imageToUse && typeof imageToUse !== 'string' && <Media resource={imageToUse} size="360px" />}
+        {imageToUse && typeof imageToUse !== 'string' && (
+          <Media imgClassName="aspect-video w-full" resource={imageToUse} size="360px" />
+        )}
       </div>
       <div className="p-4 mt-auto">
         {showCategories && hasCategories && (
@@ -80,6 +84,24 @@ export const Card: React.FC<{
             </h3>
           </div>
         )}
+        {
+          doc && 'location' in doc && doc.location && (
+            <div className="text-sm">{doc.location}</div>
+          )
+        }
+        {
+          doc && ('startDate' in doc || 'startTime' in doc) && (
+            <div className="absolute top-0 left-2 flex flex-col bg-brand-blue p-2">
+              {doc && 'startDate' in doc && doc.startDate && (
+                <div className="flex text-lg">{formatDateTime(doc.startDate, doc.endDate)}</div>
+              )}
+              {doc && 'startTime' in doc && doc.startTime &&
+                <div className="">{getHoursFromSchedule(doc.startTime, doc.endTime)}</div>
+              }
+            </div>
+          )
+        }
+
         {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
       </div>
     </article>

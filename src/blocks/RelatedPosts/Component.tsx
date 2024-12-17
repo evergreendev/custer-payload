@@ -2,14 +2,14 @@ import clsx from 'clsx'
 import React from 'react'
 import RichText from '@/components/RichText'
 
-import type { Member, Post, Page } from '@/payload-types'
+import type { Member, Post, Page, Event } from '@/payload-types'
 
 import { Card } from '@/components/Card'
 
 export type RelatedPostsProps = {
   className?: string
-  docs?: Post[]|Member[]|Page[],
-  relationTo?: 'posts' | 'members' | 'pages'
+  docs?: Post[]|Member[]|Page[]|Event[],
+  relationTo?: 'posts' | 'members' | 'pages' | 'events'
   introContent?: any
 }
 
