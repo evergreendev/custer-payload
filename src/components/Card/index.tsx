@@ -41,10 +41,10 @@ export const Card: React.FC<{
       )}
       ref={card.ref}
     >
-      <div className="relative w-full flex justify-center">
+      <div className="relative flex justify-center aspect-video w-full">
         {!imageToUse && <div className="aspect-video w-full bg-brand-blueBright/20" />}
         {imageToUse && typeof imageToUse !== 'string' && (
-          <Media imgClassName="aspect-video w-full" resource={imageToUse} size="360px" />
+          <Media fill imgClassName="aspect-video w-full object-contain" resource={imageToUse} size="360px" />
         )}
       </div>
       <div className="p-4 mt-auto">

@@ -1,11 +1,10 @@
-// storage-adapter-import-placeholder
-import { postgresAdapter } from '@payloadcms/db-postgres'
 
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
+import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import {
   BoldFeature,
   FixedToolbarFeature,
@@ -176,7 +175,7 @@ export default buildConfig({
       },
     }),
     searchPlugin({
-      collections: ['members'],
+      collections: ['members','events'],
       beforeSync: beforeSyncWithSearch,
       searchOverrides: {
         fields: ({ defaultFields }) => {
@@ -184,7 +183,11 @@ export default buildConfig({
         },
       },
     }),
-    payloadCloudPlugin(), // storage-adapter-placeholder
+    nestedDocsPlugin({
+      collections: ['categories'],
+      generateLabel: (_, doc) => doc.title as string,
+      generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ''),
+    }),
   ],
   secret: process.env.PAYLOAD_SECRET!,
   sharp,

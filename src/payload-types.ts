@@ -26,7 +26,6 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
@@ -60,9 +59,9 @@ export interface Config {
   user: User & {
     collection: 'users';
   };
-  jobs: {
+  jobs?: {
     tasks: unknown;
-    workflows: unknown;
+    workflows?: unknown;
   };
 }
 export interface UserAuthOperations {
@@ -283,6 +282,15 @@ export interface Category {
   };
   slug?: string | null;
   slugLock?: boolean | null;
+  parent?: (number | null) | Category;
+  breadcrumbs?:
+    | {
+        doc?: (number | null) | Category;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1159,10 +1167,15 @@ export interface Search {
   id: number;
   title?: string | null;
   priority?: number | null;
-  doc: {
-    relationTo: 'members';
-    value: number | Member;
-  };
+  doc:
+    | {
+        relationTo: 'members';
+        value: number | Member;
+      }
+    | {
+        relationTo: 'events';
+        value: number | Event;
+      };
   slug?: string | null;
   meta?: {
     title?: string | null;
@@ -1537,9 +1550,11 @@ export interface PagesSelect<T extends boolean = true> {
   meta?:
     | T
     | {
+        overview?: T;
         title?: T;
         image?: T;
         description?: T;
+        preview?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -1559,9 +1574,11 @@ export interface PostsSelect<T extends boolean = true> {
   meta?:
     | T
     | {
+        overview?: T;
         title?: T;
         image?: T;
         description?: T;
+        preview?: T;
       };
   publishedAt?: T;
   authors?: T;
@@ -1606,12 +1623,23 @@ export interface CategoriesSelect<T extends boolean = true> {
   meta?:
     | T
     | {
+        overview?: T;
         title?: T;
         image?: T;
         description?: T;
+        preview?: T;
       };
   slug?: T;
   slugLock?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1654,9 +1682,11 @@ export interface MembersSelect<T extends boolean = true> {
   meta?:
     | T
     | {
+        overview?: T;
         title?: T;
         image?: T;
         description?: T;
+        preview?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -1683,9 +1713,11 @@ export interface EventsSelect<T extends boolean = true> {
   meta?:
     | T
     | {
+        overview?: T;
         title?: T;
         image?: T;
         description?: T;
+        preview?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -1866,6 +1898,7 @@ export interface SearchSelect<T extends boolean = true> {
   title?: T;
   priority?: T;
   doc?: T;
+  docUrl?: T;
   slug?: T;
   meta?:
     | T

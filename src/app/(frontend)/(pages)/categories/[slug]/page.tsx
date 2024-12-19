@@ -36,7 +36,9 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   if (!category) return <PayloadRedirects url={url} />
 
-  const members = await queryMembersByCategory({ id: category.id })
+  const childCategories = await queryByParentId({ parentId: category.id });
+
+  const members = await queryMembersByCategory({ ids: [category.id].concat(childCategories?.map(cat => cat.id)) })
 
   return (
     <article className="pb-16">
@@ -83,7 +85,27 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-const queryMembersByCategory = cache(async ({ id }: { id: number }) => {
+const queryByParentId = cache(async ({ parentId }: { parentId: number }) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayloadHMR({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'categories',
+    draft,
+    limit: 100,
+    overrideAccess: draft,
+    where: {
+      parent: {
+        equals: parentId
+      }
+    },
+  })
+
+  return result.docs || null
+})
+
+const queryMembersByCategory = cache(async ({ ids }: { ids: number[] }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayloadHMR({ config: configPromise })
@@ -94,9 +116,13 @@ const queryMembersByCategory = cache(async ({ id }: { id: number }) => {
     limit: 100,
     overrideAccess: draft,
     where: {
-      'categories.id': {
-        contains: id,
-      },
+      or: ids.map(id => {
+        return {
+          'categories.id': {
+            contains: id,
+          },
+        }
+      })
     },
   })
 
