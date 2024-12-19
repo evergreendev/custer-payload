@@ -61,7 +61,6 @@ export default async function Post({ params: paramsPromise }: Args) {
     return x[1] !== '' && x[1]
   })
 
-  console.log(socials)
 
   return (
     <article className="pb-16">
