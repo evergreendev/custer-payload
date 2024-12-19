@@ -42,11 +42,9 @@ export const LargeImage: React.FC<
         >
           {content && (
             <RichText
-              className={
-                `mb-4 z-10 w-full px-14 prose-h3:text-4xl text-inherit text-center prose-xl prose-h2:text-7xl prose-h3:mb-0 prose-h2:mb-4 prose-h2:font-display prose-h2:font-bold
-                ${type === 'boxedText' ? "p-12 prose-p:text-3xl bg-black/45 w-auto prose-p:max-w-prose prose-h3:mt-0" : ""}
-                `
-              }
+              className={`mb-4 prose:text-white text-white z-10 w-full px-14 prose-h3:text-4xl text-center prose-xl prose-h2:text-7xl prose-h3:mb-0 prose-h2:mb-4 prose-h2:font-display prose-h2:font-bold
+                ${type === 'boxedText' ? 'p-12 prose-p:text-3xl bg-black/45 w-auto prose-p:max-w-prose prose-h3:mt-0' : ''}
+                `}
               content={content}
               enableGutter={false}
             />

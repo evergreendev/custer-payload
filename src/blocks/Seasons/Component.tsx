@@ -125,7 +125,7 @@ export const Seasons: React.FC<
       <div className="flex flex-wrap gap-8 w-full justify-center">
         {['winter', 'spring', 'summer', 'autumn', 'year-round'].map((season) => (
           <button
-            className={`${currentSeason === season ? 'underline' : ''} font-bold text-3xl`}
+            className={`${currentSeason === season ? 'underline' : ''} font-bold text-white text-3xl`}
             key={season}
             onClick={() => setCurrentSeason(season)}
           >
