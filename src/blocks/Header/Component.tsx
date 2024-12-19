@@ -25,7 +25,7 @@ export const Header: React.FC<
         ''
       )}
       <div className="container flex flex-col items-center">
-        <div className="max-w-[48rem] flex items-center">
+        <div className="max-w-[48rem] flex items-center text-white">
           {introContent && (
             <RichText
               className="mb-4 text-center prose-xl prose-h2:font-normal prose-h2:text-6xl prose-h3:mb-0"
