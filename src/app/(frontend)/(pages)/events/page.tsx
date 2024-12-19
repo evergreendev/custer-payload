@@ -1,7 +1,6 @@
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 
@@ -9,7 +8,7 @@ import PageClient from './page.client'
 import { getPayload } from 'payload'
 
 export async function generateStaticParams() {
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
   const members = await payload.find({
     collection: 'events',
     draft: false,

@@ -1,16 +1,16 @@
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
 
 import { PostHero } from '@/heros/PostHero'
 import PageClient from './page.client'
+import { getPayload } from 'payload'
 
 export async function generateStaticParams() {
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
   const members = await payload.find({
     collection: 'categories',
     draft: false,
@@ -68,7 +68,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
     collection: 'categories',
@@ -88,7 +88,7 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
 const queryByParentId = cache(async ({ parentId }: { parentId: number }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
     collection: 'categories',
@@ -108,7 +108,7 @@ const queryByParentId = cache(async ({ parentId }: { parentId: number }) => {
 const queryMembersByCategory = cache(async ({ ids }: { ids: number[] }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
     collection: 'members',
