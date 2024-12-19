@@ -8,13 +8,14 @@ import { Card } from '@/components/Card'
 
 export type RelatedPostsProps = {
   className?: string
-  docs?: Post[]|Member[]|Page[]|Event[],
+  docs?: Post[] | Member[] | Page[] | Event[]
   relationTo?: 'posts' | 'members' | 'pages' | 'events'
   introContent?: any
+  noBackground?: boolean
 }
 
 export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
-  const { className, docs, introContent, relationTo } = props
+  const { className, docs, introContent, relationTo, noBackground } = props
 
   return (
     <div className={clsx('container', className)}>
@@ -24,7 +25,15 @@ export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
         {docs?.map((doc, index) => {
           if (typeof doc === 'string') return null
 
-          return <Card key={index} doc={doc} relationTo={relationTo ? relationTo : 'posts'} showCategories />
+          return (
+            <Card
+              noBackground={noBackground}
+              key={index}
+              doc={doc}
+              relationTo={relationTo ? relationTo : 'posts'}
+              showCategories
+            />
+          )
         })}
       </div>
     </div>

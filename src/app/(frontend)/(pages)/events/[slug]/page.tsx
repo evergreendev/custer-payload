@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
@@ -12,9 +11,10 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { Event } from '@/payload-types'
+import { getPayload } from 'payload'
 
 export async function generateStaticParams() {
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
   const events = await payload.find({
     collection: 'events',
     draft: false,
@@ -60,7 +60,7 @@ export default async function Post({ params: paramsPromise }: Args) {
           />
         </div>
         {event.connectedPages && (
-          <RelatedPosts relationTo="pages" docs={event.connectedPages as any} />
+          <RelatedPosts noBackground relationTo="pages" docs={event.connectedPages as any} />
         )}
       </div>
     </article>
@@ -77,7 +77,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
     collection: 'events',
