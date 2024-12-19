@@ -12,7 +12,7 @@ import PageClient from './page.client'
 export async function generateStaticParams() {
   const payload = await getPayloadHMR({ config: configPromise })
   const members = await payload.find({
-    collection: 'members',
+    collection: 'categories',
     draft: false,
     limit: 1000,
     overrideAccess: false,
