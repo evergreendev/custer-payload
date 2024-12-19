@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
@@ -23,9 +22,10 @@ import {
 import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
+import { getPayload } from 'payload'
 
 export async function generateStaticParams() {
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
   const members = await payload.find({
     collection: 'members',
     draft: false,
@@ -72,7 +72,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       <PostHero post={member} showPublishedAt={false} />
 
       <div className="flex flex-col items-center gap-4 pt-8 text-slate-950">
-        <div className="container lg:mx-0 lg:grid lg:grid-cols-[1fr_48rem_1fr] grid-rows-[1fr]">
+        <div className="container gap-3 lg:mx-0 lg:grid lg:grid-cols-[2fr_48rem_1fr] grid-rows-[1fr]">
           <div className="flex flex-col items-start gap-4">
             {member.address && (
               <div className="flex justify-center items-center gap-2 text-xl font-bold">
@@ -139,7 +139,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayload({ config: configPromise })
 
   const result = await payload.find({
     collection: 'members',
