@@ -42,23 +42,30 @@ export const Card: React.FC<{
   return (
     <article
       className={cn(
-        ` flex flex-col  rounded-lg overflow-hidden ${noBackground ? 'bg-transparent' : 'border bg-card border-border'} hover:cursor-pointer relative`,
+        ` flex flex-col ${noBackground ? "text-slate-950 text-center":"text-blue-950"}  rounded-lg overflow-hidden ${noBackground ? 'bg-transparent' : 'shadow border bg-blue-50 border-border'} hover:cursor-pointer relative`,
         className,
       )}
       ref={card.ref}
     >
-      <div className="relative flex justify-center aspect-video w-full">
+      <div className="relative flex justify-center aspect-video w-full overflow-hidden">
         {!imageToUse && <div className="aspect-video w-full bg-brand-blueBright/20" />}
         {imageToUse && typeof imageToUse !== 'string' && (
           <Media
             fill
-            imgClassName="aspect-video w-full object-contain"
+            imgClassName="z-20 aspect-video w-full object-contain"
             resource={imageToUse}
             size="360px"
           />
         )}
+        {imageToUse && typeof imageToUse !== 'string' && (
+          <Media
+            fill
+            imgClassName="z-10 object-cover absolute blur-sm inset-0"
+            resource={imageToUse}
+          />
+        )}
       </div>
-      <div className="p-4 mt-auto">
+      <div className="p-4 mb-auto">
         {showCategories && hasCategories && (
           <div className="uppercase text-sm mb-4">
             {showCategories && hasCategories && (
@@ -87,12 +94,12 @@ export const Card: React.FC<{
           </div>
         )}
         {titleToUse && (
-          <div className={`prose ${noBackground ? "text-slate-950 text-center":"text-white"}`}>
-            <h3>
+          <div className={`prose`}>
+            <h2>
               <Link className="not-prose" href={href} ref={link.ref}>
                 {titleToUse}
               </Link>
-            </h3>
+            </h2>
           </div>
         )}
         {doc && 'location' in doc && doc.location && <div className="text-sm">{doc.location}</div>}

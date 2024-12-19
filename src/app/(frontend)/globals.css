@@ -15,7 +15,7 @@
 
   :root {
     --background: 165 16% 88%;
-    --foreground: 210 40% 98%;
+    --foreground: 0 0% 0%;
 
     --card: 211 24% 25%;
     --card-foreground: 210 40% 98%;
@@ -38,7 +38,7 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 240 4% 16%;
+    --border: 223 58% 43%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
 
