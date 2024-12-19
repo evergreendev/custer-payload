@@ -42,7 +42,7 @@ export const Card: React.FC<{
   return (
     <article
       className={cn(
-        ` flex flex-col ${noBackground ? "text-slate-950 text-center":"text-blue-950"}  rounded-lg overflow-hidden ${noBackground ? 'bg-transparent' : 'shadow border bg-blue-50 border-border'} hover:cursor-pointer relative`,
+        ` flex flex-col ${noBackground ? 'text-slate-950 text-center' : 'text-blue-950'}  rounded-lg overflow-hidden ${noBackground ? 'bg-transparent' : 'shadow border bg-blue-50 border-border'} hover:cursor-pointer relative`,
         className,
       )}
       ref={card.ref}
@@ -104,7 +104,7 @@ export const Card: React.FC<{
         )}
         {doc && 'location' in doc && doc.location && <div className="text-sm">{doc.location}</div>}
         {doc && ('startDate' in doc || 'startTime' in doc) && (
-          <div className="absolute top-0 left-2 flex flex-col bg-brand-blue p-2">
+          <div className="absolute top-0 left-2 flex flex-col border border-border bg-brand-blue bg-opacity-95 p-2 z-40 text-white">
             {doc && 'startDate' in doc && doc.startDate && (
               <div className="flex text-lg">{formatDateTime(doc.startDate, doc.endDate)}</div>
             )}
