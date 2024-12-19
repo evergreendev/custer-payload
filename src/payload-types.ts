@@ -26,6 +26,7 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
+  collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
@@ -33,7 +34,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
-    events: EventsSelect<false> | EventsSelect<true>;
+    events: EventsSelect1<false> | EventsSelect1<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -59,9 +60,9 @@ export interface Config {
   user: User & {
     collection: 'users';
   };
-  jobs?: {
+  jobs: {
     tasks: unknown;
-    workflows?: unknown;
+    workflows: unknown;
   };
 }
 export interface UserAuthOperations {
@@ -1303,258 +1304,24 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        cta?:
-          | T
-          | {
-              richText?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        buttonGroup?:
-          | T
-          | {
-              introContent?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        content?:
-          | T
-          | {
-              columns?:
-                | T
-                | {
-                    size?: T;
-                    richText?: T;
-                    enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        mediaBlock?:
-          | T
-          | {
-              position?: T;
-              media?: T;
-              id?: T;
-              blockName?: T;
-            };
-        archive?:
-          | T
-          | {
-              introContent?: T;
-              populateBy?: T;
-              relationTo?: T;
-              categories?: T;
-              limit?: T;
-              selectedDocs?: T;
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              enableIntro?: T;
-              introContent?: T;
-              id?: T;
-              blockName?: T;
-            };
-        header?:
-          | T
-          | {
-              type?: T;
-              introContent?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        imageText?:
-          | T
-          | {
-              type?: T;
-              image?:
-                | T
-                | {
-                    image?: T;
-                    links?:
-                      | T
-                      | {
-                          link?:
-                            | T
-                            | {
-                                type?: T;
-                                newTab?: T;
-                                reference?: T;
-                                url?: T;
-                                label?: T;
-                                appearance?: T;
-                              };
-                          id?: T;
-                        };
-                  };
-              images?:
-                | T
-                | {
-                    image?: T;
-                    links?:
-                      | T
-                      | {
-                          link?:
-                            | T
-                            | {
-                                type?: T;
-                                newTab?: T;
-                                reference?: T;
-                                url?: T;
-                                label?: T;
-                                appearance?: T;
-                              };
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-              content?: T;
-              cta?:
-                | T
-                | {
-                    text?: T;
-                    links?:
-                      | T
-                      | {
-                          link?:
-                            | T
-                            | {
-                                type?: T;
-                                newTab?: T;
-                                reference?: T;
-                                url?: T;
-                                label?: T;
-                                appearance?: T;
-                              };
-                          id?: T;
-                        };
-                  };
-              background?: T;
-              backgroundImage?: T;
-              reverseColumns?: T;
-              id?: T;
-              blockName?: T;
-            };
-        seasons?:
-          | T
-          | {
-              springImage?: T;
-              summerImage?: T;
-              autumnImage?: T;
-              winterImage?: T;
-              yearRoundImage?: T;
-              content?: T;
-              springItems?: T;
-              summerItems?: T;
-              autumnItems?: T;
-              winterItems?: T;
-              yearRoundItems?: T;
-              id?: T;
-              blockName?: T;
-            };
-        largeImage?:
-          | T
-          | {
-              type?: T;
-              content?: T;
-              backgroundImage?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        events?:
-          | T
-          | {
-              content?: T;
-              limitEventsShown?: T;
-              limit?: T;
-              id?: T;
-              blockName?: T;
-            };
+        cta?: T | CallToActionBlockSelect<T>;
+        buttonGroup?: T | ButtonBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        header?: T | HeaderBlockSelect<T>;
+        imageText?: T | ImageTextBlockSelect<T>;
+        seasons?: T | SeasonsSelect<T>;
+        largeImage?: T | LargeImageBlockSelect<T>;
+        events?: T | EventsSelect<T>;
       };
   meta?:
     | T
     | {
-        overview?: T;
         title?: T;
         image?: T;
         description?: T;
-        preview?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -1562,6 +1329,271 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock_select".
+ */
+export interface CallToActionBlockSelect<T extends boolean = true> {
+  richText?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ButtonBlock_select".
+ */
+export interface ButtonBlockSelect<T extends boolean = true> {
+  introContent?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlock_select".
+ */
+export interface ContentBlockSelect<T extends boolean = true> {
+  columns?:
+    | T
+    | {
+        size?: T;
+        richText?: T;
+        enableLink?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock_select".
+ */
+export interface MediaBlockSelect<T extends boolean = true> {
+  position?: T;
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock_select".
+ */
+export interface ArchiveBlockSelect<T extends boolean = true> {
+  introContent?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  selectedDocs?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormBlock_select".
+ */
+export interface FormBlockSelect<T extends boolean = true> {
+  form?: T;
+  enableIntro?: T;
+  introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeaderBlock_select".
+ */
+export interface HeaderBlockSelect<T extends boolean = true> {
+  type?: T;
+  introContent?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  backgroundImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageTextBlock_select".
+ */
+export interface ImageTextBlockSelect<T extends boolean = true> {
+  type?: T;
+  image?:
+    | T
+    | {
+        image?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+      };
+  images?:
+    | T
+    | {
+        image?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  content?: T;
+  cta?:
+    | T
+    | {
+        text?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+      };
+  background?: T;
+  backgroundImage?: T;
+  reverseColumns?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Seasons_select".
+ */
+export interface SeasonsSelect<T extends boolean = true> {
+  springImage?: T;
+  summerImage?: T;
+  autumnImage?: T;
+  winterImage?: T;
+  yearRoundImage?: T;
+  content?: T;
+  springItems?: T;
+  summerItems?: T;
+  autumnItems?: T;
+  winterItems?: T;
+  yearRoundItems?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "largeImageBlock_select".
+ */
+export interface LargeImageBlockSelect<T extends boolean = true> {
+  type?: T;
+  content?: T;
+  backgroundImage?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  content?: T;
+  limitEventsShown?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1574,11 +1606,9 @@ export interface PostsSelect<T extends boolean = true> {
   meta?:
     | T
     | {
-        overview?: T;
         title?: T;
         image?: T;
         description?: T;
-        preview?: T;
       };
   publishedAt?: T;
   authors?: T;
@@ -1623,11 +1653,9 @@ export interface CategoriesSelect<T extends boolean = true> {
   meta?:
     | T
     | {
-        overview?: T;
         title?: T;
         image?: T;
         description?: T;
-        preview?: T;
       };
   slug?: T;
   slugLock?: T;
@@ -1682,11 +1710,9 @@ export interface MembersSelect<T extends boolean = true> {
   meta?:
     | T
     | {
-        overview?: T;
         title?: T;
         image?: T;
         description?: T;
-        preview?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -1699,7 +1725,7 @@ export interface MembersSelect<T extends boolean = true> {
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events_select".
  */
-export interface EventsSelect<T extends boolean = true> {
+export interface EventsSelect1<T extends boolean = true> {
   title?: T;
   location?: T;
   startDate?: T;
@@ -1713,11 +1739,9 @@ export interface EventsSelect<T extends boolean = true> {
   meta?:
     | T
     | {
-        overview?: T;
         title?: T;
         image?: T;
         description?: T;
-        preview?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -1898,7 +1922,6 @@ export interface SearchSelect<T extends boolean = true> {
   title?: T;
   priority?: T;
   doc?: T;
-  docUrl?: T;
   slug?: T;
   meta?:
     | T
