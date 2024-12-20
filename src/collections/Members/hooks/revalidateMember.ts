@@ -15,6 +15,8 @@ export const revalidateMember: CollectionAfterChangeHook<Post> = ({
     payload.logger.info(`Revalidating member at path: ${path}`)
 
     revalidatePath(path)
+    revalidatePath('/members')
+    revalidatePath('/categories/[slug]')
   }
 
   // If the post was previously published, we need to revalidate the old path
