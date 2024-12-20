@@ -46,7 +46,7 @@ export const PostHero: React.FC<{
       {typeof metaImage !== 'number' && metaImage?.width && metaImage.width < 1000 && (
         <div
           style={{ height: typeof metaImage !== 'number' ? metaImage.height || 0 : 0 }}
-          className="select-none overflow-hidden w-full"
+          className="select-none overflow-hidden w-0"
         >
           <>
             <Media
