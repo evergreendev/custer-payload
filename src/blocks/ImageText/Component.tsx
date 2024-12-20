@@ -107,12 +107,12 @@ export const ImageText: React.FC<
         ''
       )}
       <div
-        className={`flex w-full gap-5 max-w-screen-2xl mx-auto ${props.type !== 'twoImage' ? 'items-center' : ''}`}
+        className={`flex flex-wrap md:flex-nowrap w-full gap-5 max-w-screen-2xl mx-auto ${props.type !== 'twoImage' ? 'items-center' : ''}`}
       >
-        <div className="flex flex-col items-start w-6/12 relative z-10">
+        <div className="flex flex-col items-start w-full md:w-6/12 relative z-10">
           {!reverseColumns ? <LeftCol {...props} /> : <RightCol {...props} />}
         </div>
-        <div className="flex flex-col items-end w-6/12 relative z-10">
+        <div className="flex flex-col items-end w-full md:w-6/12 relative z-10">
           {!reverseColumns ? <RightCol {...props} /> : <LeftCol {...props} />}
         </div>
       </div>
