@@ -2,7 +2,7 @@ import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import React from 'react'
 
 import PageClient from './page.client'
 import { getPayload } from 'payload'
