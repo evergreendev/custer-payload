@@ -1,4 +1,3 @@
-import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { draftMode } from 'next/headers'
@@ -8,6 +7,7 @@ import RichText from '@/components/RichText'
 import { PostHero } from '@/heros/PostHero'
 import PageClient from './page.client'
 import { getPayload } from 'payload'
+import FilteredPosts from '@/blocks/RelatedPosts/Filtered'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -53,13 +53,17 @@ export default async function Post({ params: paramsPromise }: Args) {
         <div className="container lg:mx-0 lg:grid lg:grid-cols-[1fr_48rem_1fr] grid-rows-[1fr]">
           {category.content && (
             <RichText
-              className='lg:grid text-slate-950 text-xl lg:grid-cols-subgrid col-start-2 col-span-1 grid-rows-[1fr]'
+              className="lg:grid text-slate-950 text-xl lg:grid-cols-subgrid col-start-2 col-span-1 grid-rows-[1fr]"
               content={category.content}
               enableGutter={false}
             />
           )}
         </div>
-        {members && <RelatedPosts relationTo="members" docs={members} />}
+        {members && <FilteredPosts posts={members} filters={childCategories?.map(category => {return {
+          property: "categories",
+          label: category.title,
+          value: category.id,
+        }})} />}
       </div>
     </article>
   )
