@@ -1,12 +1,14 @@
 import type { Block } from 'payload'
 
 import {
+  BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import { linkGroup } from '@/fields/linkGroup'
+import { MediaBlock } from '@/blocks/MediaBlock/config'
 
 export const Header: Block = {
   slug: 'header',
@@ -37,6 +39,7 @@ export const Header: Block = {
           return [
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+            BlocksFeature({ blocks: [MediaBlock] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
           ]
