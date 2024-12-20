@@ -1,7 +1,7 @@
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import React, { cache, Suspense } from 'react'
 import RichText from '@/components/RichText'
 
 import { PostHero } from '@/heros/PostHero'
@@ -36,9 +36,11 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   if (!category) return <PayloadRedirects url={url} />
 
-  const childCategories = await queryByParentId({ parentId: category.id });
+  const childCategories = await queryByParentId({ parentId: category.id })
 
-  const members = await queryMembersByCategory({ ids: [category.id].concat(childCategories?.map(cat => cat.id)) })
+  const members = await queryMembersByCategory({
+    ids: [category.id].concat(childCategories?.map((cat) => cat.id)),
+  })
 
   return (
     <article className="pb-16">
@@ -59,11 +61,20 @@ export default async function Post({ params: paramsPromise }: Args) {
             />
           )}
         </div>
-        {members && <FilteredPosts posts={members} filters={childCategories?.map(category => {return {
-          property: "categories",
-          label: category.title,
-          value: category.id,
-        }})} />}
+        {members && (
+          <Suspense>
+            <FilteredPosts
+              posts={members}
+              filters={childCategories?.map((category) => {
+                return {
+                  property: 'categories',
+                  label: category.title,
+                  value: category.id,
+                }
+              })}
+            />
+          </Suspense>
+        )}
       </div>
     </article>
   )
@@ -101,8 +112,8 @@ const queryByParentId = cache(async ({ parentId }: { parentId: number }) => {
     overrideAccess: draft,
     where: {
       parent: {
-        equals: parentId
-      }
+        equals: parentId,
+      },
     },
   })
 
@@ -120,13 +131,13 @@ const queryMembersByCategory = cache(async ({ ids }: { ids: number[] }) => {
     limit: 100,
     overrideAccess: draft,
     where: {
-      or: ids.map(id => {
+      or: ids.map((id) => {
         return {
           'categories.id': {
             contains: id,
           },
         }
-      })
+      }),
     },
   })
 
