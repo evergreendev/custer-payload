@@ -112,7 +112,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               return (
                 <MediaBlock
                   className="col-start-1 col-span-3"
-                  imgClassName="m-0"
+                  imgClassName="my-0 mx-auto"
                   key={index}
                   {...block}
                   captionClassName="mx-auto max-w-[48rem]"
