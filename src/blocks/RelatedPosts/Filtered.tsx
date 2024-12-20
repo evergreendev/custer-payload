@@ -109,6 +109,7 @@ const FilteredPosts = ({ posts, filters }: Props) => {
             onClick={() => handleFilterChange(property, value)}
             className={`
             rounded-full
+            whitespace-nowrap
             px-2
             ${
               activeFilters.find((filter) => filter.property === property && filter.value === value)
