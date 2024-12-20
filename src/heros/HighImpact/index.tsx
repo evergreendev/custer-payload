@@ -31,7 +31,7 @@ export const HighImpactHero: React.FC<Page['hero']&{fallbackTitle:string,siteOpt
           </div>
         )}
         <div className="mt-[1vh]">
-          <h1 className="font-display text-8xl font-bold text-center mb-4">
+          <h1 className="font-display text-4xl sm:text-8xl font-bold text-center mb-4">
             {headline || fallbackTitle}
           </h1>
           {subheading && <h2 className="text-center text-5xl">{subheading}</h2>}
