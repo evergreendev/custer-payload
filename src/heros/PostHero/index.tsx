@@ -20,6 +20,7 @@ export const PostHero: React.FC<{
           <div className="flex flex-col items-start">
             {'startDate' in post && <EventHeroSection event={post} />}
             <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl">{title}</h1>
+            {'location' in post && <h2 className="text-2xl">{post.location}</h2>}
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 md:gap-16">
