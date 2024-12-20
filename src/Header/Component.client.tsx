@@ -10,6 +10,7 @@ import { HeaderNav } from './Nav'
 import { MobileNav } from '@/Header/Nav/MobileNav'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmark } from '@awesome.me/kit-45560c6e49/icons/classic/solid'
+import { usePathname } from 'next/navigation'
 
 interface HeaderClientProps {
   header: Header
@@ -36,6 +37,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
       setHasScrolled(false)
     }
   }
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setMobileNavIsOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
