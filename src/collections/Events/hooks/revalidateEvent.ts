@@ -1,6 +1,6 @@
 import type { CollectionAfterChangeHook } from 'payload'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 import type { Page } from '@/payload-types'
 
@@ -15,6 +15,7 @@ export const revalidateEvent: CollectionAfterChangeHook<Page> = ({
     payload.logger.info(`Revalidating event at path: ${path}`)
 
     revalidatePath(path)
+    revalidateTag("event-block")
   }
 
   // If the page was previously published, we need to revalidate the old path

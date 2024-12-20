@@ -6,6 +6,7 @@ import React from 'react'
 import RichText from '@/components/RichText'
 import Link from 'next/link'
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
+import { unstable_cache } from 'next/cache'
 
 export const EventsBlock: React.FC<
   EventBlockProps & {
@@ -20,22 +21,28 @@ export const EventsBlock: React.FC<
 
   const dateObj = new Date()
 
-  const fetchedEvents = await payload.find({
-    collection: 'events',
-    sort: 'startDate',
-    where: {
-      or: [
-        {
-          startDate: { greater_than_equal: dateObj },
-        },
-        {
-          endDate: { greater_than_equal: dateObj },
-        },
-      ],
-    },
-    depth: 1,
-    limit,
+  const fetchEvents = unstable_cache(async () => {
+    return await payload.find({
+      collection: 'events',
+      sort: 'startDate',
+      where: {
+        or: [
+          {
+            startDate: { greater_than_equal: dateObj },
+          },
+          {
+            endDate: { greater_than_equal: dateObj },
+          },
+        ],
+      },
+      depth: 1,
+      limit,
+    })
+  },[],{
+    tags: ['event_block']
   })
+
+  const events = await fetchEvents();
 
   return (
     <div id={`block-${id}`}>
@@ -49,7 +56,7 @@ export const EventsBlock: React.FC<
         </div>
       )}
       <div className="p-4">
-        <RelatedPosts relationTo="events" docs={fetchedEvents.docs} />
+        <RelatedPosts relationTo="events" docs={events.docs} />
         <div className="flex items-center mt-4">
           <Link className="text-center text-xl mx-auto" href="/events">
             See All Events

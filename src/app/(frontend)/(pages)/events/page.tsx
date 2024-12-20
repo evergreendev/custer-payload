@@ -6,6 +6,7 @@ import React, { cache } from 'react'
 
 import PageClient from './page.client'
 import { getPayload } from 'payload'
+import { unstable_cache } from 'next/cache'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -43,7 +44,7 @@ export default async function Post() {
   )
 }
 
-const queryEvents = cache(async () => {
+const queryEvents = unstable_cache(async () => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
@@ -69,4 +70,4 @@ const queryEvents = cache(async () => {
   })
 
   return result.docs || null
-})
+},[],{tags: ['event_block']})
