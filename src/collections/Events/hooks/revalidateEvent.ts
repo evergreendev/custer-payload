@@ -10,7 +10,7 @@ export const revalidateEvent: CollectionAfterChangeHook<Page> = ({
   req: { payload },
 }) => {
   if (doc._status === 'published') {
-    const path = doc.slug === 'home' ? '/' : `/${doc.slug}`
+    const path = doc.slug === 'home' ? '/' : `/events/${doc.slug}`
 
     payload.logger.info(`Revalidating event at path: ${path}`)
 
