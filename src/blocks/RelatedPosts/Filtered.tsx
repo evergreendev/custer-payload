@@ -102,7 +102,7 @@ const FilteredPosts = ({ posts, filters }: Props) => {
 
   return (
     <>
-      <div className="flex w-full overflow-x-auto max-w-screen-lg mx-auto gap-2 text-lg sticky-top">
+      <div className="z-20 p-2 bg-background flex w-full overflow-x-auto max-w-screen-lg mx-auto gap-2 text-lg sticky top-0">
         <p>filter:</p>
         {filters.map(({ property, value, label }, index) => (
           <button
