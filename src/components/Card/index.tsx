@@ -104,7 +104,7 @@ export const Card: React.FC<{
         )}
         {doc && 'location' in doc && doc.location && <div className="text-sm">{doc.location}</div>}
         {doc && ('startDate' in doc || 'startTime' in doc) && (
-          <div className="absolute top-0 left-2 flex flex-col border border-border bg-brand-blue bg-opacity-95 p-2 z-40 text-white">
+          <div className="absolute top-0 left-2 flex flex-col border border-border bg-brand-blue bg-opacity-95 p-2 z-30 text-white">
             {doc && 'startDate' in doc && doc.startDate && (
               <div className="flex text-lg">{formatDateTime(doc.startDate, doc.endDate)}</div>
             )}
