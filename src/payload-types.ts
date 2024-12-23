@@ -283,6 +283,7 @@ export interface Category {
   };
   slug?: string | null;
   slugLock?: boolean | null;
+  showMemberInfo?: boolean | null;
   parent?: (number | null) | Category;
   breadcrumbs?:
     | {
@@ -1659,6 +1660,7 @@ export interface CategoriesSelect<T extends boolean = true> {
       };
   slug?: T;
   slugLock?: T;
+  showMemberInfo?: T;
   parent?: T;
   breadcrumbs?:
     | T

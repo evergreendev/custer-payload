@@ -10,10 +10,11 @@ type Props = {
     property: string
     value: any
     label: string
-  }[]
+  }[],
+  showInfo?: boolean|null
 }
 
-const FilteredPosts = ({ posts, filters }: Props) => {
+const FilteredPosts = ({ posts, filters,showInfo }: Props) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const filterParams = searchParams.get('active-filters')
@@ -104,7 +105,7 @@ const FilteredPosts = ({ posts, filters }: Props) => {
     <>
       <div className="z-30 p-2 bg-background flex w-full overflow-x-auto max-w-screen-lg mx-auto gap-2 text-lg sticky top-0">
         <p>filter:</p>
-        {filters.map(({ property, value, label }, index) => (
+        {filters.map(({ property, value, label }) => (
           <button
             onClick={() => handleFilterChange(property, value)}
             className={`
@@ -133,7 +134,7 @@ const FilteredPosts = ({ posts, filters }: Props) => {
           </button>
         )}
       </div>
-      <RelatedPosts relationTo="members" docs={activePosts} />
+      <RelatedPosts showInfo={showInfo} relationTo="members" docs={activePosts} />
     </>
   )
 }

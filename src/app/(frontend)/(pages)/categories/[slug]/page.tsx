@@ -64,6 +64,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         {members && (
           <Suspense>
             <FilteredPosts
+              showInfo={category.showMemberInfo}
               posts={members}
               filters={childCategories?.map((category) => {
                 return {

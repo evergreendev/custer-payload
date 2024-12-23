@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-import { anyone } from '../access/anyone'
-import { authenticated } from '../access/authenticated'
+import { anyone } from '@/access/anyone'
+import { authenticated } from '@/access/authenticated'
 import { slugField } from '@/fields/slug'
 import {
   BlocksFeature,
@@ -93,7 +93,15 @@ const Categories: CollectionConfig = {
         },
       ],
     },
-    ...slugField('title')
+    ...slugField('title'),
+    {
+      type: "checkbox",
+      name: 'showMemberInfo',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+      }
+    }
   ],
 }
 
