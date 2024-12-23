@@ -15,10 +15,12 @@ export const PostHero: React.FC<{
   return (
     <div className="relative flex items-end overflow-hidden">
       <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-white pb-8">
-        <div className="col-start-1 col-span-1 md:col-start-2 md:col-span-2">
+        <div className={`col-start-1 col-span-1 ${metaImage ? "md:col-start-2":""} md:col-span-2`}>
           <div className="flex flex-col items-start">
             {'startDate' in post && <EventHeroSection event={post} />}
-            <h1 className={`${metaImage ? 'mb-6':'mb-0'} text-3xl md:text-5xl lg:text-6xl`}>{title}</h1>
+            <h1 className={`${metaImage ? 'mb-6' : 'mb-0'} text-3xl md:text-5xl lg:text-6xl`}>
+              {title}
+            </h1>
             {'location' in post && <h2 className="text-2xl">{post.location}</h2>}
           </div>
 
