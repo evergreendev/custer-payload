@@ -5,7 +5,6 @@ import RichText from '@/components/RichText'
 import type { Member, Post, Page, Event } from '@/payload-types'
 
 import { Card } from '@/components/Card'
-import { Media } from '@/components/Media'
 import Image from 'next/image'
 
 export type RelatedPostsProps = {
@@ -34,7 +33,7 @@ export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
                 <div className={'col lg:col-span-2 mb-8 text-lg'}>
                   {doc.categories && (
                     <div className="flex gap-2 flex-wrap text-sm">
-                      {doc.categories.map((category) => {
+                      {doc.categories.filter(category => !category.hideInCategoryList).map((category) => {
                         return (
                           <div
                             className="bg-gray-50 text-gray-600 rounded-full px-1"

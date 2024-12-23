@@ -101,6 +101,14 @@ const Categories: CollectionConfig = {
       admin: {
         position: 'sidebar',
       }
+    },
+    {
+      type: "checkbox",
+      name: "hideInCategoryList",
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+      }
     }
   ],
 }
