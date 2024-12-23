@@ -20,6 +20,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { revalidateCategory } from '@/collections/Categories/hooks/revalidateEvent'
 
 const Categories: CollectionConfig = {
   slug: 'categories',
@@ -111,6 +112,9 @@ const Categories: CollectionConfig = {
       }
     }
   ],
+  hooks: {
+    afterChange: [revalidateCategory],
+  },
 }
 
 export default Categories

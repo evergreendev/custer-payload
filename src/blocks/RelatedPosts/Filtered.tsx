@@ -103,12 +103,13 @@ const FilteredPosts = ({ posts, filters,showInfo }: Props) => {
 
   return (
     <>
-      <div className="z-30 p-2 bg-background flex w-full overflow-x-auto max-w-screen-lg mx-auto gap-2 text-lg sticky top-0">
-        <p>filter:</p>
-        {filters.map(({ property, value, label }) => (
-          <button
-            onClick={() => handleFilterChange(property, value)}
-            className={`
+      {
+        filters.length > 0 && <div className="z-30 p-2 bg-background flex w-full overflow-x-auto max-w-screen-lg mx-auto gap-2 text-lg sticky top-0">
+          <p>filter:</p>
+          {filters.map(({ property, value, label }) => (
+            <button
+              onClick={() => handleFilterChange(property, value)}
+              className={`
             rounded-full
             whitespace-nowrap
             px-2
@@ -118,22 +119,23 @@ const FilteredPosts = ({ posts, filters,showInfo }: Props) => {
                 : 'border-gray-100 border-2 text-gray-600'
             }
             `}
-            key={property + value}
-          >
-            {label}
-          </button>
-        ))}
-        {activeFilters.length > 0 && (
-          <button
-            onClick={() => {
-              setActiveFilters([])
-              handleUpdateQueryParam('active-filters', '')
-            }}
-          >
-            clear
-          </button>
-        )}
-      </div>
+              key={property + value}
+            >
+              {label}
+            </button>
+          ))}
+          {activeFilters.length > 0 && (
+            <button
+              onClick={() => {
+                setActiveFilters([])
+                handleUpdateQueryParam('active-filters', '')
+              }}
+            >
+              clear
+            </button>
+          )}
+        </div>
+      }
       <RelatedPosts showInfo={showInfo} relationTo="members" docs={activePosts} />
     </>
   )
