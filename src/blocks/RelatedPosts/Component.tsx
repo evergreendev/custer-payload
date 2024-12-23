@@ -62,7 +62,7 @@ export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
                       {doc.phone && <p>{doc.phone}</p>}
                       {doc.website && (
                         <p>
-                          Website: <a href={doc.website}>{doc.website}</a>
+                          <a href={doc.website}>{doc.website}</a>
                         </p>
                       )}
                       {doc.content && <RichText enableGutter={false} content={doc.content} />}
