@@ -32,7 +32,7 @@ const PopUpClient = ({ popUps }: PopUpClientProps) => {
 
   return (
     <div
-      className={`fixed max-w-full min-w-64 bottom-0 right-0 sm:right-8 bg-gray-100 shadow-lg duration-700 transition-transform ${showPopup ? '' : 'translate-y-full'}`}
+      className={`fixed z-30 max-w-full min-w-64 bottom-0 right-0 sm:right-8 bg-gray-100 shadow-lg duration-700 transition-transform ${showPopup ? '' : 'translate-y-full'}`}
     >
       <form
         action={() => {
