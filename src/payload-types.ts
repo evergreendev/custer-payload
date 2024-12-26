@@ -18,6 +18,7 @@ export interface Config {
     users: User;
     members: Member;
     events: Event;
+    popUp: PopUp;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -35,6 +36,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
     events: EventsSelect1<false> | EventsSelect1<true>;
+    popUp: PopUpSelect<false> | PopUpSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1120,6 +1122,85 @@ export interface Event {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popUp".
+ */
+export interface PopUp {
+  id: number;
+  headerImage?: (number | null) | Media;
+  headerText?: string | null;
+  bodyText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'members';
+                value: number | Member;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'categories';
+                value: number | Category;
+              } | null);
+          url?: string | null;
+          label: string;
+          appearance?: ('default' | 'highlight') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  priority?: number | null;
+  startShowing?: string | null;
+  stopShowing?: string | null;
+  showOnAllPages?: boolean | null;
+  pages?:
+    | (
+        | {
+            relationTo: 'pages';
+            value: number | Page;
+          }
+        | {
+            relationTo: 'categories';
+            value: number | Category;
+          }
+        | {
+            relationTo: 'events';
+            value: number | Event;
+          }
+        | {
+            relationTo: 'members';
+            value: number | Member;
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1229,6 +1310,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'popUp';
+        value: number | PopUp;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1753,6 +1838,37 @@ export interface EventsSelect1<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popUp_select".
+ */
+export interface PopUpSelect<T extends boolean = true> {
+  headerImage?: T;
+  headerText?: T;
+  bodyText?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  priority?: T;
+  startShowing?: T;
+  stopShowing?: T;
+  showOnAllPages?: T;
+  pages?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

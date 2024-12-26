@@ -15,6 +15,7 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
 import './globals.css'
+import PopUp from '@/collections/PopUps/component'
 
 const playball = Playball({
   subsets:['latin'],
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <LivePreviewListener />
           {children}
           <Footer />
+          <PopUp/>
         </Providers>
       </body>
     </html>
