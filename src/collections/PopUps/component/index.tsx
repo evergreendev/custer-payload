@@ -81,6 +81,8 @@ const PopUp = async () => {
   )
   const data = await fetchPopUps()
 
+  console.log(data.docs);
+
   return <PopUpClient popUps={data.docs} />
 }
 
