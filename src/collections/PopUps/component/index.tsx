@@ -28,7 +28,16 @@ const PopUp = async () => {
                       startShowing: { less_than_equal: dateObj },
                     },
                     {
-                      startShowing: { equals: null },
+                      or: [
+                        {
+                          startShowing: {
+                            exists: false
+                          }
+                        },
+                        {
+                          startShowing: { equals: null },
+                        },
+                      ],
                     },
                   ],
                 },
@@ -38,7 +47,16 @@ const PopUp = async () => {
                       stopShowing: { greater_than_equal: dateObj },
                     },
                     {
-                      stopShowing: { equals: null },
+                      or: [
+                        {
+                          stopShowing: {
+                            exists: false
+                          }
+                        },
+                        {
+                          stopShowing: { equals: null },
+                        },
+                      ],
                     },
                   ],
                 },
@@ -52,7 +70,16 @@ const PopUp = async () => {
                       startShowing: { less_than_equal: dateObj },
                     },
                     {
-                      startShowing: { equals: null },
+                      or: [
+                        {
+                          startShowing: {
+                            exists: false
+                          }
+                        },
+                        {
+                          startShowing: { equals: null },
+                        },
+                      ],
                     },
                   ],
                 },
@@ -62,7 +89,16 @@ const PopUp = async () => {
                       stopShowing: { greater_than_equal: dateObj },
                     },
                     {
-                      stopShowing: { equals: null },
+                      or: [
+                        {
+                          stopShowing: {
+                            exists: false
+                          }
+                        },
+                        {
+                          stopShowing: { equals: null },
+                        },
+                      ],
                     },
                   ],
                 },
@@ -80,8 +116,6 @@ const PopUp = async () => {
     },
   )
   const data = await fetchPopUps()
-
-  console.log(data.docs);
 
   return <PopUpClient popUps={data.docs} />
 }
