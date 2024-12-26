@@ -2,9 +2,9 @@ import type { CollectionAfterChangeHook } from 'payload'
 
 import { revalidatePath } from 'next/cache'
 
-import type { Post } from '@/payload-types'
+import type { Member } from '@/payload-types'
 
-export const revalidateMember: CollectionAfterChangeHook<Post> = ({
+export const revalidateMember: CollectionAfterChangeHook<Member> = ({
                                                                   doc,
                                                                   previousDoc,
                                                                   req: { payload },

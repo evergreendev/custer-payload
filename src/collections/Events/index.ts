@@ -25,6 +25,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { Banner } from '@/blocks/Banner/config'
 import { Code } from '@/blocks/Code/config'
+import { addMetaIfFeaturedImage } from '@/collections/genericHooks/addMetaIfFeaturedImage'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -192,10 +193,25 @@ export const Events: CollectionConfig = {
       },
     },
     ...slugField(),
+    {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'keepExistingMetaImage',
+      type: 'checkbox',
+      admin: {
+        position: 'sidebar',
+      },
+    },
   ],
   hooks: {
     afterChange: [revalidateEvent],
-    beforeChange: [populatePublishedAt],
+    beforeChange: [populatePublishedAt,addMetaIfFeaturedImage],
   },
   versions: {
     drafts: {

@@ -25,6 +25,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
+import { addMetaIfFeaturedImage } from '@/collections/genericHooks/addMetaIfFeaturedImage'
 
 export const Members: CollectionConfig = {
   slug: 'members',
@@ -176,6 +177,21 @@ export const Members: CollectionConfig = {
       ],
     },
     {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
+      name: 'keepExistingMetaImage',
+      type: 'checkbox',
+      admin: {
+        position: 'sidebar'
+      }
+    },
+    {
       name: 'publishedAt',
       type: 'date',
       admin: {
@@ -198,6 +214,7 @@ export const Members: CollectionConfig = {
     ...slugField(),
   ],
   hooks: {
+    beforeChange: [addMetaIfFeaturedImage],
     afterChange: [revalidateMember],
   },
   versions: {

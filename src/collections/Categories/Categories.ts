@@ -6,7 +6,8 @@ import { slugField } from '@/fields/slug'
 import {
   BlocksFeature,
   FixedToolbarFeature,
-  HeadingFeature, HorizontalRuleFeature,
+  HeadingFeature,
+  HorizontalRuleFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
@@ -21,6 +22,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { revalidateCategory } from '@/collections/Categories/hooks/revalidateEvent'
+import { addMetaIfFeaturedImage } from '@/collections/genericHooks/addMetaIfFeaturedImage'
 
 const Categories: CollectionConfig = {
   slug: 'categories',
@@ -96,23 +98,39 @@ const Categories: CollectionConfig = {
     },
     ...slugField('title'),
     {
-      type: "checkbox",
+      type: 'checkbox',
       name: 'showMemberInfo',
       defaultValue: false,
       admin: {
         position: 'sidebar',
-      }
+      },
     },
     {
-      type: "checkbox",
-      name: "hideInCategoryList",
+      type: 'checkbox',
+      name: 'hideInCategoryList',
       defaultValue: false,
       admin: {
         position: 'sidebar',
-      }
-    }
+      },
+    },
+    {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'keepExistingMetaImage',
+      type: 'checkbox',
+      admin: {
+        position: 'sidebar',
+      },
+    },
   ],
   hooks: {
+    beforeChange: [addMetaIfFeaturedImage],
     afterChange: [revalidateCategory],
   },
 }

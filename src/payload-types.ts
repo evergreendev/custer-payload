@@ -249,6 +249,8 @@ export interface Member {
     image?: (number | null) | Media;
     description?: string | null;
   };
+  featuredImage?: (number | null) | Media;
+  keepExistingMetaImage?: boolean | null;
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -287,6 +289,8 @@ export interface Category {
   slugLock?: boolean | null;
   showMemberInfo?: boolean | null;
   hideInCategoryList?: boolean | null;
+  featuredImage?: (number | null) | Media;
+  keepExistingMetaImage?: boolean | null;
   parent?: (number | null) | Category;
   breadcrumbs?:
     | {
@@ -1116,6 +1120,8 @@ export interface Event {
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
+  featuredImage?: (number | null) | Media;
+  keepExistingMetaImage?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1748,6 +1754,8 @@ export interface CategoriesSelect<T extends boolean = true> {
   slugLock?: T;
   showMemberInfo?: T;
   hideInCategoryList?: T;
+  featuredImage?: T;
+  keepExistingMetaImage?: T;
   parent?: T;
   breadcrumbs?:
     | T
@@ -1803,6 +1811,8 @@ export interface MembersSelect<T extends boolean = true> {
         image?: T;
         description?: T;
       };
+  featuredImage?: T;
+  keepExistingMetaImage?: T;
   publishedAt?: T;
   slug?: T;
   slugLock?: T;
@@ -1835,6 +1845,8 @@ export interface EventsSelect1<T extends boolean = true> {
   publishedAt?: T;
   slug?: T;
   slugLock?: T;
+  featuredImage?: T;
+  keepExistingMetaImage?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
