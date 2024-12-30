@@ -16,7 +16,7 @@ export const revalidateMember: CollectionAfterChangeHook<Member> = ({
 
     revalidatePath(path)
     revalidatePath('/members')
-    revalidatePath('/categories/[slug]')
+    revalidatePath('/(frontend)/(pages)/categories/[slug]','page')
   }
 
   // If the post was previously published, we need to revalidate the old path

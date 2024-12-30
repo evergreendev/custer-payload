@@ -520,6 +520,10 @@ export interface ArchiveBlock {
             relationTo: 'members';
             value: number | Member;
           }
+        | {
+            relationTo: 'categories';
+            value: number | Category;
+          }
       )[]
     | null;
   id?: string | null;
