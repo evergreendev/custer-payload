@@ -25,6 +25,13 @@ function getCurrSeason() {
 
   return 'autumn'
 }
+function shuffleArray(array) {
+  for (let i = array.length - 1; i >= 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 export const Seasons: React.FC<
   Props & {
@@ -40,19 +47,19 @@ export const Seasons: React.FC<
   useEffect(() => {
     switch (currentSeason) {
       case 'winter':
-        setItemsToDisplay(winterItems)
+        setItemsToDisplay(shuffleArray(winterItems))
         break
       case 'spring':
-        setItemsToDisplay(springItems)
+        setItemsToDisplay(shuffleArray(springItems))
         break
       case 'summer':
-        setItemsToDisplay(summerItems)
+        setItemsToDisplay(shuffleArray(summerItems))
         break
       case 'autumn':
-        setItemsToDisplay(autumnItems)
+        setItemsToDisplay(shuffleArray(autumnItems))
         break
       default:
-        setItemsToDisplay(yearRoundItems)
+        setItemsToDisplay(shuffleArray(yearRoundItems))
         break
     }
   }, [autumnItems, currentSeason, springItems, summerItems, winterItems, yearRoundItems])
@@ -96,7 +103,8 @@ export const Seasons: React.FC<
       )}
 
       <div className="flex gap-8 w-full overflow-hidden justify-center">
-        {itemsToDisplay?.map((item) => {
+        {itemsToDisplay?.map((item,index) => {
+          if (index > 2) return null;
           if (typeof item.value === 'number') return null
 
           const itemTypeSlug = item.relationTo === 'pages' ? '' : item.relationTo + '/'
