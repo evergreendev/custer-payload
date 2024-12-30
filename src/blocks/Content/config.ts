@@ -1,6 +1,7 @@
 import type { Block, Field } from 'payload'
 
 import {
+  AlignFeature,
   BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
@@ -43,6 +44,7 @@ const columnFields: Field[] = [
       features: ({ rootFeatures }) => {
         return [
           ...rootFeatures,
+          AlignFeature(),
           HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
           BlocksFeature({blocks: [MediaBlock,FormBlock]}),
           FixedToolbarFeature(),

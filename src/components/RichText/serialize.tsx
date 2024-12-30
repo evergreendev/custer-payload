@@ -18,6 +18,12 @@ import {
   IS_UNDERLINE,
 } from './nodeFormat'
 import type { Page } from '@/payload-types'
+const alignment = {
+  center: "md:text-center text-left",
+  left: "md:text-left text-left",
+  right: "md:text-right text-left",
+  justify: "md:text-justify text-left",
+}
 
 export type NodeTypes =
   | DefaultNodeTypes
@@ -138,7 +144,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             }
             case 'paragraph': {
               return (
-                <p className="col-start-2" key={index}>
+                <p className={`col-start-2 ${alignment[node.format]}`} key={index}>
                   {serializedChildren}
                 </p>
               )
@@ -146,7 +152,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'heading': {
               const Tag = node?.tag
               return (
-                <Tag className="col-start-2" key={index}>
+                <Tag className={`col-start-2 ${alignment[node.format]}`} key={index}>
                   {serializedChildren}
                 </Tag>
               )
@@ -154,7 +160,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'list': {
               const Tag = node?.tag
               return (
-                <Tag className="list col-start-2" key={index}>
+                <Tag className={`list col-start-2 ${alignment[node.format]}`} key={index}>
                   {serializedChildren}
                 </Tag>
               )
@@ -164,7 +170,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                 return (
                   <li
                     aria-checked={node.checked ? 'true' : 'false'}
-                    className={` ${node.checked ? '' : ''}`}
+                    className={` ${node.checked ? '' : ''} ${alignment[node.format]}`}
                     key={index}
                     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
                     role="checkbox"
@@ -176,7 +182,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                 )
               } else {
                 return (
-                  <li key={index} value={node?.value}>
+                  <li className={alignment[node.format]} key={index} value={node?.value}>
                     {serializedChildren}
                   </li>
                 )
@@ -184,7 +190,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             }
             case 'quote': {
               return (
-                <blockquote className="col-start-2" key={index}>
+                <blockquote className={`col-start-2 ${alignment[node.format]}`} key={index}>
                   {serializedChildren}
                 </blockquote>
               )
@@ -194,6 +200,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
 
               return (
                 <CMSLink
+                  className={alignment[node.format]}
                   key={index}
                   newTab={Boolean(fields?.newTab)}
                   reference={fields.doc as any}
