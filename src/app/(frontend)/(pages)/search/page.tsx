@@ -45,7 +45,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       </div>
 
       {result.length > 0 ? (
-        <CollectionArchive posts={result} />
+        <>{query && <CollectionArchive posts={result} />}</>
       ) : (
         <div className="container">No results found.</div>
       )}
