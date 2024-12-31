@@ -30,21 +30,7 @@ export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
           return (
             <>
               {showInfo ? (
-                <div className={'col lg:col-span-2 mb-8 text-lg'}>
-                  {doc.categories && (
-                    <div className="flex gap-2 flex-wrap text-sm">
-                      {doc.categories.filter(category => !category.hideInCategoryList).map((category) => {
-                        return (
-                          <div
-                            className="bg-gray-50 text-gray-600 rounded-full px-1"
-                            key={category.id}
-                          >
-                            {category.title}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )}
+                <div className={'col lg:col-span-2 mb-8 text-lg border-t border-b border-gray-500'}>
                   <h2 className="font-bold">{doc.title}</h2>
                   <div className="flex gap-2 items-start">
                     {imageToUse && typeof imageToUse !== 'string' && (
