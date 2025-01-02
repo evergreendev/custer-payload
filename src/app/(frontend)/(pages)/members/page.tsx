@@ -58,7 +58,6 @@ export default async function Post({searchParams: searchParamsPromise}:Args) {
                 value: category.id,
               }
             })}/>
-            <Pagination totalPages={members.totalPages}/>
             <RelatedPosts showInfo={true} relationTo="members" docs={members.docs} />
             <Pagination totalPages={members.totalPages}/>
           </Suspense>
