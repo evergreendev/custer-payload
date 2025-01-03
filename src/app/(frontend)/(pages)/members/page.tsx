@@ -8,6 +8,7 @@ import { getPayload } from 'payload'
 import Filter from '@/blocks/RelatedPosts/Filter'
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import Pagination from '@/blocks/ParamPagination'
+import { PostHero } from '@/heros/PostHero'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -25,20 +26,23 @@ export async function generateStaticParams() {
 
 type Args = {
   searchParams: Promise<{
-    ["active-filters"]?: string,
+    ['active-filters']?: string
     page: string
   }>
 }
 
-export default async function Post({searchParams: searchParamsPromise}:Args) {
-  const searchParams = await searchParamsPromise;
-  const activeFilters = searchParams['active-filters']||"";
-  const page = searchParams['page']||"1";
+export default async function Post({ searchParams: searchParamsPromise }: Args) {
+  const searchParams = await searchParamsPromise
+  const activeFilters = searchParams['active-filters'] || ''
+  const page = searchParams['page'] || '1'
 
   const url = '/members/category/'
-  const categories = await queryCategories();
+  const categories = await queryCategories()
 
-  const members = await queryMembers(parseInt(page),activeFilters)
+  const members = await queryMembers(parseInt(page), activeFilters)
+  const currCategory = categories.find(
+    (category) => category.id === parseInt(activeFilters.split('|')[1]),
+  )
 
   return (
     <article className="pb-16">
@@ -46,21 +50,22 @@ export default async function Post({searchParams: searchParamsPromise}:Args) {
 
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
-
+      {currCategory && <PostHero post={currCategory} showPublishedAt={false} />}
       <div className="flex flex-col items-center gap-4 pt-8">
         {members && (
           <Suspense>
-
-            <Filter filters={categories?.map((category) => {
-              return {
-                property: 'categories',
-                label: category.title,
-                value: category.id,
-              }
-            })}/>
-            <Pagination totalPages={members.totalPages}/>
+            <Filter
+              filters={categories?.map((category) => {
+                return {
+                  property: 'categories',
+                  label: category.title,
+                  value: category.id,
+                }
+              })}
+            />
+            <Pagination totalPages={members.totalPages} />
             <RelatedPosts showInfo={true} relationTo="members" docs={members.docs} />
-            <Pagination totalPages={members.totalPages}/>
+            <Pagination totalPages={members.totalPages} />
           </Suspense>
         )}
       </div>
@@ -83,11 +88,11 @@ const queryCategories = cache(async () => {
   return result.docs || null
 })
 
-const queryMembers = cache(async (page:number, activeFilters:string) => {
-  const { isEnabled: draft } = await draftMode();
+const queryMembers = cache(async (page: number, activeFilters: string) => {
+  const { isEnabled: draft } = await draftMode()
   const payload = await getPayload({ config: configPromise })
 
-  if (!activeFilters){
+  if (!activeFilters) {
     const result = await payload.find({
       collection: 'members',
       draft,
@@ -99,7 +104,7 @@ const queryMembers = cache(async (page:number, activeFilters:string) => {
 
     return result || null
   }
-  const activeFiltersArr =     decodeURI(activeFilters || '')
+  const activeFiltersArr = decodeURI(activeFilters || '')
     .split(',')
     .map((item) => item.split('|'))
     .map((item) => {
@@ -117,18 +122,16 @@ const queryMembers = cache(async (page:number, activeFilters:string) => {
     limit: 5,
     sort: 'title',
     where: {
-      or: activeFiltersArr.map(filter => {
+      or: activeFiltersArr.map((filter) => {
         return {
-          [filter.property + ".id"]:{
-            contains: filter.value
-          }
+          [filter.property + '.id']: {
+            contains: filter.value,
+          },
         }
-      })
+      }),
     },
     overrideAccess: draft,
   })
 
   return result || null
-
-
 })
