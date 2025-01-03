@@ -9,6 +9,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { linkGroup } from '@/fields/linkGroup'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { Content } from '@/blocks/Content/config'
 
 export const Header: Block = {
   slug: 'header',
@@ -39,7 +40,7 @@ export const Header: Block = {
           return [
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            BlocksFeature({ blocks: [MediaBlock] }),
+            BlocksFeature({ blocks: [MediaBlock,Content] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
           ]

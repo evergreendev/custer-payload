@@ -5,6 +5,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { FormBlock, FormBlockType } from '@/blocks/Form/Component'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '@/components/Link'
+import { ContentBlock } from '@/blocks/Content/Component'
 import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
 import type { BannerBlock as BannerBlockProps } from '@/payload-types'
 
@@ -18,6 +19,7 @@ import {
   IS_UNDERLINE,
 } from './nodeFormat'
 import type { Page } from '@/payload-types'
+
 const alignment = {
   center: "md:text-center text-left",
   left: "md:text-left text-left",
@@ -30,6 +32,7 @@ export type NodeTypes =
   | SerializedBlockNode<
       | Extract<Page['layout'][0], { blockType: 'cta' }>
       | Extract<Page['layout'][0], { blockType: 'mediaBlock' }>
+      | Extract<Page['layout'][0], { blockType: 'content' }>
       | BannerBlockProps
       | CodeBlockProps
   | FormBlockType
@@ -114,6 +117,8 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           }
 
           switch (blockType) {
+            case 'content':
+              return <ContentBlock key={index} {...block} />
             case 'cta':
               return <CallToActionBlock key={index} {...block} />
             case 'mediaBlock':
