@@ -41,7 +41,7 @@ const Pagination = ({totalPages}: { totalPages: number }) => {
       || index + 1 === currPageNumber
     ){
       return <button key={page} onClick={() => handleClick(page)}
-                     className={`bg-slate-500 text-white p-2
+                     className={`bg-slate-500 text-white p-2 w-10
                        ${currPage === page ? "bg-slate-800" : ""}
                        `}>{page}</button>
     } else{
