@@ -61,7 +61,8 @@ const Filter = ({filters}: Props) => {
         return filter.property === property && filter.value === value
       })
       if (currentFilter) {
-        updatedFilters = activeFilters.concat([currentFilter])
+        //updatedFilters = activeFilters.concat([currentFilter])
+        updatedFilters = [currentFilter];
       }
     }
 
