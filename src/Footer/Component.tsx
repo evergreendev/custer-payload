@@ -8,7 +8,7 @@ import type { Footer, SiteOption } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 
 export async function Footer() {
-  const footer: Footer = await getCachedGlobal('footer')()
+  const footer: Footer = await getCachedGlobal('footer', 1)()
   const siteOptions: SiteOption = await getCachedGlobal('siteOptions', 1)() as SiteOption;
   const siteLogo = (siteOptions.siteLogoLight ? siteOptions.siteLogoLight : siteOptions.siteLogo);
 
