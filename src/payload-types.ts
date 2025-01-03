@@ -2191,6 +2191,21 @@ export interface SiteOption {
   siteTitle: string;
   siteLogo: number | Media;
   siteLogoLight?: (number | null) | Media;
+  contactInfo?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2248,6 +2263,7 @@ export interface SiteOptionsSelect<T extends boolean = true> {
   siteTitle?: T;
   siteLogo?: T;
   siteLogoLight?: T;
+  contactInfo?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
