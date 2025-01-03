@@ -11,6 +11,11 @@ type Props = {
 }
 
 const Filter = ({filters}: Props) => {
+  filters.sort((a, b)=> {
+    if (a.label.toLowerCase() < b.label.toLowerCase()) return -1
+    else return 1;
+  });
+
   const router = useRouter()
   const searchParams = useSearchParams()
   const filterParams = searchParams.get('active-filters')
