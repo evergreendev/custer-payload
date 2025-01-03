@@ -79,7 +79,7 @@ const Filter = ({filters}: Props) => {
   return (
     <>
       {
-        filters.length > 0 && <div className="z-30 p-2 bg-background flex lg:flex-wrap w-full overflow-x-auto max-w-screen-lg mx-auto gap-2 text-lg">
+        filters.length > 0 && <div className="container z-30 p-2 bg-background flex lg:flex-wrap w-full overflow-x-auto mx-auto gap-2 text-lg">
           <p>filter:</p>
           {filters.map(({ property, value, label }) => (
             <button
