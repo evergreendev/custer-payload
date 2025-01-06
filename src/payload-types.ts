@@ -130,7 +130,7 @@ export interface Page {
  */
 export interface Media {
   id: number;
-  alt: string;
+  alt?: string | null;
   caption?: {
     root: {
       type: string;

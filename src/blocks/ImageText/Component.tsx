@@ -19,7 +19,7 @@ const LeftCol: React.FC<
       {type === 'twoImage' && images?.[0]?.image && typeof images?.[0].image !== 'number' && (
         <div className="mb-5">
           <Image
-            alt={images?.[0].image.alt}
+            alt={images?.[0].image.alt || ''}
             src={images?.[0].image.url || ''}
             width={images?.[0].image.width || 0}
             height={images?.[0].image.height || 0}
@@ -63,7 +63,7 @@ const RightCol: React.FC<
     <div className={`${type === 'overlap' ? 'w-96 mx-auto -translate-y-12' : ''} `}>
       {currImgGroup?.image && typeof currImgGroup?.image !== 'number' && (
         <Image
-          alt={currImgGroup?.image.alt}
+          alt={currImgGroup?.image.alt || ''}
           src={currImgGroup?.image.url || ''}
           width={currImgGroup?.image.width || 0}
           height={currImgGroup?.image.height || 0}
