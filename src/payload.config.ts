@@ -89,7 +89,7 @@ export default buildConfig({
         BoldFeature(),
         ItalicFeature(),
         LinkFeature({
-          enabledCollections: ['pages', 'posts', 'members','events','categories'],
+          enabledCollections: ['pages', 'posts', 'members','events','categories','media'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
               return !('name' in field && field.name === 'url');
