@@ -4,14 +4,16 @@ import {
   AlignFeature,
   BlocksFeature,
   FixedToolbarFeature,
-  HeadingFeature,
+  HeadingFeature, HorizontalRuleFeature,
   InlineToolbarFeature,
-  lexicalEditor,
+  lexicalEditor, OrderedListFeature, ParagraphFeature, UnorderedListFeature,
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { FormBlock } from '@/blocks/Form/config'
+import { Banner } from '@/blocks/Banner/config'
+import { Code } from '@/blocks/Code/config'
 
 const columnFields: Field[] = [
   {
@@ -45,10 +47,15 @@ const columnFields: Field[] = [
         return [
           ...rootFeatures,
           AlignFeature(),
+          ParagraphFeature(),
           HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
-          BlocksFeature({blocks: [MediaBlock,FormBlock]}),
+          BlocksFeature({ blocks: [Banner, Code, MediaBlock, FormBlock] }),
+          OrderedListFeature(),
+          UnorderedListFeature(),
           FixedToolbarFeature(),
           InlineToolbarFeature(),
+          HorizontalRuleFeature(),
+          AlignFeature()
         ]
       },
     }),
