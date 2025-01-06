@@ -60,7 +60,7 @@ export const Card: React.FC<{
         {imageToUse && typeof imageToUse !== 'string' && (
           <Media
             fill
-            imgClassName="z-10 object-cover absolute blur-sm inset-0"
+            imgClassName="z-10 object-cover absolute blur-sm inset-0 opacity-50"
             resource={imageToUse}
           />
         )}
