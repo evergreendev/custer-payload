@@ -199,6 +199,10 @@ export interface CallToActionBlock {
             | ({
                 relationTo: 'categories';
                 value: number | Category;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: number | Media;
               } | null);
           url?: string | null;
           label: string;
@@ -404,6 +408,10 @@ export interface ButtonBlock {
             | ({
                 relationTo: 'categories';
                 value: number | Category;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: number | Media;
               } | null);
           url?: string | null;
           label: string;
@@ -459,6 +467,10 @@ export interface ContentBlock {
             | ({
                 relationTo: 'categories';
                 value: number | Category;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: number | Media;
               } | null);
           url?: string | null;
           label: string;
@@ -762,6 +774,10 @@ export interface HeaderBlock {
             | ({
                 relationTo: 'categories';
                 value: number | Category;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: number | Media;
               } | null);
           url?: string | null;
           label: string;
@@ -804,6 +820,10 @@ export interface ImageTextBlock {
               | ({
                   relationTo: 'categories';
                   value: number | Category;
+                } | null)
+              | ({
+                  relationTo: 'media';
+                  value: number | Media;
                 } | null);
             url?: string | null;
             label: string;
@@ -837,6 +857,10 @@ export interface ImageTextBlock {
                   | ({
                       relationTo: 'categories';
                       value: number | Category;
+                    } | null)
+                  | ({
+                      relationTo: 'media';
+                      value: number | Media;
                     } | null);
                 url?: string | null;
                 label: string;
@@ -900,6 +924,10 @@ export interface ImageTextBlock {
               | ({
                   relationTo: 'categories';
                   value: number | Category;
+                } | null)
+              | ({
+                  relationTo: 'media';
+                  value: number | Media;
                 } | null);
             url?: string | null;
             label: string;
@@ -1048,6 +1076,10 @@ export interface LargeImageBlock {
             | ({
                 relationTo: 'categories';
                 value: number | Category;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: number | Media;
               } | null);
           url?: string | null;
           label: string;
@@ -1174,6 +1206,10 @@ export interface PopUp {
             | ({
                 relationTo: 'categories';
                 value: number | Category;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: number | Media;
               } | null);
           url?: string | null;
           label: string;
@@ -2135,6 +2171,10 @@ export interface Header {
             | ({
                 relationTo: 'categories';
                 value: number | Category;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: number | Media;
               } | null);
           url?: string | null;
           label: string;
@@ -2172,6 +2212,10 @@ export interface Footer {
             | ({
                 relationTo: 'categories';
                 value: number | Category;
+              } | null)
+            | ({
+                relationTo: 'media';
+                value: number | Media;
               } | null);
           url?: string | null;
           label: string;
