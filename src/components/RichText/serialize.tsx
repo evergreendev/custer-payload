@@ -36,6 +36,7 @@ export type NodeTypes =
       | BannerBlockProps
       | CodeBlockProps
   | FormBlockType
+  | Extract<Page['layout'][0], { blockType: 'IFrame' }>
     >
 
 type Props = {

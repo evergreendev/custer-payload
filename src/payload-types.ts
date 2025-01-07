@@ -111,6 +111,19 @@ export interface Page {
     | Seasons
     | LargeImageBlock
     | Events
+    | {
+        containerStyle?: string | null;
+        fields?:
+          | {
+              property: string;
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'IFrame';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1448,6 +1461,20 @@ export interface PagesSelect<T extends boolean = true> {
         seasons?: T | SeasonsSelect<T>;
         largeImage?: T | LargeImageBlockSelect<T>;
         events?: T | EventsSelect<T>;
+        IFrame?:
+          | T
+          | {
+              containerStyle?: T;
+              fields?:
+                | T
+                | {
+                    property?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T

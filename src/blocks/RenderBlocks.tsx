@@ -13,6 +13,7 @@ import { ImageText } from '@/blocks/ImageText/Component'
 import { Seasons } from '@/blocks/Seasons/Component'
 import { LargeImage } from '@/blocks/LargeImage/Component'
 import { EventsBlock } from '@/blocks/EventsBlock/Component'
+import IFrameBlock from '@/blocks/IFrame/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -25,7 +26,8 @@ const blockComponents = {
   imageText: ImageText,
   seasons: Seasons,
   largeImage: LargeImage,
-  events: EventsBlock
+  events: EventsBlock,
+  IFrame: IFrameBlock
 }
 
 export const RenderBlocks: React.FC<{

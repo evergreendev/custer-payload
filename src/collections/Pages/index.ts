@@ -26,6 +26,7 @@ import { ImageText } from '@/blocks/ImageText/config'
 import { Seasons } from '@/blocks/Seasons/config'
 import { LargeImage } from '@/blocks/LargeImage/config'
 import { Events } from '@/blocks/EventsBlock/config'
+import IFrame from '@/blocks/IFrame/config'
 export const Pages: CollectionConfig = {
   slug: 'pages',
   access: {
@@ -74,7 +75,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, ButtonGroup, Content, MediaBlock, Archive, FormBlock, Header,ImageText, Seasons, LargeImage, Events],
+              blocks: [CallToAction, ButtonGroup, Content, MediaBlock, Archive, FormBlock, Header,ImageText, Seasons, LargeImage, Events, IFrame],
               required: true,
             },
           ],
