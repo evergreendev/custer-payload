@@ -18,9 +18,9 @@ export const ButtonGroup: React.FC<
           <div className="max-w-[48rem] flex items-center text-white">
             {introContent && <RichText className="mb-4 prose-xl prose-h2:font-normal" content={introContent} enableGutter={false} />}
           </div>
-          <div className="flex gap-8 w-full items-center">
+          <div className="flex flex-wrap gap-8 w-full items-center">
             {(links || []).map(({ link }, i) => {
-              return <CMSLink className="grow" key={i} size="lg" {...link} />
+              return <CMSLink className="grow w-full sm:w-auto" key={i} size="lg" {...link} />
             })}
           </div>
         </div>
