@@ -16,7 +16,7 @@ const Pagination = ({totalPages}: { totalPages: number }) => {
 
     params.set('page', page.toString());
 
-    replace(`${pathname}?${params.toString()}`)
+    replace(`${pathname}?${params.toString()}`,{scroll: false})
   }
   useEffect(() => {
     if (totalPages < parseInt(currPage)){
