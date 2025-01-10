@@ -7,8 +7,9 @@ import RichText from '@/components/RichText'
 import { PostHero } from '@/heros/PostHero'
 import PageClient from './page.client'
 import { getPayload } from 'payload'
-import FilteredPosts from '@/blocks/RelatedPosts/Filtered'
 import Pagination from '@/blocks/ParamPagination'
+import Filter from '@/blocks/RelatedPosts/Filter'
+import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -29,7 +30,8 @@ type Args = {
     slug?: string
   }>
   searchParams: Promise<{
-    page?: string
+    ['active-filters']?: string
+    page: string
   }>
 }
 
@@ -38,15 +40,18 @@ export default async function Post({ params: paramsPromise, searchParams: search
   const url = '/members/category/' + slug
   const category = await queryPostBySlug({ slug })
   const searchParams = await searchParamsPromise
+  const activeFilters = searchParams['active-filters'] || ''
   const page = searchParams['page'] || '1'
 
   if (!category) return <PayloadRedirects url={url} />
 
   const childCategories = await queryByParentId({ parentId: category.id })
+  console.log(childCategories);
 
   const members = await queryMembersByCategory({
     page: parseInt(page),
     ids: [category.id].concat(childCategories?.map((cat) => cat.id)),
+    activeFilters: activeFilters,
   })
 
   return (
@@ -70,10 +75,7 @@ export default async function Post({ params: paramsPromise, searchParams: search
         </div>
         {members && (
           <Suspense>
-            <Pagination totalPages={members.totalPages} />
-            <FilteredPosts
-              showInfo={category.showMemberInfo}
-              posts={members.docs}
+            <Filter
               filters={childCategories?.map((category) => {
                 return {
                   property: 'categories',
@@ -82,6 +84,8 @@ export default async function Post({ params: paramsPromise, searchParams: search
                 }
               })}
             />
+            <Pagination totalPages={members.totalPages} />
+            <RelatedPosts showInfo={true} relationTo="members" docs={members.docs} />
             <Pagination totalPages={members.totalPages} />
           </Suspense>
         )}
@@ -130,27 +134,59 @@ const queryByParentId = cache(async ({ parentId }: { parentId: number }) => {
   return result.docs || null
 })
 
-const queryMembersByCategory = cache(async ({ page, ids }: { page: number, ids: number[] }) => {
+const queryMembersByCategory = cache(async ({ page, ids, activeFilters }: { page: number, ids: number[], activeFilters: string }) => {
   const { isEnabled: draft } = await draftMode()
-
   const payload = await getPayload({ config: configPromise })
+
+  if(!activeFilters) {
+    const result = await payload.find({
+      collection: 'members',
+      draft,
+      page: page,
+      limit: 5,
+      sort: "title",
+      overrideAccess: draft,
+      where: {
+        or: ids.map((id) => {
+          return {
+            'categories.id': {
+              contains: id,
+            },
+          }
+        }),
+      },
+    })
+
+    return result || null
+  }
+
+  const activeFiltersArr = decodeURI(activeFilters || '')
+    .split(',')
+    .map((item) => item.split('|'))
+    .map((item) => {
+      return {
+        property: item[0],
+        value: parseInt(item[1]),
+        label: '',
+      }
+    })
 
   const result = await payload.find({
     collection: 'members',
     draft,
     page: page,
-    limit: 9,
-    sort: "title",
-    overrideAccess: draft,
+    limit: 5,
+    sort: 'title',
     where: {
-      or: ids.map((id) => {
+      or: activeFiltersArr.map((filter) => {
         return {
-          'categories.id': {
-            contains: id,
+          [filter.property + '.id']: {
+            contains: filter.value,
           },
         }
       }),
     },
+    overrideAccess: draft,
   })
 
   return result || null
