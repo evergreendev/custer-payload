@@ -52,6 +52,7 @@ export default async function Post({ params: paramsPromise, searchParams: search
     page: parseInt(page),
     ids: [category.id].concat(childCategories?.map((cat) => cat.id)),
     activeFilters: activeFilters,
+    limit: category.showMemberInfo ? 5 : 9
   })
 
   return (
@@ -134,7 +135,7 @@ const queryByParentId = cache(async ({ parentId }: { parentId: number }) => {
   return result.docs || null
 })
 
-const queryMembersByCategory = cache(async ({ page, ids, activeFilters }: { page: number, ids: number[], activeFilters: string }) => {
+const queryMembersByCategory = cache(async ({ page, ids, activeFilters, limit }: { page: number, ids: number[], activeFilters: string, limit: number }) => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayload({ config: configPromise })
 
@@ -175,7 +176,7 @@ const queryMembersByCategory = cache(async ({ page, ids, activeFilters }: { page
     collection: 'members',
     draft,
     page: page,
-    limit: 5,
+    limit: limit,
     sort: 'title',
     where: {
       or: activeFiltersArr.map((filter) => {
