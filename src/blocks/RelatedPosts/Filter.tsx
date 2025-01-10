@@ -46,7 +46,7 @@ const Filter = ({filters}: Props) => {
           label: '',
         }
       }))
-  }, [])
+  }, [filterParams])
 
   const handleFilterChange = (property: string, value: string) => {
     const foundFilter = activeFilters.find(
