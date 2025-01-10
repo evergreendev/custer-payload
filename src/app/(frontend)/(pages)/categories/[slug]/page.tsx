@@ -85,7 +85,7 @@ export default async function Post({ params: paramsPromise, searchParams: search
               })}
             />
             <Pagination totalPages={members.totalPages} />
-            <RelatedPosts showInfo={true} relationTo="members" docs={members.docs} />
+            <RelatedPosts showInfo={category.showMemberInfo} relationTo="members" docs={members.docs} />
             <Pagination totalPages={members.totalPages} />
           </Suspense>
         )}
@@ -143,7 +143,7 @@ const queryMembersByCategory = cache(async ({ page, ids, activeFilters }: { page
       collection: 'members',
       draft,
       page: page,
-      limit: 5,
+      pagination: false,
       sort: "title",
       overrideAccess: draft,
       where: {
