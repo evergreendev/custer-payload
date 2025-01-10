@@ -8,6 +8,7 @@ import { PostHero } from '@/heros/PostHero'
 import PageClient from './page.client'
 import { getPayload } from 'payload'
 import FilteredPosts from '@/blocks/RelatedPosts/Filtered'
+import Pagination from '@/blocks/ParamPagination'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -27,18 +28,24 @@ type Args = {
   params: Promise<{
     slug?: string
   }>
+  searchParams: Promise<{
+    page?: string
+  }>
 }
 
-export default async function Post({ params: paramsPromise }: Args) {
+export default async function Post({ params: paramsPromise, searchParams: searchParamsPromise }: Args) {
   const { slug = '' } = await paramsPromise
   const url = '/members/category/' + slug
   const category = await queryPostBySlug({ slug })
+  const searchParams = await searchParamsPromise
+  const page = searchParams['page'] || '1'
 
   if (!category) return <PayloadRedirects url={url} />
 
   const childCategories = await queryByParentId({ parentId: category.id })
 
   const members = await queryMembersByCategory({
+    page: parseInt(page),
     ids: [category.id].concat(childCategories?.map((cat) => cat.id)),
   })
 
@@ -63,9 +70,10 @@ export default async function Post({ params: paramsPromise }: Args) {
         </div>
         {members && (
           <Suspense>
+            <Pagination totalPages={members.totalPages} />
             <FilteredPosts
               showInfo={category.showMemberInfo}
-              posts={members}
+              posts={members.docs}
               filters={childCategories?.map((category) => {
                 return {
                   property: 'categories',
@@ -74,6 +82,7 @@ export default async function Post({ params: paramsPromise }: Args) {
                 }
               })}
             />
+            <Pagination totalPages={members.totalPages} />
           </Suspense>
         )}
       </div>
@@ -121,7 +130,7 @@ const queryByParentId = cache(async ({ parentId }: { parentId: number }) => {
   return result.docs || null
 })
 
-const queryMembersByCategory = cache(async ({ ids }: { ids: number[] }) => {
+const queryMembersByCategory = cache(async ({ page, ids }: { page: number, ids: number[] }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
@@ -129,7 +138,9 @@ const queryMembersByCategory = cache(async ({ ids }: { ids: number[] }) => {
   const result = await payload.find({
     collection: 'members',
     draft,
-    limit: 100,
+    page: page,
+    limit: 9,
+    sort: "title",
     overrideAccess: draft,
     where: {
       or: ids.map((id) => {
@@ -142,5 +153,5 @@ const queryMembersByCategory = cache(async ({ ids }: { ids: number[] }) => {
     },
   })
 
-  return result.docs || null
+  return result || null
 })
