@@ -82,6 +82,11 @@ const queryCategories = cache(async () => {
     collection: 'categories',
     draft,
     limit: 1000,
+    where: {
+      hideInCategoryList: {
+        not_equals: true
+      }
+    },
     overrideAccess: draft,
   })
 
