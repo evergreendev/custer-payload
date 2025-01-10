@@ -46,7 +46,6 @@ export default async function Post({ params: paramsPromise, searchParams: search
   if (!category) return <PayloadRedirects url={url} />
 
   const childCategories = await queryByParentId({ parentId: category.id })
-  console.log(childCategories);
 
   const members = await queryMembersByCategory({
     page: parseInt(page),
