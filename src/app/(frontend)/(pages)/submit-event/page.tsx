@@ -1,5 +1,4 @@
 'use client'
-import type { Metadata } from 'next/types'
 
 import React, { useActionState } from 'react'
 import PageClient from './page.client'
@@ -7,6 +6,7 @@ import { createEvent } from '@/app/(frontend)/(pages)/submit-event/actions'
 
 const initialState = {
   message: '',
+  error: ''
 }
 
 export default function Page() {
@@ -17,6 +17,9 @@ export default function Page() {
       <PageClient />
       <h1 className="text-4xl mb-12 container">Submit Your Event</h1>
       <div className="container mb-16">
+        {
+          state.error ? <div className="text-red-800 font-bold">{state.error}</div> : null
+        }
         {state.message ? (
           <h2 className="text-3xl">{state.message}</h2>
         ) : (
@@ -31,15 +34,15 @@ export default function Page() {
               </div>
               <div className="flex gap-2 items-center">
                 <label htmlFor="event-end">Event End: </label>
-                <input className="p-2 rounded" name="event-start" type="date" />
+                <input className="p-2 rounded" name="event-end" type="date" />
               </div>
               <div className="flex gap-2 items-center w-full">
                 <label htmlFor="image">Image: </label>
-                <input className="p-2 rounded" name="image" type="file" />
+                <input accept="image/jpeg,image/png,image/gif,image/webp" className="p-2 rounded" name="image" type="file" />
               </div>
               <div className="flex flex-col gap-2 w-full">
                 <label htmlFor="title">Title: </label>
-                <input className="p-2 rounded grow" name="title" type="text" />
+                <input required className="p-2 rounded grow" name="title" type="text" />
               </div>
               <div className="flex flex-col gap-2 w-full">
                 <label htmlFor="location">Location: </label>
