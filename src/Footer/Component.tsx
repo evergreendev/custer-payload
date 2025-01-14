@@ -23,7 +23,7 @@ export async function Footer() {
             <Image src={siteLogo?.url || ''} alt="Description" width={200} height={200} />
           </Link>
         )}
-        {siteOptions.contactInfo && <RichText className="prose" content={siteOptions.contactInfo} />}
+        {siteOptions.contactInfo && <RichText enableGutter={false} className="prose ml-2" content={siteOptions.contactInfo} />}
 
         <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
           <nav className="flex flex-col md:flex-row gap-4">

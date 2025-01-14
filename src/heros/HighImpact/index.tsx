@@ -52,7 +52,7 @@ export const HighImpactHero: React.FC<
           </div>
         )}
       </div>
-      <div className="min-h-screen select-none">
+      <div className="min-h-[80vh] select-none">
         {media && typeof media === 'object' && (
           <React.Fragment>
             <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
