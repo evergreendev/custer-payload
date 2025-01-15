@@ -16,6 +16,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import {
+  AlignFeature,
   BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
@@ -141,6 +142,7 @@ export const Events: CollectionConfig = {
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
+                    AlignFeature()
                   ]
                 },
               }),
