@@ -241,7 +241,7 @@ export interface CallToActionBlock {
 export interface Member {
   id: number;
   title: string;
-  content: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -255,7 +255,7 @@ export interface Member {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   website?: string | null;
   email?: string | null;
   phone?: string | null;
@@ -501,6 +501,38 @@ export interface ContentBlock {
 export interface MediaBlock {
   position?: ('default' | 'fullscreen') | null;
   media: number | Media;
+  enableLink?: boolean | null;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'members';
+          value: number | Member;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'categories';
+          value: number | Category;
+        } | null)
+      | ({
+          relationTo: 'media';
+          value: number | Media;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -1625,6 +1657,17 @@ export interface ContentBlockSelect<T extends boolean = true> {
 export interface MediaBlockSelect<T extends boolean = true> {
   position?: T;
   media?: T;
+  enableLink?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
   id?: T;
   blockName?: T;
 }

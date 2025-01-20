@@ -99,7 +99,10 @@ export default async function Post({ params: paramsPromise }: Args) {
               </a>
             )}
             {member.website && (
-              <a className="flex justify-center items-center gap-2 text-xl font-bold" href={member.website}>
+              <a
+                className="flex justify-center items-center gap-2 text-xl font-bold"
+                href={member.website}
+              >
                 <FontAwesomeIcon className="size-5 ml-2 text-brand-blue" icon={faGlobe} />
                 Visit Website
               </a>
@@ -109,20 +112,26 @@ export default async function Post({ params: paramsPromise }: Args) {
                 {socials.map(([key, value]) => {
                   return (
                     <a aria-label={`Follow ${member.title} on ${key}`} href={value || ''} key={key}>
-                      <FontAwesomeIcon className="size-10 ml-2 text-brand-blue" icon={socialIconMap[key]} />
+                      <FontAwesomeIcon
+                        className="size-10 ml-2 text-brand-blue"
+                        icon={socialIconMap[key]}
+                      />
                     </a>
                   )
                 })}
               </div>
             )}
           </div>
-          <RichText
-            className={
-              'lg:grid text-slate-950 text-xl lg:grid-cols-subgrid col-start-2 col-span-1 grid-rows-[1fr]'
-            }
-            content={member.content}
-            enableGutter={false}
-          />
+          {
+            member.content &&
+            <RichText
+              className={
+                'lg:grid text-slate-950 text-xl lg:grid-cols-subgrid col-start-2 col-span-1 grid-rows-[1fr]'
+              }
+              content={member.content}
+              enableGutter={false}
+            />
+          }
         </div>
       </div>
     </article>

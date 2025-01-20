@@ -88,7 +88,7 @@ export const Members: CollectionConfig = {
                 },
               }),
               label: false,
-              required: true,
+              required: false,
             },
           ],
           label: 'Content',

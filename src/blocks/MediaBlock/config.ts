@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { link } from '@/fields/link'
 
 export const MediaBlock: Block = {
   slug: 'mediaBlock',
@@ -25,5 +26,16 @@ export const MediaBlock: Block = {
       relationTo: 'media',
       required: true,
     },
+    {
+      name: 'enableLink',
+      type: 'checkbox',
+    },
+    link({
+      overrides: {
+        admin: {
+          condition: (_, { enableLink }) => Boolean(enableLink),
+        },
+      },
+    }),
   ],
 }
