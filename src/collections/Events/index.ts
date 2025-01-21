@@ -154,7 +154,26 @@ export const Events: CollectionConfig = {
               type: 'relationship',
               relationTo: 'pages',
               hasMany: true
-            }
+            },
+            {
+              name: 'bottomContent',
+              type: 'richText',
+              editor: lexicalEditor({
+                features: ({ rootFeatures }) => {
+                  return [
+                    ...rootFeatures,
+                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    FixedToolbarFeature(),
+                    InlineToolbarFeature(),
+                    HorizontalRuleFeature(),
+                    AlignFeature()
+                  ]
+                },
+              }),
+              label: false,
+              required: false,
+            },
           ],
           label: 'Content',
         },

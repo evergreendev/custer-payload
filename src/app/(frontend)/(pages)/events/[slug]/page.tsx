@@ -62,6 +62,17 @@ export default async function Post({ params: paramsPromise }: Args) {
         {event.connectedPages && (
           <RelatedPosts noBackground relationTo="pages" docs={event.connectedPages as any} />
         )}
+        {event.bottomContent && (
+          <div className="container lg:mx-0 lg:grid lg:grid-cols-[1fr_48rem_1fr] grid-rows-[1fr]">
+            <RichText
+              className={
+                'lg:grid text-slate-950 text-xl lg:grid-cols-subgrid col-start-2 col-span-1 grid-rows-[1fr]'
+              }
+              content={event.bottomContent}
+              enableGutter={false}
+            />
+          </div>
+        )}
       </div>
     </article>
   )
