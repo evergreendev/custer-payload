@@ -1,12 +1,18 @@
 import type { Block } from 'payload'
 
 import {
+  AlignFeature,
+  BlocksFeature,
   FixedToolbarFeature,
-  HeadingFeature,
+  HeadingFeature, HorizontalRuleFeature,
   InlineToolbarFeature,
-  lexicalEditor,
+  lexicalEditor, OrderedListFeature, UnorderedListFeature,
 } from '@payloadcms/richtext-lexical'
 import { linkGroup } from '@/fields/linkGroup'
+import { Banner } from '@/blocks/Banner/config'
+import { Code } from '@/blocks/Code/config'
+import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { FormBlock } from '@/blocks/Form/config'
 
 export const ImageText: Block = {
   slug: 'imageText',
@@ -85,6 +91,13 @@ export const ImageText: Block = {
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
+            BlocksFeature({ blocks: [Banner, Code, MediaBlock, FormBlock] }),
+            OrderedListFeature(),
+            UnorderedListFeature(),
+            FixedToolbarFeature(),
+            InlineToolbarFeature(),
+            HorizontalRuleFeature(),
+            AlignFeature()
           ]
         },
       }),

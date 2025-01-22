@@ -13,7 +13,7 @@ type LowImpactHeroType =
 
 export const LowImpactHero: React.FC<LowImpactHeroType> = ({ children }) => {
   return (
-    <div className="container mt-16">
+    <div className="container">
       <div className="max-w-[48rem]">
         {children}
       </div>
