@@ -19,6 +19,7 @@ export interface Config {
     members: Member;
     events: Event;
     popUp: PopUp;
+    newsletters: Newsletter;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -37,6 +38,7 @@ export interface Config {
     members: MembersSelect<false> | MembersSelect<true>;
     events: EventsSelect1<false> | EventsSelect1<true>;
     popUp: PopUpSelect<false> | PopUpSelect<true>;
+    newsletters: NewslettersSelect<false> | NewslettersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -558,7 +560,7 @@ export interface ArchiveBlock {
     [k: string]: unknown;
   } | null;
   populateBy?: ('collection' | 'selection') | null;
-  relationTo?: ('posts' | 'members' | 'pages') | null;
+  relationTo?: ('posts' | 'members' | 'pages' | 'newsletters') | null;
   categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
@@ -1356,6 +1358,21 @@ export interface PopUp {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletters".
+ */
+export interface Newsletter {
+  id: number;
+  title: string;
+  document: number | Media;
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1474,6 +1491,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'popUp';
         value: number | PopUp;
+      } | null)
+    | ({
+        relationTo: 'newsletters';
+        value: number | Newsletter;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2056,6 +2077,20 @@ export interface PopUpSelect<T extends boolean = true> {
   pages?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletters_select".
+ */
+export interface NewslettersSelect<T extends boolean = true> {
+  title?: T;
+  document?: T;
+  publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

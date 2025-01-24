@@ -4,7 +4,7 @@ import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
 
-import type { Member, Page, Post, Event } from '@/payload-types'
+import type { Member, Page, Post, Event, Newsletter } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { formatDateTime } from '@/utilities/dateToPretty'
@@ -13,8 +13,8 @@ import { getHoursFromSchedule } from '@/heros/PostHero/EventHeroSection'
 export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
-  doc?: Post | Member | Page | Event
-  relationTo?: 'posts' | 'members' | 'pages' | 'events'
+  doc?: Post | Member | Page | Event | Newsletter
+  relationTo?: 'posts' | 'members' | 'pages' | 'events' | 'newsletters'
   showCategories?: boolean
   title?: string
   noBackground?: boolean | undefined
@@ -22,6 +22,7 @@ export const Card: React.FC<{
   const { card, link } = useClickableCard({})
   const { className, doc, relationTo, showCategories, title: titleFromProps, noBackground } = props
 
+  // @ts-ignore
   const { slug, meta, title } = doc || {}
   const { description, image: metaImage } = meta || {}
 
@@ -33,7 +34,13 @@ export const Card: React.FC<{
     doc.categories.length > 0
   const titleToUse = titleFromProps || title
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
-  const href = relationTo === 'pages' ? `/${slug}` : `/${relationTo}/${slug}`
+  let href = relationTo === 'pages' ? `/${slug}` : `/${relationTo}/${slug}`
+
+  // @ts-ignore
+  if (relationTo === "newsletters" && "document" in doc && typeof doc.document !== "number") {
+    href = doc.document.url || "";
+  }
+
   let imageToUse = metaImage
   if (doc && 'hero' in doc) {
     imageToUse = metaImage || (doc && 'hero' in doc) ? doc.hero.media : null
@@ -47,24 +54,26 @@ export const Card: React.FC<{
       )}
       ref={card.ref}
     >
-      <div className="relative flex justify-center aspect-video w-full overflow-hidden">
-        {!imageToUse && <div className="aspect-video w-full bg-brand-blueBright/20" />}
-        {imageToUse && typeof imageToUse !== 'string' && (
-          <Media
-            fill
-            imgClassName="z-20 aspect-video w-full object-contain"
-            resource={imageToUse}
-            size="360px"
-          />
-        )}
-        {imageToUse && typeof imageToUse !== 'string' && (
-          <Media
-            fill
-            imgClassName="z-10 object-cover absolute blur-sm inset-0 opacity-50"
-            resource={imageToUse}
-          />
-        )}
-      </div>
+      {relationTo !== "newsletters" &&
+        <div className="relative flex justify-center aspect-video w-full overflow-hidden">
+          {!imageToUse && <div className="aspect-video w-full bg-brand-blueBright/20" />}
+          {imageToUse && typeof imageToUse !== 'string' && (
+            <Media
+              fill
+              imgClassName="z-20 aspect-video w-full object-contain"
+              resource={imageToUse}
+              size="360px"
+            />
+          )}
+          {imageToUse && typeof imageToUse !== 'string' && (
+            <Media
+              fill
+              imgClassName="z-10 object-cover absolute blur-sm inset-0 opacity-50"
+              resource={imageToUse}
+            />
+          )}
+        </div>
+      }
       <div className="p-4 mb-auto">
         {showCategories && hasCategories && (
           <div className="uppercase text-sm mb-4">

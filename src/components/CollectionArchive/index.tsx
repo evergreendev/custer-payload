@@ -1,15 +1,25 @@
 import { cn } from 'src/utilities/cn'
 import React from 'react'
 
-import type { Member, Page, Post } from '@/payload-types'
+import type { Member, Newsletter, Page, Post } from '@/payload-types'
 
 import { Card } from '@/components/Card'
 
 export type Props = {
-  posts: (Post & {relationTo: 'posts' | 'members' | 'pages' | undefined
-  } | Member & {relationTo: 'posts' | 'members' | 'pages' | undefined
-  } | Page & {relationTo: 'posts' | 'members' | 'pages' | undefined
-  })[]
+  posts: (
+    | (Post & {
+        relationTo: 'posts' | 'members' | 'pages' | 'newsletters' | undefined
+      })
+    | (Member & {
+        relationTo: 'posts' | 'members' | 'pages' | 'newsletters' | undefined
+      })
+    | (Page & {
+        relationTo: 'posts' | 'members' | 'pages' | 'newsletters' | undefined
+      })
+    | (Newsletter & {
+        relationTo: 'posts' | 'members' | 'pages' | 'newsletters' | undefined
+      })
+  )[]
 }
 
 export const CollectionArchive: React.FC<Props> = (props) => {
@@ -23,7 +33,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
             if (typeof result === 'object' && result !== null) {
               return (
                 <div className="col-span-4 text-white" key={index}>
-                  <Card className="h-full" doc={result} relationTo={result.relationTo||"posts"} />
+                  <Card className="h-full" doc={result} relationTo={result.relationTo || 'posts'} />
                 </div>
               )
             }

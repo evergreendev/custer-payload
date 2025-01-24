@@ -38,6 +38,7 @@ import { SiteOptions } from '@/SiteOptions/config'
 import { Events } from '@/collections/Events'
 import { PopUps } from '@/collections/PopUps'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { Newsletters } from '@/collections/Newsletter'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -134,7 +135,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Members, Events, PopUps],
+  collections: [Pages, Posts, Media, Categories, Users, Members, Events, PopUps, Newsletters],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer, SiteOptions],
