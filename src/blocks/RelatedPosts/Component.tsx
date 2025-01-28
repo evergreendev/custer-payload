@@ -25,8 +25,20 @@ export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 items-stretch">
         {docs?.map((doc, index) => {
-          if (typeof doc === 'string') return null
-          let imageToUse = doc.meta.image;
+          if (!doc.meta || typeof doc === 'string') return null
+
+          if (doc._status === 'draft') {
+            return (
+              <div
+                className="flex flex-col overflow-hidden justify-center items-center bg-red-300 text-red-900 text-3xl font-bold text-center"
+                key={doc.id}
+              >
+                <div>{doc.title} Page is not published and will not show to the public</div>
+              </div>
+            )
+          }
+
+          let imageToUse = doc.meta.image
           return (
             <>
               {showInfo ? (
