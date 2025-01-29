@@ -13,7 +13,7 @@ import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
-
+import {GoogleAnalytics} from '@next/third-parties/google'
 import './globals.css'
 import PopUp from '@/collections/PopUps/component'
 
@@ -54,6 +54,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <PopUp/>
         </Providers>
       </body>
+    <GoogleAnalytics gaId="G-7KBVJ8N50K"/>
     </html>
   )
 }
