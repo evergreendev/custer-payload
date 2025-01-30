@@ -1395,6 +1395,10 @@ export interface Redirect {
       | ({
           relationTo: 'members';
           value: number | Member;
+        } | null)
+      | ({
+          relationTo: 'events';
+          value: number | Event;
         } | null);
     url?: string | null;
   };

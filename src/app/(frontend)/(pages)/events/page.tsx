@@ -7,6 +7,7 @@ import React from 'react'
 import PageClient from './page.client'
 import { getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
+import Link from 'next/link'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -35,6 +36,9 @@ export default async function Post() {
       <PayloadRedirects disableNotFound url={url} />
       <div className="bg-brand-red p-8 text-white">
         <h1 className="font-display text-6xl text-center">Upcoming Events</h1>
+      </div>
+      <div className="bg-brand-blue border-b-2 border-b-blue-950 p-2 text-white text-center text-xl font-bold hover:bg-brand-blue/90">
+        <Link href="/submit-event"><h2>Submit a Community Event</h2></Link>
       </div>
 
       <div className="flex flex-col items-center gap-4 pt-8">
