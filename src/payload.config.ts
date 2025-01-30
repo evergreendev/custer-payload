@@ -141,7 +141,7 @@ export default buildConfig({
   globals: [Header, Footer, SiteOptions],
   plugins: [
     redirectsPlugin({
-      collections: ['pages', 'posts', 'members'],
+      collections: ['pages', 'posts', 'members','events'],
       overrides: {
         // @ts-expect-error
         fields: ({ defaultFields }) => {
