@@ -74,4 +74,4 @@ const queryEvents = unstable_cache(async () => {
   })
 
   return result.docs || null
-},[],{tags: ['event_block']})
+},[],{tags: ['event_block'], revalidate: 43200})
