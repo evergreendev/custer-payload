@@ -16,6 +16,7 @@ export const revalidateEvent: CollectionAfterChangeHook<Page> = ({
 
     revalidatePath(path)
     revalidateTag("event_block")
+    revalidatePath("/events")
   }
 
   // If the page was previously published, we need to revalidate the old path
