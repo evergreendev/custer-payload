@@ -22,7 +22,7 @@ export const HighImpactHero: React.FC<
 
   return (
     <div
-      className={`relative ${centerNav ? '-mt-[10.4rem]' : ''} flex items-end text-white`}
+      className={`relative ${centerNav ? '-mt-[10.4rem] min-h-[800px]' : ''} flex items-end text-white`}
       data-theme="dark"
     >
       <div className="container mb-8 z-10 absolute left-1/2 top-0 bottom-0 -translate-x-1/2 flex flex-col">
