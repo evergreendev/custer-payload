@@ -6,7 +6,8 @@ import RichText from '@/components/RichText'
 
 import type { Page } from '@/payload-types'
 
-import { Media } from '../../components/Media'
+import { Media } from '@/components/Media'
+import { CMSLink } from '@/components/Link'
 
 type Props = Extract<Page['layout'][0], { blockType: 'mediaBlock' }> & {
   breakout?: boolean
@@ -34,6 +35,8 @@ export const MediaBlock: React.FC<Props> = (props) => {
   let caption
   if (media && typeof media === 'object') caption = media.caption
 
+  console.log(props)
+
   return (
     <div
       className={cn(
@@ -51,6 +54,16 @@ export const MediaBlock: React.FC<Props> = (props) => {
       )}
       {position === 'default' && (
         <Media imgClassName={cn('rounded', imgClassName)} resource={media} src={staticImage} />
+      )}
+      {props?.link && (
+        <div className="w-full flex">
+          <CMSLink
+            {...props?.link}
+            size="full"
+            appearance={props?.link.appearance}
+          />
+        </div>
+
       )}
       {caption && (
         <div
