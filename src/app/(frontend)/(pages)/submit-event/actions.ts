@@ -82,7 +82,6 @@ export async function createEvent(
 
       await cleanup()
     } catch (e) {
-      console.log(e)
       await cleanup()
     }
   }

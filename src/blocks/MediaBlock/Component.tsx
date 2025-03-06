@@ -35,8 +35,6 @@ export const MediaBlock: React.FC<Props> = (props) => {
   let caption
   if (media && typeof media === 'object') caption = media.caption
 
-  console.log(props)
-
   return (
     <div
       className={cn(

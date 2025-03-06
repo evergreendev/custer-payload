@@ -47,7 +47,6 @@ async function download(url: string, outputFile: PathLike) {
         return outputFile + '.' + imgType
       })
     } catch (error) {
-      console.log(url, error)
       reject(null)
     }
   })
@@ -88,7 +87,6 @@ const htmlToRoot = async (
     | string,
   format?: number,
 ) => {
-  console.log(curr)
   if (!curr) return
 
   if (typeof curr === 'string') {
@@ -262,7 +260,6 @@ export async function GET() {
 
   async function getOrCreateCategory(title: string) {
     try {
-      console.log("here2")
       const foundCategory = await payload.find({
         collection: 'categories',
         limit: 1,
@@ -272,12 +269,10 @@ export async function GET() {
           },
         },
       })
-      console.log("found category");
 
       if (foundCategory.docs.length > 0) {
         return foundCategory.docs[0].id
       } else {
-        console.log("creating Cat");
         const createdCat = await payload.create({
           collection: 'categories',
           user: user,
@@ -285,12 +280,10 @@ export async function GET() {
             title: title,
           },
         })
-        console.log("cat created");
 
         return createdCat?.id
       }
     } catch (e) {
-      console.error(e, title)
       return 0
     }
   }
@@ -315,7 +308,6 @@ export async function GET() {
 
         if (!body) continue
 
-        console.log("search Image")
         const foundImage = await payload.find({
           collection: 'media',
           limit: 1,
@@ -323,7 +315,6 @@ export async function GET() {
             alt: { equals: item.Name },
           },
         })
-        console.log("found image")
 
         if (foundImage.docs.length === 0) {
           const dom = new jsdom.JSDOM(body)
@@ -379,7 +370,6 @@ export async function GET() {
       } else {
         const response = await fetch(`https://www.custersd.com/${slugToFind}`)
         if (response.status !== 200) {
-          console.log(slugToFind, 'NOT FOUND')
           const categories = await Promise.all(
             item.Category.trim()
               .split(',')
