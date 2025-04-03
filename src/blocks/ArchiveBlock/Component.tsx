@@ -50,6 +50,7 @@ export const ArchiveBlock: React.FC<
     const fetchedPosts = await payload.find({
       collection: relationTo || 'posts',
       depth: 1,
+      draft: false,
       limit,
       ...(flattenedCategories && flattenedCategories.length > 0
         ? {
