@@ -28,7 +28,6 @@ export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
           if (!doc.meta || typeof doc === 'string') return null
 
           if (doc._status === 'draft') {
-            return null;
             return (
               <div
                 className="flex flex-col overflow-hidden justify-center items-center bg-red-300 text-red-900 text-3xl font-bold text-center"

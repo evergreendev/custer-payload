@@ -20,6 +20,7 @@ export interface Config {
     events: Event;
     popUp: PopUp;
     newsletters: Newsletter;
+    ads: Ad;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -39,6 +40,7 @@ export interface Config {
     events: EventsSelect1<false> | EventsSelect1<true>;
     popUp: PopUpSelect<false> | PopUpSelect<true>;
     newsletters: NewslettersSelect<false> | NewslettersSelect<true>;
+    ads: AdsSelect<false> | AdsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -54,11 +56,13 @@ export interface Config {
     header: Header;
     footer: Footer;
     siteOptions: SiteOption;
+    adSpots: AdSpot;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     siteOptions: SiteOptionsSelect<false> | SiteOptionsSelect<true>;
+    adSpots: AdSpotsSelect<false> | AdSpotsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1373,6 +1377,22 @@ export interface Newsletter {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ads".
+ */
+export interface Ad {
+  id: number;
+  title: string;
+  link: string;
+  image?: (number | null) | Media;
+  impressions?: number | null;
+  clicks?: number | null;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1499,6 +1519,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'newsletters';
         value: number | Newsletter;
+      } | null)
+    | ({
+        relationTo: 'ads';
+        value: number | Ad;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2098,6 +2122,21 @@ export interface NewslettersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ads_select".
+ */
+export interface AdsSelect<T extends boolean = true> {
+  title?: T;
+  link?: T;
+  image?: T;
+  impressions?: T;
+  clicks?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
@@ -2429,6 +2468,36 @@ export interface SiteOption {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "adSpots".
+ */
+export interface AdSpot {
+  id: number;
+  homePageAdSpot?: {
+    relationTo: 'ads';
+    value: number | Ad;
+  } | null;
+  eventsPageAdSpot?: {
+    relationTo: 'ads';
+    value: number | Ad;
+  } | null;
+  CategoryAdSpots?:
+    | {
+        adSpotCategory?: {
+          relationTo: 'categories';
+          value: number | Category;
+        } | null;
+        ad?: {
+          relationTo: 'ads';
+          value: number | Ad;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2482,6 +2551,24 @@ export interface SiteOptionsSelect<T extends boolean = true> {
   siteLogo?: T;
   siteLogoLight?: T;
   contactInfo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "adSpots_select".
+ */
+export interface AdSpotsSelect<T extends boolean = true> {
+  homePageAdSpot?: T;
+  eventsPageAdSpot?: T;
+  CategoryAdSpots?:
+    | T
+    | {
+        adSpotCategory?: T;
+        ad?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -39,6 +39,8 @@ import { Events } from '@/collections/Events'
 import { PopUps } from '@/collections/PopUps'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { Newsletters } from '@/collections/Newsletter'
+import { Ads } from '@/collections/Ads'
+import { AdSpots } from '@/AdSpots/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -135,10 +137,10 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Members, Events, PopUps, Newsletters],
+  collections: [Pages, Posts, Media, Categories, Users, Members, Events, PopUps, Newsletters, Ads],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
-  globals: [Header, Footer, SiteOptions],
+  globals: [Header, Footer, SiteOptions, AdSpots],
   plugins: [
     redirectsPlugin({
       collections: ['pages', 'posts', 'members','events'],

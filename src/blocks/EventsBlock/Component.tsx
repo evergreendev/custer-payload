@@ -7,6 +7,7 @@ import RichText from '@/components/RichText'
 import Link from 'next/link'
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { unstable_cache } from 'next/cache'
+import { draftMode } from 'next/headers'
 
 export const EventsBlock: React.FC<
   EventBlockProps & {
@@ -22,18 +23,32 @@ export const EventsBlock: React.FC<
   const dateObj = new Date()
 
   const fetchEvents = unstable_cache(async () => {
+
+    const { isEnabled: draft } = await draftMode()
+
+    console.log(draft);
+
     return await payload.find({
       collection: 'events',
+      draft,
       sort: 'startDate',
       where: {
-        or: [
+        and: [
           {
-            startDate: { greater_than_equal: dateObj },
+            or: [
+              {
+                startDate: { greater_than_equal: dateObj },
+              },
+              {
+                endDate: { greater_than_equal: dateObj },
+              },
+            ],
           },
-          {
-            endDate: { greater_than_equal: dateObj },
-          },
-        ],
+          draft ? {} : {
+            _status: { equals: "published"}
+          }
+        ]
+
       },
       depth: 1,
       limit,
