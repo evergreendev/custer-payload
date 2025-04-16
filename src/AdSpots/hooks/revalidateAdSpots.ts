@@ -3,9 +3,9 @@ import type { GlobalAfterChangeHook } from 'payload'
 import { revalidateTag } from 'next/cache'
 
 export const revalidateAdSpots: GlobalAfterChangeHook = ({ doc, req: { payload } }) => {
-  payload.logger.info(`Revalidating site options`)
+  payload.logger.info(`Revalidating ad spots`)
 
-  revalidateTag('global_site_options')
+  revalidateTag('global_adSpots')
 
   return doc
 }

@@ -5,7 +5,7 @@ import configPromise from '@payload-config'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 
-import type { Page as PageType, SiteOption } from '@/payload-types'
+import type { AdSpot, Page as PageType, SiteOption, Ad as AdType } from '@/payload-types'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
@@ -14,6 +14,7 @@ import PageClient from './page.client'
 import { Header } from '@/Header/Component'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getPayload } from 'payload'
+import Ad from '@/components/Ad'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -46,6 +47,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const url = '/' + slug
 
   const siteOptions: SiteOption = (await getCachedGlobal('siteOptions', 1)()) as SiteOption
+  const adSpots: AdSpot = (await getCachedGlobal('adSpots', 2)()) as AdSpot
 
   let page: PageType | null
 
@@ -62,6 +64,13 @@ export default async function Page({ params: paramsPromise }: Args) {
   return (
     <>
       {slug === 'home' ? <Header centerNav={true} /> : null}
+      {slug === 'home' && adSpots.homePageAdSpot ? (
+        <div className="bg-brand-blue">
+          <Ad
+            ad={adSpots.homePageAdSpot.value as AdType}
+          />
+        </div>
+      ) : null}
       <article className={`${slug === 'home' ? 'pt-16' : ''}`}>
         <PageClient />
         {/* Allows redirects for valid pages too */}
