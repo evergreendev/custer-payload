@@ -282,6 +282,10 @@ export interface Member {
     description?: string | null;
   };
   featuredImage?: (number | null) | Media;
+  /**
+   * Image to be used on mobile devices. If not provided, the featured image will be used.
+   */
+  mobileFeaturedImage?: (number | null) | Media;
   keepExistingMetaImage?: boolean | null;
   publishedAt?: string | null;
   slug?: string | null;
@@ -2035,6 +2039,7 @@ export interface MembersSelect<T extends boolean = true> {
         description?: T;
       };
   featuredImage?: T;
+  mobileFeaturedImage?: T;
   keepExistingMetaImage?: T;
   publishedAt?: T;
   slug?: T;

@@ -189,6 +189,15 @@ export const Members: CollectionConfig = {
       }
     },
     {
+      name: 'mobileFeaturedImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        position: 'sidebar',
+        description: 'Image to be used on mobile devices. If not provided, the featured image will be used.'
+      }
+    },
+    {
       name: 'keepExistingMetaImage',
       type: 'checkbox',
       admin: {
