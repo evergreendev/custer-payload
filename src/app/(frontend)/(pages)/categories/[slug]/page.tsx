@@ -10,6 +10,9 @@ import { getPayload } from 'payload'
 import Pagination from '@/blocks/ParamPagination'
 import Filter from '@/blocks/RelatedPosts/Filter'
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import Ad from '@/components/Ad'
+import type { AdSpot, Ad as AdType, Category } from '@/payload-types'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -35,13 +38,17 @@ type Args = {
   }>
 }
 
-export default async function Post({ params: paramsPromise, searchParams: searchParamsPromise }: Args) {
+export default async function Post({
+  params: paramsPromise,
+  searchParams: searchParamsPromise,
+}: Args) {
   const { slug = '' } = await paramsPromise
   const url = '/members/category/' + slug
   const category = await queryPostBySlug({ slug })
   const searchParams = await searchParamsPromise
   const activeFilters = searchParams['active-filters'] || ''
   const page = searchParams['page'] || '1'
+  const adSpots: AdSpot = (await getCachedGlobal('adSpots', 2)()) as AdSpot
 
   if (!category) return <PayloadRedirects url={url} />
 
@@ -51,8 +58,13 @@ export default async function Post({ params: paramsPromise, searchParams: search
     page: parseInt(page),
     ids: [category.id].concat(childCategories?.map((cat) => cat.id)),
     activeFilters: activeFilters,
-    limit: category.showMemberInfo ? 5 : 9
+    limit: category.showMemberInfo ? 5 : 9,
   })
+
+  // Find an ad for the current category
+  const categoryAd = adSpots.CategoryAdSpots?.find(
+    (adSpot) => (adSpot.adSpotCategory?.value as Category).id === category.id,
+  )?.ad?.value as AdType | undefined
 
   return (
     <article className="pb-16">
@@ -62,6 +74,12 @@ export default async function Post({ params: paramsPromise, searchParams: search
       <PayloadRedirects disableNotFound url={url} />
 
       <PostHero post={category} />
+
+      {categoryAd && (
+        <div className="container mx-auto mt-4">
+          <Ad ad={categoryAd} />
+        </div>
+      )}
 
       <div className="flex flex-col items-center gap-4 pt-8">
         <div className="container lg:mx-0 lg:grid lg:grid-cols-[1fr_48rem_1fr] grid-rows-[1fr]">
@@ -85,7 +103,11 @@ export default async function Post({ params: paramsPromise, searchParams: search
               })}
             />
             <Pagination totalPages={members.totalPages} />
-            <RelatedPosts showInfo={category.showMemberInfo} relationTo="members" docs={members.docs} />
+            <RelatedPosts
+              showInfo={category.showMemberInfo}
+              relationTo="members"
+              docs={members.docs}
+            />
             <Pagination totalPages={members.totalPages} />
           </Suspense>
         )}
@@ -134,60 +156,72 @@ const queryByParentId = cache(async ({ parentId }: { parentId: number }) => {
   return result.docs || null
 })
 
-const queryMembersByCategory = cache(async ({ page, ids, activeFilters, limit }: { page: number, ids: number[], activeFilters: string, limit: number }) => {
-  const { isEnabled: draft } = await draftMode()
-  const payload = await getPayload({ config: configPromise })
+const queryMembersByCategory = cache(
+  async ({
+    page,
+    ids,
+    activeFilters,
+    limit,
+  }: {
+    page: number
+    ids: number[]
+    activeFilters: string
+    limit: number
+  }) => {
+    const { isEnabled: draft } = await draftMode()
+    const payload = await getPayload({ config: configPromise })
 
-  if(!activeFilters) {
+    if (!activeFilters) {
+      const result = await payload.find({
+        collection: 'members',
+        draft,
+        page: page,
+        pagination: false,
+        sort: 'title',
+        overrideAccess: draft,
+        where: {
+          or: ids.map((id) => {
+            return {
+              'categories.id': {
+                contains: id,
+              },
+            }
+          }),
+        },
+      })
+
+      return result || null
+    }
+
+    const activeFiltersArr = decodeURI(activeFilters || '')
+      .split(',')
+      .map((item) => item.split('|'))
+      .map((item) => {
+        return {
+          property: item[0],
+          value: parseInt(item[1]),
+          label: '',
+        }
+      })
+
     const result = await payload.find({
       collection: 'members',
       draft,
       page: page,
-      pagination: false,
-      sort: "title",
-      overrideAccess: draft,
+      limit: limit,
+      sort: 'title',
       where: {
-        or: ids.map((id) => {
+        or: activeFiltersArr.map((filter) => {
           return {
-            'categories.id': {
-              contains: id,
+            [filter.property + '.id']: {
+              contains: filter.value,
             },
           }
         }),
       },
+      overrideAccess: draft,
     })
 
     return result || null
-  }
-
-  const activeFiltersArr = decodeURI(activeFilters || '')
-    .split(',')
-    .map((item) => item.split('|'))
-    .map((item) => {
-      return {
-        property: item[0],
-        value: parseInt(item[1]),
-        label: '',
-      }
-    })
-
-  const result = await payload.find({
-    collection: 'members',
-    draft,
-    page: page,
-    limit: limit,
-    sort: 'title',
-    where: {
-      or: activeFiltersArr.map((filter) => {
-        return {
-          [filter.property + '.id']: {
-            contains: filter.value,
-          },
-        }
-      }),
-    },
-    overrideAccess: draft,
-  })
-
-  return result || null
-})
+  },
+)
