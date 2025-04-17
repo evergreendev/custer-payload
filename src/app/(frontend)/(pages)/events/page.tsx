@@ -8,6 +8,9 @@ import PageClient from './page.client'
 import { getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
 import Link from 'next/link'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import Ad from '@/components/Ad'
+import type { AdSpot, Ad as AdType } from '@/payload-types'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -26,6 +29,8 @@ export async function generateStaticParams() {
 export default async function Post() {
   const events = await queryEvents();
   const url = "/events";
+  const adSpots: AdSpot = (await getCachedGlobal('adSpots', 2)()) as AdSpot;
+
   if (!events) return <PayloadRedirects url={url} />
 
   return (
@@ -40,6 +45,12 @@ export default async function Post() {
       <div className="bg-brand-blue border-b-2 border-b-blue-950 p-2 text-white text-center text-xl font-bold hover:bg-brand-blue/90">
         <Link href="/submit-event"><h2>Submit a Community Event</h2></Link>
       </div>
+
+      {adSpots.eventsPageAdSpot && (
+        <div className="container mx-auto mt-4">
+          <Ad ad={adSpots.eventsPageAdSpot.value as AdType} />
+        </div>
+      )}
 
       <div className="flex flex-col items-center gap-4 pt-8">
         {events && <RelatedPosts relationTo="events" docs={events} />}

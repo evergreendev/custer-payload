@@ -10,8 +10,10 @@ import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
-import { Event } from '@/payload-types'
+import { Event, AdSpot, Ad as AdType } from '@/payload-types'
 import { getPayload } from 'payload'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import Ad from '@/components/Ad'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -37,6 +39,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
   const url = '/events/' + slug
   const event: Event = await queryPostBySlug({ slug })
+  const adSpots: AdSpot = (await getCachedGlobal('adSpots', 2)()) as AdSpot
 
   if (!event) return <PayloadRedirects url={url} />
 
@@ -48,6 +51,12 @@ export default async function Post({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
 
       <PostHero post={event} showPublishedAt={false} />
+
+      {adSpots.eventsPageAdSpot && (
+        <div className="container mx-auto mt-4">
+          <Ad ad={adSpots.eventsPageAdSpot.value as AdType} />
+        </div>
+      )}
 
       <div className="flex flex-col items-center gap-4 pt-8 text-slate-950">
         <div className="container lg:mx-0 lg:grid lg:grid-cols-[1fr_48rem_1fr] grid-rows-[1fr]">
