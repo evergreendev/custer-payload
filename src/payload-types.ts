@@ -2472,6 +2472,9 @@ export interface SiteOption {
  */
 export interface AdSpot {
   id: number;
+  /**
+   * Below Home Page Banner. Image size should be 970x250
+   */
   homePageAdSpot?: {
     relationTo: 'ads';
     value: number | Ad;

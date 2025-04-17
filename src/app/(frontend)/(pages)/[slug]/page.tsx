@@ -65,11 +65,9 @@ export default async function Page({ params: paramsPromise }: Args) {
     <>
       {slug === 'home' ? <Header centerNav={true} /> : null}
       {slug === 'home' && adSpots.homePageAdSpot ? (
-        <div className="bg-brand-blue">
           <Ad
             ad={adSpots.homePageAdSpot.value as AdType}
           />
-        </div>
       ) : null}
       <article className={`${slug === 'home' ? 'pt-16' : ''}`}>
         <PageClient />

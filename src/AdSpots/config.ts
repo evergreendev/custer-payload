@@ -11,6 +11,9 @@ export const AdSpots: GlobalConfig = {
     {
       type: "relationship",
       name: "homePageAdSpot",
+      admin: {
+        description: "Below Home Page Banner. Image size should be 970x250"
+      },
       relationTo: ["ads"],
     },
     {

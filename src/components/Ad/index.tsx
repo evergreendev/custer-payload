@@ -71,7 +71,7 @@ const AdComponent: React.FC<AdProps> = ({ ad }) => {
   if (!ad.image || typeof ad.image === 'number') return <></>
 
   return (
-    <button onClick={handleClick}>
+    <button className="mx-auto block" onClick={handleClick}>
       <Image
         src={ad.image.url || ''}
         alt={ad.image.alt || ''}
