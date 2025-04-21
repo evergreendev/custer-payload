@@ -8,10 +8,11 @@ export const revalidateAd: CollectionAfterChangeHook<Ad> = ({
   doc,
   req: { payload },
 }) => {
+  if (doc._status === 'published'){
+    payload.logger.info(`Revalidating ad spots`)
 
-  payload.logger.info(`Revalidating ad spots`)
-
-  revalidateTag('global_adSpots')
+    revalidateTag('global_adSpots')
+  }
 
   return doc
 }
