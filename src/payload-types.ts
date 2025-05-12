@@ -328,6 +328,10 @@ export interface Category {
   slugLock?: boolean | null;
   showMemberInfo?: boolean | null;
   hideInCategoryList?: boolean | null;
+  /**
+   * Hide this category from the category select form field
+   */
+  hideInCategorySelect?: boolean | null;
   featuredImage?: (number | null) | Media;
   keepExistingMetaImage?: boolean | null;
   parent?: (number | null) | Category;
@@ -1990,6 +1994,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   slugLock?: T;
   showMemberInfo?: T;
   hideInCategoryList?: T;
+  hideInCategorySelect?: T;
   featuredImage?: T;
   keepExistingMetaImage?: T;
   parent?: T;

@@ -114,6 +114,15 @@ const Categories: CollectionConfig = {
       },
     },
     {
+      type: 'checkbox',
+      name: 'hideInCategorySelect',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Hide this category from the category select form field',
+      },
+    },
+    {
       name: 'featuredImage',
       type: 'upload',
       relationTo: 'media',

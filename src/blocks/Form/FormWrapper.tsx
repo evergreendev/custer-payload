@@ -30,16 +30,25 @@ const getCategories = cache(async () => {
     collection: 'categories',
     limit: 1000,
     where: {
-      hideInCategoryList: {
-        not_equals: true
-      }
+      and: [
+        {
+          hideInCategoryList: {
+            not_equals: true
+          }
+        },
+        {
+          hideInCategorySelect: {
+            not_equals: true
+          }
+        }
+      ]
     },
   })
 
   return result.docs.map(category => ({
     id: category.id,
     title: category.title
-  }))
+  })).sort((a, b) => a.title.localeCompare(b.title))
 })
 
 export default FormWrapper;
