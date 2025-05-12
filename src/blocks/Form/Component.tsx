@@ -25,6 +25,7 @@ export type FormBlockType = {
   blockType?: 'formBlock'
   enableIntro: boolean
   form: FormType
+  categories: {id:number, title:string}[]
   introContent?: {
     [k: string]: unknown
   }[]
@@ -40,6 +41,7 @@ export const FormBlock: React.FC<
     form: formFromProps,
     form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
     introContent,
+    categories,
   } = props
 
   const formMethods = useForm({
@@ -152,6 +154,7 @@ export const FormBlock: React.FC<
                           control={control}
                           errors={errors}
                           register={register}
+                          categories={categories}
                         />
                       </div>
                     )

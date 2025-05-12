@@ -16,8 +16,9 @@ import { Controller } from 'react-hook-form'
 import { Error } from '../Error'
 import { Width } from '../Width'
 
-export const Select: React.FC<
+export const CategorySelect: React.FC<
   SelectField & {
+  categories: {title: string, id: string}[]
     control: Control<FieldValues, any>
     errors: Partial<
       FieldErrorsImpl<{
@@ -25,7 +26,7 @@ export const Select: React.FC<
       }>
     >
   }
-> = ({ name, control, errors, label, options, required, width }) => {
+> = ({ name, control, errors, label, categories, required, width }) => {
   return (
     <Width width={width}>
       <Label htmlFor={name}>{label}</Label>
@@ -34,18 +35,18 @@ export const Select: React.FC<
         defaultValue=""
         name={name}
         render={({ field: { onChange, value } }) => {
-          const controlledValue = options.find((t) => t.value === value)
+          const controlledValue = categories.find((t) => t.title === value)
 
           return (
-            <SelectComponent onValueChange={(val) => onChange(val)} value={controlledValue?.value}>
+            <SelectComponent onValueChange={(val) => onChange(val)} value={controlledValue?.title}>
               <SelectTrigger className="w-full" id={name}>
                 <SelectValue placeholder={label} />
               </SelectTrigger>
               <SelectContent>
-                {options.map(({ label, value }) => {
+                {categories.map(({ title, id }) => {
                   return (
-                    <SelectItem key={value} value={value}>
-                      {label}
+                    <SelectItem key={id} value={title}>
+                      {title}
                     </SelectItem>
                   )
                 })}

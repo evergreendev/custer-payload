@@ -41,6 +41,7 @@ import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { Newsletters } from '@/collections/Newsletter'
 import { Ads } from '@/collections/Ads'
 import { AdSpots } from '@/AdSpots/config'
+import { CategorySelect } from '@/blocks/Form/CategorySelect/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -171,6 +172,7 @@ export default buildConfig({
     formBuilderPlugin({
       fields: {
         payment: false,
+        CategorySelect
       },
       formOverrides: {
         fields: ({ defaultFields }) => {

@@ -42,7 +42,7 @@ export const RelatedPosts: React.FC<RelatedPostsProps> = (props) => {
           return (
             <>
               {showInfo ? (
-                <div className={'col lg:col-span-2 mb-8 text-lg border-t border-b border-gray-500'}>
+                <div key={doc.id} className={'col lg:col-span-2 mb-8 text-lg border-t border-b border-gray-500'}>
                   <h2 className="font-bold">{doc.title}</h2>
                   <div className="flex gap-2 items-start">
                     {imageToUse && typeof imageToUse !== 'string' && (

@@ -2,7 +2,8 @@ import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
-import { FormBlock, FormBlockType } from '@/blocks/Form/Component'
+import { FormBlockType } from '@/blocks/Form/Component'
+import FormWrapper from '@/blocks/Form/FormWrapper'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '@/components/Link'
 import { ContentBlock } from '@/blocks/Content/Component'
@@ -139,7 +140,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'code':
               return <CodeBlock className="col-start-2" key={index} {...block} />
             case 'formBlock':
-              return <FormBlock key={index} {...block} />
+              return <FormWrapper key={index} {...block} />
             default:
               return null
           }

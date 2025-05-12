@@ -5,7 +5,6 @@ import type { Page } from '@/payload-types'
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
-import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ButtonGroup } from '@/blocks/ButtonGroup/Component'
 import { Header } from '@/blocks/Header/Component'
@@ -14,12 +13,13 @@ import { Seasons } from '@/blocks/Seasons/Component'
 import { LargeImage } from '@/blocks/LargeImage/Component'
 import { EventsBlock } from '@/blocks/EventsBlock/Component'
 import IFrameBlock from '@/blocks/IFrame/Component'
+import FormWrapper from '@/blocks/Form/FormWrapper'
 
 const blockComponents = {
   archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
-  formBlock: FormBlock,
+  formBlock: FormWrapper,
   mediaBlock: MediaBlock,
   buttonGroup: ButtonGroup,
   header: Header,
