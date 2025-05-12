@@ -57,7 +57,7 @@ export const CategorySelect: React.FC<
               const results = searcher.search(inputValue)
               setFilteredCategories(results)
             }
-          }, [inputValue, categories])
+          }, [inputValue])
 
           const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const newValue = e.target.value
