@@ -1,6 +1,7 @@
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
+import { HTMLEmbedBlock, HTMLEmbedBlockProps } from '@/blocks/HTMLEmbed/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { FormBlockType } from '@/blocks/Form/Component'
 import FormWrapper from '@/blocks/Form/FormWrapper'
@@ -36,6 +37,7 @@ export type NodeTypes =
       | Extract<Page['layout'][0], { blockType: 'content' }>
       | BannerBlockProps
       | CodeBlockProps
+      | HTMLEmbedBlockProps
   | FormBlockType
   | Extract<Page['layout'][0], { blockType: 'IFrame' }>
     >
@@ -139,6 +141,8 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
             case 'code':
               return <CodeBlock className="col-start-2" key={index} {...block} />
+            case 'htmlEmbed':
+              return <HTMLEmbedBlock className="col-start-2" key={index} {...block} />
             case 'formBlock':
               return <FormWrapper key={index} {...block} />
             default:

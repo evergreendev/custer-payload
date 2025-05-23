@@ -2643,6 +2643,19 @@ export interface CodeBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HTMLEmbedBlock".
+ */
+export interface HTMLEmbedBlock {
+  /**
+   * Enter HTML code to embed. Note: For security reasons, potentially harmful elements (script, iframe, form) and attributes (onclick, onerror) will be automatically removed.
+   */
+  html: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'htmlEmbed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {

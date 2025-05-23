@@ -14,6 +14,7 @@ import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { Banner } from '@/blocks/Banner/config'
 import { Code } from '@/blocks/Code/config'
+import { HTMLEmbed } from '@/blocks/HTMLEmbed/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { revalidateMember } from './hooks/revalidateMember'
@@ -77,7 +78,7 @@ export const Members: CollectionConfig = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({ blocks: [Banner, Code, HTMLEmbed, MediaBlock] }),
                     OrderedListFeature(),
                     UnorderedListFeature(),
                     FixedToolbarFeature(),

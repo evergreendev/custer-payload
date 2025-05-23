@@ -14,6 +14,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { FormBlock } from '@/blocks/Form/config'
 import { Banner } from '@/blocks/Banner/config'
 import { Code } from '@/blocks/Code/config'
+import { HTMLEmbed } from '@/blocks/HTMLEmbed/config'
 
 const columnFields: Field[] = [
   {
@@ -49,7 +50,7 @@ const columnFields: Field[] = [
           AlignFeature(),
           ParagraphFeature(),
           HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
-          BlocksFeature({ blocks: [Banner, Code, MediaBlock, FormBlock] }),
+          BlocksFeature({ blocks: [Banner, Code, HTMLEmbed, MediaBlock, FormBlock] }),
           OrderedListFeature(),
           UnorderedListFeature(),
           FixedToolbarFeature(),
