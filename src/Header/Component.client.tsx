@@ -31,6 +31,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
   const { headerTheme } = useHeaderTheme()
   const [hasScrolled, setHasScrolled] = useState(false)
   const handleScroll = () => {
+    if (typeof window === 'undefined') return;
     if (window.scrollY > 0) {
       setHasScrolled(true)
     } else {
@@ -48,6 +49,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerTheme])
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])

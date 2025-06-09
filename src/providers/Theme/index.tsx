@@ -21,32 +21,38 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   )
 
   const setTheme = useCallback((themeToSet: Theme | null) => {
-    if (themeToSet === null) {
-      window.localStorage.removeItem(themeLocalStorageKey)
-      const implicitPreference = getImplicitPreference()
-      document.documentElement.setAttribute('data-theme', implicitPreference || '')
-      if (implicitPreference) setThemeState(implicitPreference)
-    } else {
-      setThemeState(themeToSet)
-      window.localStorage.setItem(themeLocalStorageKey, themeToSet)
-      document.documentElement.setAttribute('data-theme', themeToSet)
+    if (typeof window !== 'undefined'
+    ){
+      if (themeToSet === null) {
+        window.localStorage.removeItem(themeLocalStorageKey)
+        const implicitPreference = getImplicitPreference()
+        document.documentElement.setAttribute('data-theme', implicitPreference || '')
+        if (implicitPreference) setThemeState(implicitPreference)
+      } else {
+        setThemeState(themeToSet)
+        window.localStorage.setItem(themeLocalStorageKey, themeToSet)
+        document.documentElement.setAttribute('data-theme', themeToSet)
+      }
     }
+
   }, [])
 
   useEffect(() => {
     let themeToSet: Theme = defaultTheme
-    const preference = window.localStorage.getItem(themeLocalStorageKey)
+    if (typeof window !== 'undefined'
+    ) {
+      const preference = window.localStorage.getItem(themeLocalStorageKey)
 
-    if (themeIsValid(preference)) {
-      themeToSet = preference
-    } else {
-      const implicitPreference = getImplicitPreference()
+      if (themeIsValid(preference)) {
+        themeToSet = preference
+      } else {
+        const implicitPreference = getImplicitPreference()
 
-      if (implicitPreference) {
-        themeToSet = implicitPreference
+        if (implicitPreference) {
+          themeToSet = implicitPreference
+        }
       }
     }
-
     document.documentElement.setAttribute('data-theme', themeToSet)
     setThemeState(themeToSet)
   }, [])
