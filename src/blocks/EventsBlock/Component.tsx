@@ -6,7 +6,6 @@ import React from 'react'
 import RichText from '@/components/RichText'
 import Link from 'next/link'
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
-import { unstable_cache } from 'next/cache'
 import { draftMode } from 'next/headers'
 
 export const EventsBlock: React.FC<
@@ -22,11 +21,10 @@ export const EventsBlock: React.FC<
 
   const dateObj = new Date()
 
-  const fetchEvents = unstable_cache(async () => {
+  const fetchEvents = async () => {
 
     const { isEnabled: draft } = await draftMode()
 
-    console.log(draft);
 
     return await payload.find({
       collection: 'events',
@@ -53,9 +51,7 @@ export const EventsBlock: React.FC<
       depth: 1,
       limit,
     })
-  },[],{
-    tags: ['event_block']
-  })
+  }
 
   const events = await fetchEvents();
 
