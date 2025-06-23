@@ -29,6 +29,7 @@ export const ThemeSelector: React.FC = () => {
   }
 
   React.useEffect(() => {
+    if (typeof window === 'undefined') return;
     const preference = window.localStorage.getItem(themeLocalStorageKey)
     setValue(preference ?? 'auto')
   }, [])
