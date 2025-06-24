@@ -84,5 +84,9 @@ export const Content: Block = {
       type: 'array',
       fields: columnFields,
     },
+    {
+      name: 'showColumnDivider',
+      type: 'checkbox',
+    }
   ],
 }

@@ -504,6 +504,7 @@ export interface ContentBlock {
         id?: string | null;
       }[]
     | null;
+  showColumnDivider?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
@@ -1728,6 +1729,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  showColumnDivider?: T;
   id?: T;
   blockName?: T;
 }

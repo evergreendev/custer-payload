@@ -13,7 +13,7 @@ export const ContentBlock: React.FC<
     id?: string
   } & Props
 > = (props) => {
-  const { columns } = props
+  const { columns, showColumnDivider } = props
 
   const colsSpanClasses = {
     full: '12',
@@ -29,11 +29,13 @@ export const ContentBlock: React.FC<
           columns.length > 0 &&
           columns.map((col, index) => {
             const { enableLink, link, richText, size } = col
+            const isLastColumn = index === columns.length - 1
 
             return (
               <div
                 className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size!]}`, {
                   'md:col-span-2': size !== 'full',
+                  'lg:border-r-2 lg:pr-8': showColumnDivider && !isLastColumn,
                 })}
                 key={index}
               >
