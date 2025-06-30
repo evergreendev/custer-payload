@@ -9,3 +9,6 @@ node_modules
 # Payload default media upload directory
 public/media/
 src/app/imports/
+
+# Sentry Config File
+.env.sentry-build-plugin
