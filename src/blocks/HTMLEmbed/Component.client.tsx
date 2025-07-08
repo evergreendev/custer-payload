@@ -6,12 +6,14 @@ type Props = {
 }
 
 export const HTMLEmbed: React.FC<Props> = ({ html }) => {
-  if (!html) return null
+  return <div></div>;
+
+/*  if (!html) return null
 
   return (
     <div
       className="html-embed"
       dangerouslySetInnerHTML={{ __html: html }}
     />
-  )
+  )*/
 }
