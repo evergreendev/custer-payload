@@ -131,6 +131,7 @@ export interface Page {
         blockType: 'IFrame';
       }
   )[];
+  categories?: (number | Category)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -1644,6 +1645,7 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  categories?: T;
   meta?:
     | T
     | {

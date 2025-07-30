@@ -61,6 +61,13 @@ export default async function Post({
     limit: category.showMemberInfo ? 5 : 9,
   })
 
+  const pages = await queryPagesByCategory({
+    page: parseInt(page),
+    ids: [category.id].concat(childCategories?.map((cat) => cat.id)),
+    activeFilters: activeFilters,
+    limit: 9,
+  })
+
   // Find an ad for the current category
   const categoryAd = adSpots.CategoryAdSpots?.find(
     (adSpot) => (adSpot.adSpotCategory?.value as Category).id === category.id,
@@ -109,6 +116,18 @@ export default async function Post({
               docs={members.docs}
             />
             <Pagination totalPages={members.totalPages} />
+          </Suspense>
+        )}
+
+        {pages && pages.docs && pages.docs.length > 0 && (
+          <Suspense>
+            <h2 className="text-2xl font-bold mt-8 mb-4">Related Pages</h2>
+            <Pagination totalPages={pages.totalPages} />
+            <RelatedPosts
+              relationTo="pages"
+              docs={pages.docs}
+            />
+            <Pagination totalPages={pages.totalPages} />
           </Suspense>
         )}
       </div>
@@ -206,6 +225,76 @@ const queryMembersByCategory = cache(
 
     const result = await payload.find({
       collection: 'members',
+      draft,
+      page: page,
+      limit: limit,
+      sort: 'title',
+      where: {
+        or: activeFiltersArr.map((filter) => {
+          return {
+            [filter.property + '.id']: {
+              contains: filter.value,
+            },
+          }
+        }),
+      },
+      overrideAccess: draft,
+    })
+
+    return result || null
+  },
+)
+
+const queryPagesByCategory = cache(
+  async ({
+    page,
+    ids,
+    activeFilters,
+    limit,
+  }: {
+    page: number
+    ids: number[]
+    activeFilters: string
+    limit: number
+  }) => {
+    const { isEnabled: draft } = await draftMode()
+    const payload = await getPayload({ config: configPromise })
+
+    if (!activeFilters) {
+      const result = await payload.find({
+        collection: 'pages',
+        draft,
+        page: page,
+        pagination: false,
+        sort: 'title',
+        overrideAccess: draft,
+        where: {
+          or: ids.map((id) => {
+            return {
+              'categories.id': {
+                contains: id,
+              },
+            }
+          }),
+        },
+      })
+
+      return result || null
+    }
+
+    const activeFiltersArr = decodeURI(activeFilters || '')
+      .split(',')
+      .map((item) => item.split('|'))
+      .map((item) => {
+        return {
+          property: item[0],
+          value: parseInt(item[1]),
+          label: '',
+        }
+      })
+
+    const result = await payload.find({
+      collection: 'pages',
       draft,
       page: page,
       limit: limit,

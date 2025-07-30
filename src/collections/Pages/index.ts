@@ -82,6 +82,20 @@ export const Pages: CollectionConfig = {
           label: 'Content',
         },
         {
+          fields: [
+            {
+              name: 'categories',
+              type: 'relationship',
+              admin: {
+                position: 'sidebar',
+              },
+              hasMany: true,
+              relationTo: 'categories',
+            },
+          ],
+          label: 'Meta',
+        },
+        {
           name: 'meta',
           label: 'SEO',
           fields: [
