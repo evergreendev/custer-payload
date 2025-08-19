@@ -34,6 +34,11 @@ export const Ads: CollectionConfig = {
       relationTo: 'media'
     },
     {
+      name: 'video',
+      type: 'upload',
+      relationTo: 'media'
+    },
+    {
       name: 'impressions',
       type: 'number',
       defaultValue: 0,

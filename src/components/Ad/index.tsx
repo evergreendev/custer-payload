@@ -68,16 +68,31 @@ const AdComponent: React.FC<AdProps> = ({ ad }) => {
     handleView()
   }, [])
 
-  if (!ad.image || typeof ad.image === 'number') return <></>
+  const video = (ad as any).video
+  const hasVideo = video && typeof video !== 'number'
+  const hasImage = ad.image && typeof ad.image !== 'number'
+
+  if (!hasVideo && !hasImage) return <></>
 
   return (
     <button className="mx-auto block" onClick={handleClick}>
-      <Image
-        src={ad.image.url || ''}
-        alt={ad.image.alt || ''}
-        width={ad.image.width || 0}
-        height={ad.image.height || 0}
-      />
+      {hasVideo ? (
+        <video
+          src={video.url || ''}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="max-w-full h-auto"
+        />
+      ) : ad.image && typeof ad.image !== 'number' && (
+        <Image
+          src={ad.image?.url || ''}
+          alt={ad.image?.alt || ''}
+          width={ad.image?.width || 0}
+          height={ad.image?.height || 0}
+        />
+      )}
     </button>
   )
 }

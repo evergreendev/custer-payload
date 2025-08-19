@@ -1403,6 +1403,7 @@ export interface Ad {
   title: string;
   link: string;
   image?: (number | null) | Media;
+  video?: (number | null) | Media;
   impressions?: number | null;
   clicks?: number | null;
   publishedAt?: string | null;
@@ -2151,6 +2152,7 @@ export interface AdsSelect<T extends boolean = true> {
   title?: T;
   link?: T;
   image?: T;
+  video?: T;
   impressions?: T;
   clicks?: T;
   publishedAt?: T;
