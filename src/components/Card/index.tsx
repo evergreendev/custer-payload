@@ -38,7 +38,7 @@ export const Card: React.FC<{
 
   // @ts-ignore
   if (relationTo === "newsletters" && "document" in doc && typeof doc.document !== "number") {
-    href = doc.document.url || "";
+    href = doc?.document?.url || "";
   }
 
   let imageToUse = metaImage
