@@ -28,6 +28,7 @@ import { Banner } from '@/blocks/Banner/config'
 import { Code } from '@/blocks/Code/config'
 import { HTMLEmbed } from '@/blocks/HTMLEmbed/config'
 import { addMetaIfFeaturedImage } from '@/collections/genericHooks/addMetaIfFeaturedImage'
+import { Content } from '@/blocks/Content/config'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -139,7 +140,7 @@ export const Events: CollectionConfig = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, HTMLEmbed, MediaBlock] }),
+                    BlocksFeature({ blocks: [Banner, Code, HTMLEmbed, MediaBlock, Content] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
