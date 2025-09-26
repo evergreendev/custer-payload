@@ -68,8 +68,8 @@ export default function LatestCarousel({ items, className }: Props) {
             {items.map((post, idx) => (
               <div key={(post.id ?? idx) as React.Key} style={{ width: `${pct}%` }} className="shrink-0 px-2">
                 <Link href={post.slug ? `/posts/${post.slug}` : '#'} className="block focus:outline-none focus:ring-2 focus:ring-white/70 rounded">
-                  <div className="bg-white/5 rounded overflow-hidden hover:bg-white/10 transition">
-                    <div className="relative aspect-square">
+                  <div className="rounded overflow-hidden transition">
+                    <div className="relative aspect-square w-2/3 mx-auto">
                       {post.imgUrl ? (
                         <Image src={post.imgUrl} alt={post.title || 'Post image'} fill className="object-cover" />
                       ) : (
