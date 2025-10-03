@@ -28,6 +28,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
 import { addMetaIfFeaturedImage } from '@/collections/genericHooks/addMetaIfFeaturedImage'
+import { Content } from '@/blocks/Content/config'
 
 export const Members: CollectionConfig = {
   slug: 'members',
@@ -78,7 +79,7 @@ export const Members: CollectionConfig = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, HTMLEmbed, MediaBlock] }),
+                    BlocksFeature({ blocks: [Banner, Code, HTMLEmbed, MediaBlock,Content] }),
                     OrderedListFeature(),
                     UnorderedListFeature(),
                     FixedToolbarFeature(),
