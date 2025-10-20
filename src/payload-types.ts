@@ -139,6 +139,7 @@ export interface Page {
      */
     image?: (number | null) | Media;
     description?: string | null;
+    keywords?: string | null;
   };
   publishedAt?: string | null;
   slug?: string | null;
@@ -281,6 +282,7 @@ export interface Member {
      */
     image?: (number | null) | Media;
     description?: string | null;
+    keywords?: string | null;
   };
   featuredImage?: (number | null) | Media;
   /**
@@ -377,6 +379,7 @@ export interface Post {
      */
     image?: (number | null) | Media;
     description?: string | null;
+    keywords?: string | null;
   };
   publishedAt?: string | null;
   author?: string | null;
@@ -1280,6 +1283,7 @@ export interface Event {
      */
     image?: (number | null) | Media;
     description?: string | null;
+    keywords?: string | null;
   };
   publishedAt?: string | null;
   slug?: string | null;
@@ -1485,6 +1489,7 @@ export interface Search {
   meta?: {
     title?: string | null;
     description?: string | null;
+    keywords?: string | null;
     image?: (number | null) | Media;
   };
   categories?:
@@ -1653,6 +1658,7 @@ export interface PagesSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        keywords?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -1952,6 +1958,7 @@ export interface PostsSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        keywords?: T;
       };
   publishedAt?: T;
   author?: T;
@@ -2056,6 +2063,7 @@ export interface MembersSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        keywords?: T;
       };
   featuredImage?: T;
   mobileFeaturedImage?: T;
@@ -2089,6 +2097,7 @@ export interface EventsSelect1<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        keywords?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -2348,6 +2357,7 @@ export interface SearchSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        keywords?: T;
         image?: T;
       };
   categories?:

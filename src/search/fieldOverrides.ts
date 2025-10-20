@@ -29,6 +29,11 @@ export const searchFields: Field[] = [
         label: 'Description',
       },
       {
+        type: 'text',
+        name: 'keywords',
+        label: 'Keywords',
+      },
+      {
         name: 'image',
         label: 'Image',
         type: 'upload',

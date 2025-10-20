@@ -30,7 +30,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
     return { ...doc, relationTo: doc.doc?.relationTo };
   })
 
-  const searcher = new FuzzySearch(postsWithTypes, ['title'])
+  const searcher = new FuzzySearch(postsWithTypes, ['title','meta.keywords'])
 
   const result = searcher.search(query);
 

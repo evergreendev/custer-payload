@@ -127,6 +127,11 @@ export const Posts: CollectionConfig = {
             }),
 
             MetaDescriptionField({}),
+            {
+              name: 'keywords',
+              type: 'text',
+              label: 'Keywords',
+            },
             PreviewField({
               // if the `generateUrl` function is configured
               hasGenerateFn: true,
