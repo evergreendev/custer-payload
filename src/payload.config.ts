@@ -1,5 +1,4 @@
-
-import * as nodeMailer from "nodemailer";
+import * as nodeMailer from 'nodemailer'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
@@ -42,18 +41,22 @@ import { Newsletters } from '@/collections/Newsletter'
 import { Ads } from '@/collections/Ads'
 import { AdSpots } from '@/AdSpots/config'
 import { CategorySelect } from '@/blocks/Form/CategorySelect/config'
+import { FileUpload } from '@/blocks/Form/FileUpload/config'
+import { UserUploadedFormDocuments } from '@/collections/UserUploadedFormDocuments'
+import sendEmail from '@/blocks/Form/hooks/sendemail'
+import associateFileWithSub from '@/blocks/Form/hooks/associateFileWithSub'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const transporter = nodeMailer.createTransport({
   host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT)||587,
+  port: Number(process.env.EMAIL_PORT) || 587,
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
   },
-});
+})
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Custer Chamber of Commerce` : 'Custer Chamber of Commerce'
@@ -69,11 +72,10 @@ export default buildConfig({
   email: nodemailerAdapter({
     defaultFromAddress: 'noreply@custersd.egrmc.com',
     defaultFromName: 'Custer Chamber of Commerce',
-    transport: transporter
+    transport: transporter,
   }),
   admin: {
-    components: {
-    },
+    components: {},
     importMap: {
       baseDir: path.resolve(dirname),
     },
@@ -109,11 +111,10 @@ export default buildConfig({
         BoldFeature(),
         ItalicFeature(),
         LinkFeature({
-          enabledCollections: ['pages', 'posts', 'members','events','categories','media'],
+          enabledCollections: ['pages', 'posts', 'members', 'events', 'categories', 'media'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              return !('name' in field && field.name === 'url');
-
+              return !('name' in field && field.name === 'url')
             })
 
             return [
@@ -138,13 +139,25 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Members, Events, PopUps, Newsletters, Ads],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Members,
+    Events,
+    PopUps,
+    Newsletters,
+    Ads,
+    UserUploadedFormDocuments,
+  ],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer, SiteOptions, AdSpots],
   plugins: [
     redirectsPlugin({
-      collections: ['pages', 'posts', 'members','events'],
+      collections: ['pages', 'posts', 'members', 'events'],
       overrides: {
         // @ts-expect-error
         fields: ({ defaultFields }) => {
@@ -172,7 +185,14 @@ export default buildConfig({
     formBuilderPlugin({
       fields: {
         payment: false,
-        CategorySelect
+        CategorySelect,
+        FileUpload,
+      },
+      formSubmissionOverrides: {
+        hooks: {
+          beforeChange: [(data) => sendEmail(data)],
+          afterChange: [associateFileWithSub],
+        },
       },
       formOverrides: {
         fields: ({ defaultFields }) => {
@@ -197,7 +217,7 @@ export default buildConfig({
       },
     }),
     searchPlugin({
-      collections: ['members','events'],
+      collections: ['members', 'events'],
       beforeSync: beforeSyncWithSearch,
       searchOverrides: {
         fields: ({ defaultFields }) => {

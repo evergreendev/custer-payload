@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 
 import { buildInitialFormState } from './buildInitialFormState'
 import { fields } from './fields'
+import axios from 'axios'
 
 export type Value = unknown
 
@@ -65,10 +66,34 @@ export const FormBlock: React.FC<
       const submitForm = async () => {
         setError(undefined)
 
-        const dataToSend = Object.entries(data).map(([name, value]) => ({
-          field: name,
-          value,
-        }))
+        //formatted list excluding files
+        const dataToSend = Object.entries(data)
+          .map(([name, value]) => {
+            return {
+              field: name,
+              value,
+            }
+          })
+          .filter(
+            ({ value }) =>
+              value !== undefined &&
+              value !== null &&
+              !(value instanceof File) &&
+              !(value instanceof FileList),
+          )
+
+        const filesToSend = Object.entries(data)
+          .map(([name, value]) => ({
+            field: name,
+            value,
+          }))
+          .filter(
+            ({ value }) =>
+              value !== undefined &&
+              value !== null &&
+              ((value instanceof File) ||
+              (value instanceof FileList)),
+          )
 
         // delay loading indicator by 1s
         loadingTimerID = setTimeout(() => {
@@ -76,10 +101,28 @@ export const FormBlock: React.FC<
         }, 1000)
 
         try {
+          const uploadedFileNames: {
+            field: string
+            value: Property | Property[]
+          }[] = [];
+          for (const files of filesToSend) {
+
+            for (const file of files.value as unknown as FileList){
+              const fileRes = await axios.postForm(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/userUploadedFormDocuments`, {
+                file: file,
+                _payload: JSON.stringify({
+                }),
+              }, {headers: {"Content-Type": "multipart/form-data"}});
+              const fileData = await fileRes.data;
+              uploadedFileNames.push({field:files.field, value:("upload:-" + fileData.doc.filename) as unknown as Property});
+            }
+
+          }
+
           const req = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/form-submissions`, {
             body: JSON.stringify({
               form: formID,
-              submissionData: dataToSend,
+              submissionData: dataToSend.concat(uploadedFileNames),
             }),
             headers: {
               'Content-Type': 'application/json',
