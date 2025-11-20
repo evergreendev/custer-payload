@@ -45,6 +45,7 @@ import { FileUpload } from '@/blocks/Form/FileUpload/config'
 import { UserUploadedFormDocuments } from '@/collections/UserUploadedFormDocuments'
 import sendEmail from '@/blocks/Form/hooks/sendemail'
 import associateFileWithSub from '@/blocks/Form/hooks/associateFileWithSub'
+import { Bricks } from '@/collections/Bricks'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -151,6 +152,7 @@ export default buildConfig({
     Newsletters,
     Ads,
     UserUploadedFormDocuments,
+    Bricks,
   ],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),

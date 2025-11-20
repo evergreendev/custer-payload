@@ -22,6 +22,7 @@ export interface Config {
     newsletters: Newsletter;
     ads: Ad;
     userUploadedFormDocuments: UserUploadedFormDocument;
+    bricks: Brick;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -43,6 +44,7 @@ export interface Config {
     newsletters: NewslettersSelect<false> | NewslettersSelect<true>;
     ads: AdsSelect<false> | AdsSelect<true>;
     userUploadedFormDocuments: UserUploadedFormDocumentsSelect<false> | UserUploadedFormDocumentsSelect<true>;
+    bricks: BricksSelect<false> | BricksSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -132,6 +134,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'IFrame';
       }
+    | BrickFinder
   )[];
   categories?: (number | Category)[] | null;
   meta?: {
@@ -1228,6 +1231,17 @@ export interface Events {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BrickFinder".
+ */
+export interface BrickFinder {
+  heading?: string | null;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'brickFinder';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -1492,6 +1506,38 @@ export interface FormSubmission {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bricks".
+ */
+export interface Brick {
+  id: number;
+  title: string;
+  /**
+   * Select the panel where the brick is located.
+   */
+  panel:
+    | 'panel-1-e'
+    | 'panel-2-e'
+    | 'panel-3-e'
+    | 'panel-4-e'
+    | 'panel-5-e'
+    | 'panel-1-w'
+    | 'panel-2-w'
+    | 'panel-3-w'
+    | 'panel-4-w'
+    | 'panel-5-w';
+  /**
+   * Row (A–M)
+   */
+  row: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M';
+  /**
+   * Column (1–10)
+   */
+  column: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1612,6 +1658,10 @@ export interface PayloadLockedDocument {
         value: number | UserUploadedFormDocument;
       } | null)
     | ({
+        relationTo: 'bricks';
+        value: number | Brick;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1712,6 +1762,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        brickFinder?: T | BrickFinderSelect<T>;
       };
   categories?: T;
   meta?:
@@ -2008,6 +2059,16 @@ export interface EventsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BrickFinder_select".
+ */
+export interface BrickFinderSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -2282,6 +2343,18 @@ export interface UserUploadedFormDocumentsSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bricks_select".
+ */
+export interface BricksSelect<T extends boolean = true> {
+  title?: T;
+  panel?: T;
+  row?: T;
+  column?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

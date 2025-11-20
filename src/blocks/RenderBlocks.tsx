@@ -14,6 +14,7 @@ import { LargeImage } from '@/blocks/LargeImage/Component'
 import { EventsBlock } from '@/blocks/EventsBlock/Component'
 import IFrameBlock from '@/blocks/IFrame/Component'
 import FormWrapper from '@/blocks/Form/FormWrapper'
+import BrickFinderBlockComponent from '@/blocks/BrickFinder/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -27,7 +28,8 @@ const blockComponents = {
   seasons: Seasons,
   largeImage: LargeImage,
   events: EventsBlock,
-  IFrame: IFrameBlock
+  IFrame: IFrameBlock,
+  brickFinder: BrickFinderBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{
