@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import DOMPurify from 'dompurify'
 
 export const HTMLEmbed: Block = {
   slug: 'htmlEmbed',
@@ -15,10 +16,9 @@ export const HTMLEmbed: Block = {
       hooks: {
         beforeChange: [
           (args) => {
-            return args.value
             if (!args.value) return args.value
 
-/*            // Sanitize HTML to prevent XSS attacks
+            // Sanitize HTML to prevent XSS attacks
             const cleanHtml = DOMPurify.sanitize(args.value, {
               USE_PROFILES: { html: true },
               ADD_ATTR: ['target'], // Allow target attribute for links
@@ -26,7 +26,7 @@ export const HTMLEmbed: Block = {
               FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover'], // Forbid event handlers
             })
 
-            return cleanHtml*/
+            return cleanHtml
           }
         ]
       }
