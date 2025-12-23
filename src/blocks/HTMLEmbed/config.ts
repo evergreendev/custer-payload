@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 
 export const HTMLEmbed: Block = {
   slug: 'htmlEmbed',

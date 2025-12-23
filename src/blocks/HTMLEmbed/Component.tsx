@@ -1,4 +1,5 @@
 import React from 'react'
+import {HTMLEmbed} from './Component.client'
 
 export type HTMLEmbedBlockProps = {
   html: string
@@ -12,7 +13,7 @@ type Props = HTMLEmbedBlockProps & {
 export const HTMLEmbedBlock: React.FC<Props> = ({ className, html }) => {
   return (
     <div className={[className, 'not-prose'].filter(Boolean).join(' ')}>
-      {/*<HTMLEmbed html={html} />*/}
+      <HTMLEmbed html={html} />
     </div>
   )
 }
