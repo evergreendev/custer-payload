@@ -1,7 +1,8 @@
 import { BeforeSync, DocToSync } from '@payloadcms/plugin-search/types'
+import * as sea from 'node:sea'
 
 export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc, payload }) => {
-  const {
+/*  const {
     doc: { relationTo: collection },
   } = searchDoc
 
@@ -64,5 +65,6 @@ export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc,
     }
   }
 
-  return modifiedDoc
+  return modifiedDoc*/
+  return searchDoc
 }
