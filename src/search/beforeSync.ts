@@ -5,10 +5,11 @@ export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc,
     doc: { relationTo: collection },
   } = searchDoc
 
-/*  const { slug, id, categories, title, meta, excerpt } = originalDoc
+  const { slug, id, categories, title, meta } = originalDoc
 
   const modifiedDoc: DocToSync = {
     ...searchDoc,
+    title: title || meta?.title,
     slug,
     meta: {
       ...meta,
@@ -63,6 +64,5 @@ export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc,
     }
   }
 
-  return modifiedDoc*/
-  return searchDoc
+  return modifiedDoc
 }
