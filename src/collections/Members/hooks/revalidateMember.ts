@@ -9,7 +9,7 @@ export const revalidateMember: CollectionAfterChangeHook<Member> = ({
                                                                   previousDoc,
                                                                   req: { payload },
                                                                 }) => {
-  if (doc._status === 'published') {
+/*  if (doc._status === 'published') {
     const path = `/members/${doc.slug}`
 
     payload.logger.info(`Revalidating member at path: ${path}`)
@@ -26,7 +26,7 @@ export const revalidateMember: CollectionAfterChangeHook<Member> = ({
     payload.logger.info(`Revalidating old member at path: ${oldPath}`)
 
     revalidatePath(oldPath)
-  }
+  }*/
 
   return doc
 }
