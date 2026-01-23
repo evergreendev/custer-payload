@@ -23,15 +23,37 @@ export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc,
   if (categories && Array.isArray(categories) && categories.length > 0) {
     // get full categories and keep a flattened copy of their most important properties
     try {
-      const mappedCategories = categories.map((category) => {
-        const { id, title } = category
+      const mappedCategories = await Promise.all(
+        categories.map(async (category) => {
+          if (typeof category === 'object' && category !== null) {
+            return {
+              relationTo: 'categories',
+              id: category.id,
+              title: category.title,
+            }
+          }
 
-        return {
-          relationTo: 'categories',
-          id,
-          title,
-        }
-      })
+          // If it's just an ID, try to fetch the category to get the title
+          try {
+            const fullCategory = await payload.findByID({
+              collection: 'categories',
+              id: category,
+              depth: 0,
+            })
+
+            return {
+              relationTo: 'categories',
+              id: category,
+              title: fullCategory?.title,
+            }
+          } catch (fetchErr) {
+            return {
+              relationTo: 'categories',
+              id: category,
+            }
+          }
+        }),
+      )
 
       modifiedDoc.categories = mappedCategories
     } catch (err) {
