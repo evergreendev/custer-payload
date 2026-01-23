@@ -26,11 +26,9 @@ export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc,
       const mappedCategories = categories.map((category) => {
         const { id, title } = category
 
-        console.log(category,"------------------");
-
         return {
           relationTo: 'categories',
-          id: category,
+          id,
           title,
         }
       })
