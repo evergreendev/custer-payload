@@ -7,10 +7,8 @@ export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc,
 
   const { slug, categories, title, meta } = originalDoc
 
-  const { id: _, ...restOfSearchDoc } = searchDoc
-
   const modifiedDoc: DocToSync = {
-    ...restOfSearchDoc,
+    ...searchDoc,
     title: title || meta?.title,
     slug,
     meta: {
@@ -23,7 +21,7 @@ export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc,
     categories: [],
   }
 
-  if (categories && Array.isArray(categories) && categories.length > 0) {
+/*  if (categories && Array.isArray(categories) && categories.length > 0) {
     // get full categories and keep a flattened copy of their most important properties
     try {
       const mappedCategories = await Promise.all(
@@ -61,9 +59,9 @@ export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, searchDoc,
       modifiedDoc.categories = mappedCategories
     } catch (err) {
     }
-  }
+  }*/
 
-  return searchDoc
+  //return searchDoc
 
-  //return modifiedDoc
+  return modifiedDoc
 }
