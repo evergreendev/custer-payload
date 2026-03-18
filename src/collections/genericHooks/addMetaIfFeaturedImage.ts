@@ -15,5 +15,12 @@ export const addMetaIfFeaturedImage: CollectionBeforeChangeHook<Member> = ({
     }
   }
 
+  if (data.meta?.image && !data.featuredImage){
+    return {
+      ...data,
+      featuredImage: data.meta.image,
+    }
+  }
+
   return data
 }
