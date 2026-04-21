@@ -36,7 +36,6 @@ import { Members } from '@/collections/Members'
 import { SiteOptions } from '@/SiteOptions/config'
 import { Events } from '@/collections/Events'
 import { PopUps } from '@/collections/PopUps'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { Newsletters } from '@/collections/Newsletter'
 import { Ads } from '@/collections/Ads'
 import { AdSpots } from '@/AdSpots/config'
@@ -46,6 +45,9 @@ import { UserUploadedFormDocuments } from '@/collections/UserUploadedFormDocumen
 import sendEmail from '@/blocks/Form/hooks/sendemail'
 import associateFileWithSub from '@/blocks/Form/hooks/associateFileWithSub'
 import { Bricks } from '@/collections/Bricks'
+import { ExportCSVButton } from '@/components/ExportCSVButton'
+import { exportFormSubmissionsEndpoint } from '@/endpoints/exportFormSubmissionsEndpoint'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -137,6 +139,7 @@ export default buildConfig({
       ]
     },
   }),
+  endpoints: [exportFormSubmissionsEndpoint],
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
@@ -193,6 +196,12 @@ export default buildConfig({
         FileUpload,
       },
       formSubmissionOverrides: {
+        admin: {
+          components: {
+            //@ts-expect-error payload nonsense
+            beforeListTable: [ExportCSVButton],
+          },
+        },
         hooks: {
           beforeChange: [(data) => sendEmail(data)],
           afterChange: [associateFileWithSub],
