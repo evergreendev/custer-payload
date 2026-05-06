@@ -220,6 +220,14 @@ export const Events: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'featuredEvent',
+      type: 'checkbox',
+      label: 'Featured event',
+      admin: {
+        position: 'sidebar',
+      },
+    },
     ...slugField(),
     {
       name: 'featuredImage',

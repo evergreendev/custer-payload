@@ -1380,6 +1380,7 @@ export interface Event {
     keywords?: string | null;
   };
   publishedAt?: string | null;
+  featuredEvent?: boolean | null;
   slug?: string | null;
   slugLock?: boolean | null;
   featuredImage?: (number | null) | Media;
@@ -2314,6 +2315,7 @@ export interface EventsSelect1<T extends boolean = true> {
         keywords?: T;
       };
   publishedAt?: T;
+  featuredEvent?: T;
   slug?: T;
   slugLock?: T;
   featuredImage?: T;

@@ -30,6 +30,7 @@ export default async function Post() {
   const events = await queryEvents();
   const url = "/events";
   const adSpots: AdSpot = (await getCachedGlobal('adSpots', 2)()) as AdSpot;
+  const featuredEvents = events?.filter((event) => event.featuredEvent) || []
 
   if (!events) return <PayloadRedirects url={url} />
 
@@ -43,7 +44,9 @@ export default async function Post() {
         <h1 className="font-display text-6xl text-center">Upcoming Events</h1>
       </div>
       <div className="bg-brand-blue border-b-2 border-b-blue-950 p-2 text-white text-center text-xl font-bold hover:bg-brand-blue/90">
-        <Link href="/submit-event"><h2>Submit a Community Event</h2></Link>
+        <Link href="/submit-event">
+          <h2>Submit a Community Event</h2>
+        </Link>
       </div>
 
       {adSpots.eventsPageAdSpot && (
@@ -52,8 +55,22 @@ export default async function Post() {
         </div>
       )}
 
-      <div className="flex flex-col items-center gap-4 pt-8">
-        {events && <RelatedPosts relationTo="events" docs={events} />}
+      <div className="flex flex-col items-center gap-12 pt-8">
+        {featuredEvents.length > 0 && (
+          <section className="w-full">
+            <div className="container mb-4">
+              <h2 className="font-sans text-4xl text-blue-950">Featured Events</h2>
+            </div>
+            <RelatedPosts relationTo="events" docs={featuredEvents} />
+          </section>
+        )}
+
+        <section className="w-full">
+          <div className="container mb-4">
+            <h2 className="font-sans text-4xl text-blue-950">All Events</h2>
+          </div>
+          <RelatedPosts relationTo="events" docs={events} />
+        </section>
       </div>
     </article>
   )
