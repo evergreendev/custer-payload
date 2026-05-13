@@ -13,7 +13,7 @@ export const EventsBlock: React.FC<
     id?: string
   }
 > = async (props) => {
-  const { id, limit: limitFromProps, content, limitEventsShown } = props
+  const { id, limit: limitFromProps, content, limitEventsShown, showFeaturedOnly } = props
 
   const limit = limitEventsShown ? limitFromProps || 3 : 100
 
@@ -44,7 +44,10 @@ export const EventsBlock: React.FC<
           },
           draft ? {} : {
             _status: { equals: "published"}
-          }
+          },
+          showFeaturedOnly ? {
+            featuredEvent: { equals: true },
+          } : {},
         ]
 
       },

@@ -1286,6 +1286,7 @@ export interface Events {
     [k: string]: unknown;
   } | null;
   limitEventsShown?: boolean | null;
+  showFeaturedOnly?: boolean | null;
   limit?: number | null;
   id?: string | null;
   blockName?: string | null;
@@ -2187,6 +2188,7 @@ export interface LargeImageBlockSelect<T extends boolean = true> {
 export interface EventsSelect<T extends boolean = true> {
   content?: T;
   limitEventsShown?: T;
+  showFeaturedOnly?: T;
   limit?: T;
   id?: T;
   blockName?: T;

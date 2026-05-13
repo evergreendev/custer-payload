@@ -28,7 +28,12 @@ export const Events: Block = {
     },
     {
       name: 'limitEventsShown',
-      type: 'checkbox'
+      type: 'checkbox',
+    },
+    {
+      name: 'showFeaturedOnly',
+      type: 'checkbox',
+      label: 'Show featured events only',
     },
     {
       name: 'limit',
