@@ -8,8 +8,13 @@ import FormWrapper from '@/blocks/Form/FormWrapper'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '@/components/Link'
 import { ContentBlock } from '@/blocks/Content/Component'
-import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
+import type {
+  DefaultNodeTypes,
+  SerializedBlockNode,
+  UploadData,
+} from '@payloadcms/richtext-lexical'
 import type { BannerBlock as BannerBlockProps } from '@/payload-types'
+import { Media } from '@/components/Media'
 
 import {
   IS_BOLD,
@@ -23,14 +28,17 @@ import {
 import type { Page } from '@/payload-types'
 
 const alignment = {
-  center: "md:text-center text-left",
-  left: "md:text-left text-left",
-  right: "md:text-right text-left",
-  justify: "md:text-justify text-left",
+  center: 'md:text-center text-left',
+  left: 'md:text-left text-left',
+  right: 'md:text-right text-left',
+  justify: 'md:text-justify text-left',
 }
 
 export type NodeTypes =
   | DefaultNodeTypes
+  | ({
+      type: 'upload'
+    } & UploadData)
   | SerializedBlockNode<
       | Extract<Page['layout'][0], { blockType: 'cta' }>
       | Extract<Page['layout'][0], { blockType: 'mediaBlock' }>
@@ -38,8 +46,8 @@ export type NodeTypes =
       | BannerBlockProps
       | CodeBlockProps
       | HTMLEmbedBlockProps
-  | FormBlockType
-  | Extract<Page['layout'][0], { blockType: 'IFrame' }>
+      | FormBlockType
+      | Extract<Page['layout'][0], { blockType: 'IFrame' }>
     >
 
 type Props = {
@@ -219,6 +227,20 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                 >
                   {serializedChildren}
                 </CMSLink>
+              )
+            }
+            case 'upload': {
+              if (node.relationTo !== 'media') {
+                return null
+              }
+
+              return (
+                <Media
+                  className="col-start-2 my-8"
+                  imgClassName="w-full rounded"
+                  key={index}
+                  resource={node.value}
+                />
               )
             }
 

@@ -46,6 +46,7 @@ import { UserUploadedFormDocuments } from '@/collections/UserUploadedFormDocumen
 import sendEmail from '@/blocks/Form/hooks/sendemail'
 import associateFileWithSub from '@/blocks/Form/hooks/associateFileWithSub'
 import { Bricks } from '@/collections/Bricks'
+import { LandingPages } from '@/collections/LandingPages'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -63,7 +64,13 @@ const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Custer Chamber of Commerce` : 'Custer Chamber of Commerce'
 }
 
-const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
+const generateURL: GenerateURL<Post | Page> = ({ doc, collectionSlug }) => {
+  if (collectionSlug === 'landing-pages') {
+    return doc?.slug
+      ? `${process.env.NEXT_PUBLIC_SERVER_URL!}/landing-page/${doc.slug}`
+      : process.env.NEXT_PUBLIC_SERVER_URL!
+  }
+
   return doc?.slug
     ? `${process.env.NEXT_PUBLIC_SERVER_URL!}/${doc.slug}`
     : process.env.NEXT_PUBLIC_SERVER_URL!
@@ -112,7 +119,15 @@ export default buildConfig({
         BoldFeature(),
         ItalicFeature(),
         LinkFeature({
-          enabledCollections: ['pages', 'posts', 'members', 'events', 'categories', 'media'],
+          enabledCollections: [
+            'pages',
+            'posts',
+            'members',
+            'events',
+            'categories',
+            'media',
+            'landing-pages',
+          ],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
               return !('name' in field && field.name === 'url')
@@ -155,13 +170,14 @@ export default buildConfig({
     Ads,
     UserUploadedFormDocuments,
     Bricks,
+    LandingPages,
   ],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer, SiteOptions, AdSpots],
   plugins: [
     redirectsPlugin({
-      collections: ['pages', 'posts', 'members', 'events'],
+      collections: ['pages', 'posts', 'members', 'events', 'landing-pages'],
       overrides: {
         // @ts-expect-error
         fields: ({ defaultFields }) => {

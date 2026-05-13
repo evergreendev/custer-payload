@@ -1,5 +1,4 @@
 import { withPayload } from '@payloadcms/next/withPayload';
-import { withSentryConfig } from '@sentry/nextjs';
 import redirects from './redirects.js';
 
 const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
@@ -28,13 +27,4 @@ const baseConfig = {
 
 const payloadConfig = withPayload(baseConfig);
 
-const sentryConfig = withSentryConfig(payloadConfig, {
-  org: "evergreen-media",
-  project: "javascript-nextjs",
-  silent: !process.env.CI,
-  widenClientFileUpload: true,
-  disableLogger: true,
-  automaticVercelMonitors: true,
-});
-
-export default sentryConfig;
+export default payloadConfig;

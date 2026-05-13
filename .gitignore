@@ -10,6 +10,3 @@ node_modules
 public/media/
 public/user-uploaded-documents/
 src/app/imports/
-
-# Sentry Config File
-.env.sentry-build-plugin

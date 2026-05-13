@@ -1,21 +1,20 @@
 import { formatDateTime } from 'src/utilities/formatDateTime'
 import React from 'react'
 
-import type { Category, Post, Event, Member } from '@/payload-types'
+import type { Category, Event, LandingPage, Member, Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import EventHeroSection from '@/heros/PostHero/EventHeroSection'
 
 export const PostHero: React.FC<{
-  post: Post | Category | Event | Member
+  post: Post | Category | Event | Member | LandingPage
   showPublishedAt?: boolean
 }> = ({ post, showPublishedAt = true }) => {
   const { meta: { image: metaImage } = {}, title } = post
 
   // Get mobile featured image if available
-  const mobileImage = 'mobileFeaturedImage' in post && post.mobileFeaturedImage
-    ? post.mobileFeaturedImage
-    : metaImage
+  const mobileImage =
+    'mobileFeaturedImage' in post && post.mobileFeaturedImage ? post.mobileFeaturedImage : metaImage
 
   return (
     <div className="relative flex items-end overflow-hidden">
@@ -31,8 +30,8 @@ export const PostHero: React.FC<{
             {'location' in post && <h2 className="text-2xl">{post.location}</h2>}
           </div>
 
-          {
-            ('author' in post && post.author)||(showPublishedAt && 'publishedAt' in post && post.publishedAt) &&
+          {(('author' in post && post.author) ||
+            (showPublishedAt && 'publishedAt' in post && post.publishedAt)) && (
             <div className="flex flex-col gap-2 mt-3">
               {'author' in post && post.author && (
                 <div className="flex flex-col gap-1">
@@ -46,7 +45,7 @@ export const PostHero: React.FC<{
                 </div>
               )}
             </div>
-          }
+          )}
         </div>
       </div>
 
