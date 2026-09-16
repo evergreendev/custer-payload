@@ -1581,27 +1581,20 @@ export interface FormSubmission {
  */
 export interface Brick {
   id: number;
+  /**
+   * Name or inscription as written on the brick. Duplicate titles are allowed.
+   */
   title: string;
   /**
    * Select the panel where the brick is located.
    */
-  panel:
-    | 'panel-1-e'
-    | 'panel-2-e'
-    | 'panel-3-e'
-    | 'panel-4-e'
-    | 'panel-5-e'
-    | 'panel-1-w'
-    | 'panel-2-w'
-    | 'panel-3-w'
-    | 'panel-4-w'
-    | 'panel-5-w';
+  panel: 'north-west' | 'north-east';
   /**
-   * Row (A–M)
+   * Row (A-N)
    */
-  row: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M';
+  row: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N';
   /**
-   * Column (1–10)
+   * Column (1-50)
    */
   column: number;
   updatedAt: string;

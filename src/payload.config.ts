@@ -1,4 +1,3 @@
-import * as nodeMailer from 'nodemailer'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
@@ -51,14 +50,14 @@ import { LandingPages } from '@/collections/LandingPages'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const transporter = nodeMailer.createTransport({
+const transportOptions = {
   host: process.env.EMAIL_HOST,
   port: Number(process.env.EMAIL_PORT) || 587,
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
   },
-})
+}
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Custer Chamber of Commerce` : 'Custer Chamber of Commerce'
@@ -80,7 +79,7 @@ export default buildConfig({
   email: nodemailerAdapter({
     defaultFromAddress: 'noreply@custersd.egrmc.com',
     defaultFromName: 'Custer Chamber of Commerce',
-    transport: transporter,
+    transportOptions,
   }),
   admin: {
     components: {},

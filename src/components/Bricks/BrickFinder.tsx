@@ -1,14 +1,9 @@
-"use client"
+'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-type Brick = {
-  id: string
-  title: string
-  panel: string
-  row: string // 'A' - 'M'
-  column: number // 1 - 10
-}
+import type { Brick } from '@/payload-types'
+import { BRICK_PANELS, BRICK_ROWS as ROWS, BRICK_COLUMN_COUNT } from '@/utilities/bricks'
 
 type ApiResponse = {
   docs: Brick[]
@@ -28,22 +23,25 @@ function useDebouncedValue<T>(value: T, delay = 300) {
   return v
 }
 
-const ROWS = Array.from({ length: 13 }, (_, i) => String.fromCharCode('A'.charCodeAt(0) + i))
-const COLS = Array.from({ length: 10 }, (_, i) => i + 1)
+const COLS = Array.from({ length: BRICK_COLUMN_COUNT }, (_, i) => i + 1)
 
 export default function BrickFinder() {
   const [query, setQuery] = useState('')
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState<Brick[]>([])
   const [selected, setSelected] = useState<Brick | null>(null)
+  const targetRef = useRef<HTMLDivElement>(null)
+  const [error, setError] = useState(false)
   const debounced = useDebouncedValue(query, 300)
 
   useEffect(() => {
     let active = true
     async function run() {
+      setError(false)
       if (!debounced || debounced.length < 2) {
         setResults([])
         setSelected(null)
+        setLoading(false)
         return
       }
       setLoading(true)
@@ -59,16 +57,16 @@ export default function BrickFinder() {
         const data: ApiResponse = await res.json()
         if (!active) return
         setResults(data.docs)
-        if (data.docs.length > 0) setSelected(data.docs[0])
+        setSelected(data.docs[0] ?? null)
       } catch (e) {
         if (active) {
           console.error(e)
+          setError(true)
           setResults([])
           setSelected(null)
         }
       } finally {
-        active = false
-        setLoading(false)
+        if (active) setLoading(false)
       }
     }
     run()
@@ -77,31 +75,35 @@ export default function BrickFinder() {
     }
   }, [debounced])
 
-  const grid = useMemo(() => {
-    // Build a 13x10 grid and mark selected location
-    const map = new Map<string, Brick>()
-    if (selected) {
-      map.set(`${selected.row}-${selected.column}`, selected)
-    }
-    return { map }
+  useEffect(() => {
+    targetRef.current?.scrollIntoView({ block: 'nearest', inline: 'center' })
   }, [selected])
 
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="mb-4">
         <label htmlFor="brick-search" className="block text-sm font-medium text-gray-700">
-          Search for a brick by title
+          Search for a brick by name or inscription
         </label>
         <input
           id="brick-search"
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter brick title..."
+          placeholder="Enter a name or inscription..."
           className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
         />
         {loading && <p className="mt-2 text-sm text-gray-500">Searching…</p>}
       </div>
+
+      {error && (
+        <p role="alert" className="mb-4 text-sm text-red-700">
+          Unable to search bricks. Please try again.
+        </p>
+      )}
+      {!loading && !error && debounced.length >= 2 && results.length === 0 && (
+        <p className="mb-4 text-sm text-gray-600">No bricks found.</p>
+      )}
 
       {results.length > 0 && (
         <div className="mb-6">
@@ -116,11 +118,15 @@ export default function BrickFinder() {
                   'px-3 py-1.5 rounded border text-sm',
                   selected?.id === b.id
                     ? 'bg-brand-red text-white border-primary'
-                    : 'bg-white text-gray-700 border-gray-300 hover:border-primary'
+                    : 'bg-white text-gray-700 border-gray-300 hover:border-primary',
                 )}
                 title={`${b.title} — ${formatPanel(b.panel)} Row ${b.row}, Col ${b.column}`}
               >
                 {b.title}
+                <span className="block text-xs">
+                  {formatPanel(b.panel)} / {b.row}
+                  {b.column}
+                </span>
               </button>
             ))}
           </div>
@@ -132,12 +138,16 @@ export default function BrickFinder() {
           <div className="mb-4">
             <h3 className="text-lg font-semibold">Location</h3>
             <p className="text-sm text-gray-600">
-              Panel: <strong>{formatPanel(selected.panel)}</strong> · Row: <strong>{selected.row}</strong> · Column: <strong>{selected.column}</strong>
+              Panel: <strong>{formatPanel(selected.panel)}</strong> · Row:{' '}
+              <strong>{selected.row}</strong> · Column: <strong>{selected.column}</strong>
             </p>
           </div>
 
           <div className="overflow-auto">
-            <div className="inline-grid grid-cols-[auto_repeat(10,max-content)] gap-1">
+            <div
+              className="inline-grid gap-1"
+              style={{ gridTemplateColumns: `auto repeat(${BRICK_COLUMN_COUNT}, max-content)` }}
+            >
               {/* Column headers */}
               <div />
               {COLS.map((c) => (
@@ -147,16 +157,21 @@ export default function BrickFinder() {
               ))}
               {ROWS.map((r) => (
                 <React.Fragment key={`row-${r}`}>
-                  <div className="text-xs text-gray-600 pr-2 flex items-center justify-end">{r}</div>
+                  <div className="text-xs text-gray-600 pr-2 flex items-center justify-end">
+                    {r}
+                  </div>
                   {COLS.map((c) => {
                     const key = `${r}-${c}`
-                    const isTarget = grid.map.has(key)
+                    const isTarget = selected.row === r && selected.column === c
                     return (
                       <div
                         key={key}
+                        ref={isTarget ? targetRef : undefined}
                         className={classNames(
                           'h-8 w-12 sm:h-6 sm:w-14 border rounded-sm flex items-center justify-center text-[10px] sm:text-xs',
-                          isTarget ? 'bg-black text-white border-primary' : 'bg-gray-50 text-gray-500 border-gray-200'
+                          isTarget
+                            ? 'bg-black text-white border-primary'
+                            : 'bg-gray-50 text-gray-500 border-gray-200',
                         )}
                         aria-label={`Row ${r} Column ${c}${isTarget ? ' (selected)' : ''}`}
                       >
@@ -175,28 +190,5 @@ export default function BrickFinder() {
 }
 
 function formatPanel(value: string) {
-  switch (value) {
-    case 'panel-1-e':
-      return 'Panel 1 E'
-    case 'panel-2-e':
-      return 'Panel 2 E'
-    case 'panel-3-e':
-      return 'Panel 3 E'
-    case 'panel-4-e':
-      return 'Panel 4 E'
-    case 'panel-5-e':
-      return 'Panel 5 E'
-    case 'panel-1-w':
-      return 'Panel 1 W'
-    case 'panel-2-w':
-      return 'Panel 2 W'
-    case 'panel-3-w':
-      return 'Panel 3 W'
-    case 'panel-4-w':
-      return 'Panel 4 W'
-    case 'panel-5-w':
-      return 'Panel 5 W'
-    default:
-      return value
-  }
+  return BRICK_PANELS.find((panel) => panel.value === value)?.label ?? value
 }
