@@ -74,6 +74,7 @@ export interface Config {
     users: User;
     members: Member;
     events: Event;
+    'help-wanted': HelpWanted;
     popUp: PopUp;
     newsletters: Newsletter;
     ads: Ad;
@@ -98,6 +99,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
     events: EventsSelect1<false> | EventsSelect1<true>;
+    'help-wanted': HelpWantedSelect<false> | HelpWantedSelect<true>;
     popUp: PopUpSelect<false> | PopUpSelect<true>;
     newsletters: NewslettersSelect<false> | NewslettersSelect<true>;
     ads: AdsSelect<false> | AdsSelect<true>;
@@ -1393,6 +1395,23 @@ export interface Event {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Review public submissions, then publish approved help wanted listings.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "help-wanted".
+ */
+export interface HelpWanted {
+  id: number;
+  title: string;
+  image?: (number | null) | Media;
+  description: string;
+  link: string;
+  linkLabel: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "popUp".
  */
@@ -1764,6 +1783,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'help-wanted';
+        value: number | HelpWanted;
       } | null)
     | ({
         relationTo: 'popUp';
@@ -2364,6 +2387,20 @@ export interface EventsSelect1<T extends boolean = true> {
   slugLock?: T;
   featuredImage?: T;
   keepExistingMetaImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "help-wanted_select".
+ */
+export interface HelpWantedSelect<T extends boolean = true> {
+  title?: T;
+  image?: T;
+  description?: T;
+  link?: T;
+  linkLabel?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
