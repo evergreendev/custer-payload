@@ -28,7 +28,6 @@ import { LargeImage } from '@/blocks/LargeImage/config'
 import { Events } from '@/blocks/EventsBlock/config'
 import IFrame from '@/blocks/IFrame/config'
 import { BrickFinderBlock } from '@/blocks/BrickFinder/config'
-import { HelpWantedBlock } from '@/blocks/HelpWanted/config'
 export const Pages: CollectionConfig = {
   slug: 'pages',
   access: {
@@ -77,7 +76,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, ButtonGroup, Content, MediaBlock, Archive, FormBlock, Header, ImageText, Seasons, LargeImage, Events, IFrame, BrickFinderBlock, HelpWantedBlock],
+              blocks: [CallToAction, ButtonGroup, Content, MediaBlock, Archive, FormBlock, Header, ImageText, Seasons, LargeImage, Events, IFrame, BrickFinderBlock],
               required: true,
             },
           ],
