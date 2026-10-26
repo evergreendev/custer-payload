@@ -15,6 +15,7 @@ import { EventsBlock } from '@/blocks/EventsBlock/Component'
 import IFrameBlock from '@/blocks/IFrame/Component'
 import FormWrapper from '@/blocks/Form/FormWrapper'
 import BrickFinderBlockComponent from '@/blocks/BrickFinder/Component'
+import { HelpWantedBlock } from '@/blocks/HelpWanted/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -30,6 +31,7 @@ const blockComponents = {
   events: EventsBlock,
   IFrame: IFrameBlock,
   brickFinder: BrickFinderBlockComponent,
+  helpWanted: HelpWantedBlock,
 }
 
 export const RenderBlocks: React.FC<{
