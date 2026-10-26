@@ -6,6 +6,7 @@ const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://loc
 /** @type {import('next').NextConfig} */
 const baseConfig = {
   experimental: {
+    serverActions: { bodySizeLimit: '32mb' },
     staticGenerationRetryCount: 1,
     staticGenerationMaxConcurrency: 2,
     staticGenerationMinPagesPerWorker: 25,

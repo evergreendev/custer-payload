@@ -6,6 +6,7 @@ import { file } from 'tmp-promise'
 import fs from 'fs/promises'
 import { Buffer } from 'buffer'
 import * as process from 'node:process'
+import { submissionNotificationRecipients } from '@/utilities/submissionNotifications'
 
 function fileIsAccepted(
   fileType: string,
@@ -125,7 +126,7 @@ export async function createEvent(
   })
 
   const email = await payload.sendEmail({
-    to: 'dmurray@custersd.com',
+    to: submissionNotificationRecipients,
     subject: 'New Community Event Submission',
     html: `<p>Please check the new community event submission: <a href="${process.env.NEXT_PUBLIC_SERVER_URL}/admin/collections/events/${newEvent.id}">Link to Event</a></p>`,
   })
