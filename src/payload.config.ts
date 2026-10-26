@@ -34,7 +34,6 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Members } from '@/collections/Members'
 import { SiteOptions } from '@/SiteOptions/config'
 import { Events } from '@/collections/Events'
-import { HelpWanted } from '@/collections/HelpWanted'
 import { PopUps } from '@/collections/PopUps'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { Newsletters } from '@/collections/Newsletter'
@@ -165,7 +164,6 @@ export default buildConfig({
     Users,
     Members,
     Events,
-    HelpWanted,
     PopUps,
     Newsletters,
     Ads,
