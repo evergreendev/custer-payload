@@ -196,6 +196,7 @@ export interface Page {
         blockType: 'IFrame';
       }
     | BrickFinder
+    | HelpWantedBlock
   )[];
   categories?: (number | Category)[] | null;
   meta?: {
@@ -1305,6 +1306,17 @@ export interface BrickFinder {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HelpWantedBlock".
+ */
+export interface HelpWantedBlock {
+  heading?: string | null;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'helpWanted';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -1891,6 +1903,7 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         brickFinder?: T | BrickFinderSelect<T>;
+        helpWanted?: T | HelpWantedBlockSelect<T>;
       };
   categories?: T;
   meta?:
@@ -2191,6 +2204,16 @@ export interface EventsSelect<T extends boolean = true> {
  * via the `definition` "BrickFinder_select".
  */
 export interface BrickFinderSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HelpWantedBlock_select".
+ */
+export interface HelpWantedBlockSelect<T extends boolean = true> {
   heading?: T;
   description?: T;
   id?: T;
