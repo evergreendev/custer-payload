@@ -1,7 +1,6 @@
 "use client"
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
-import {faChevronRight,faChevronLeft} from "@awesome.me/kit-45560c6e49/icons/classic/thin";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect } from 'react'
 
 
@@ -56,16 +55,18 @@ const Pagination = ({totalPages}: { totalPages: number }) => {
     }</button>
     {
       <button className="px-1 size-6" disabled={currPage === "1"}
+              aria-label="Previous page"
               onClick={() => handleClick(Math.max((parseInt(currPage) - 1), 1))}>
-        {currPage === "1" ? "" : <FontAwesomeIcon icon={faChevronLeft}/>}
+        {currPage === "1" ? "" : <ChevronLeft className="inline-block size-4" strokeWidth={1} aria-hidden="true" />}
       </button>
     }
     {buttonArr}
     {
       <button className="px-1 size-6"
+              aria-label="Next page"
               disabled={parseInt(currPage) === totalPages}
               onClick={() => handleClick(Math.min((parseInt(currPage) + 1), totalPages))}>
-        {parseInt(currPage) === totalPages ? "" : <FontAwesomeIcon icon={faChevronRight}/>}
+        {parseInt(currPage) === totalPages ? "" : <ChevronRight className="inline-block size-4" strokeWidth={1} aria-hidden="true" />}
       </button>
     }
     <button className="pl-2 w-14" onClick={() => handleClick(totalPages)}>{

@@ -5,38 +5,24 @@ import configPromise from '@payload-config'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { XLogo } from '@/components/icons/XLogo'
 import {
-  faLocationDot,
-  faPhone,
-  faEnvelope,
-  faGlobe,
-} from '@awesome.me/kit-45560c6e49/icons/classic/solid'
-import {
-  faFacebookSquare,
-  faInstagramSquare,
-  faSquareXTwitter,
-  faYoutubeSquare,
-} from '@awesome.me/kit-45560c6e49/icons/classic/brands'
+  MapPin,
+  Phone,
+  Mail,
+  Globe,
+  Facebook,
+  Instagram,
+  Youtube,
+} from 'lucide-react'
 
 import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { getPayload } from 'payload'
 
-export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const members = await payload.find({
-    collection: 'members',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-  })
-
-  return members.docs.map(({ slug }) => {
-    return { slug }
-  })
-}
+// Resolve member slugs on request instead of enumerating them during every build.
+// Keep rendering automatic so draft previews and cookie-based popups still work.
 
 type Args = {
   params: Promise<{
@@ -48,11 +34,11 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
   const url = '/members/' + slug
   const member = await queryPostBySlug({ slug })
-  const socialIconMap = {
-    facebook: faFacebookSquare,
-    instagram: faInstagramSquare,
-    twitter: faSquareXTwitter,
-    youtube: faYoutubeSquare,
+  const socialIconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+    facebook: Facebook,
+    instagram: Instagram,
+    twitter: XLogo,
+    youtube: Youtube,
   }
 
   if (!member) return <PayloadRedirects url={url} />
@@ -76,7 +62,7 @@ export default async function Post({ params: paramsPromise }: Args) {
           <div className="flex flex-col items-start gap-4">
             {member.address && (
               <div className="flex justify-center items-center gap-2 text-xl font-bold">
-                <FontAwesomeIcon className="size-5 ml-2 text-brand-blue" icon={faLocationDot} />
+                <MapPin className="size-5 shrink-0 ml-2 text-brand-blue" aria-hidden="true" />
                 {member.address}
               </div>
             )}
@@ -85,7 +71,7 @@ export default async function Post({ params: paramsPromise }: Args) {
                 href={`tel:${member.phone}`}
                 className="flex justify-center items-center gap-2 text-xl font-bold"
               >
-                <FontAwesomeIcon className="size-5 ml-2 text-brand-blue" icon={faPhone} />
+                <Phone className="size-5 shrink-0 ml-2 text-brand-blue" aria-hidden="true" />
                 {member.phone}
               </a>
             )}
@@ -94,7 +80,7 @@ export default async function Post({ params: paramsPromise }: Args) {
                 href={`mailto:${member.email}`}
                 className="flex justify-center items-center gap-2 text-xl font-bold"
               >
-                <FontAwesomeIcon className="size-5 ml-2 text-brand-blue" icon={faEnvelope} />
+                <Mail className="size-5 shrink-0 ml-2 text-brand-blue" aria-hidden="true" />
                 {member.email}
               </a>
             )}
@@ -103,18 +89,21 @@ export default async function Post({ params: paramsPromise }: Args) {
                 className="flex justify-center items-center gap-2 text-xl font-bold"
                 href={member.website}
               >
-                <FontAwesomeIcon className="size-5 ml-2 text-brand-blue" icon={faGlobe} />
+                <Globe className="size-5 shrink-0 ml-2 text-brand-blue" aria-hidden="true" />
                 Visit Website
               </a>
             )}
             {socials.length > 0 && (
               <div className="flex justify-center items-center gap-2 text-xl font-bold">
                 {socials.map(([key, value]) => {
+                  const Icon = socialIconMap[key]
+                  if (!Icon) return null
+
                   return (
-                    <a aria-label={`Follow ${member.title} on ${key}`} href={value || ''} key={key}>
-                      <FontAwesomeIcon
+                    <a aria-label={`Follow ${member.title} on ${key === 'twitter' ? 'X' : key}`} href={value || ''} key={key}>
+                      <Icon
                         className="size-10 ml-2 text-brand-blue"
-                        icon={socialIconMap[key]}
+                        aria-hidden="true"
                       />
                     </a>
                   )

@@ -4,8 +4,7 @@ import { PopUp } from '@/payload-types'
 import Image from 'next/image'
 import { CMSLink } from '@/components/Link'
 import React, { useEffect } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark, faChevronUp } from '@awesome.me/kit-45560c6e49/icons/classic/solid'
+import { ChevronUp, X } from 'lucide-react'
 import { setBannerCookie } from '@/collections/PopUps/component/setBannerCookie'
 
 interface PopUpClientProps {
@@ -42,13 +41,15 @@ const PopUpClient = ({ popUps }: PopUpClientProps) => {
         }}
       >
         <button
+          aria-label={showPopup ? 'Collapse popup' : 'Expand popup'}
+          aria-expanded={showPopup}
           onClick={() => setShowPopup(!showPopup)}
           className="sm:translate-x-1/2 -translate-y-1/2 size-9 rounded-full absolute top-0 right-0 bg-brand-blue sm:bg-opacity-50 hover:bg-opacity-100 p-1"
         >
           {showPopup ? (
-            <FontAwesomeIcon className="text-white" icon={faXmark} />
+            <X className="mx-auto size-4 text-white" aria-hidden="true" />
           ) : (
-            <FontAwesomeIcon className="text-white" icon={faChevronUp} />
+            <ChevronUp className="mx-auto size-4 text-white" aria-hidden="true" />
           )}
         </button>
       </form>

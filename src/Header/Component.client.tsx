@@ -8,8 +8,7 @@ import type { Header, Media } from '@/payload-types'
 import { Logo } from '@/components/Logo/Logo'
 import { HeaderNav } from './Nav'
 import { MobileNav } from '@/Header/Nav/MobileNav'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faXmark } from '@awesome.me/kit-45560c6e49/icons/classic/solid'
+import { Menu, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
 interface HeaderClientProps {
@@ -69,13 +68,15 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({
       </header>
       <header className={`md:hidden`}>
         <button
+          aria-label={mobileNavIsOpen ? 'Close navigation' : 'Open navigation'}
+          aria-expanded={mobileNavIsOpen}
           onClick={() => setMobileNavIsOpen(!mobileNavIsOpen)}
           className="fixed z-50 top-4 right-4"
         >
           {mobileNavIsOpen ? (
-            <FontAwesomeIcon className="text-white" size="2xl" icon={faXmark} />
+            <X className="size-8 text-white" aria-hidden="true" />
           ) : (
-            <FontAwesomeIcon className="text-brand-blueBright" size="2xl" icon={faBars} />
+            <Menu className="size-8 text-brand-blueBright" aria-hidden="true" />
           )}
         </button>
         <div
