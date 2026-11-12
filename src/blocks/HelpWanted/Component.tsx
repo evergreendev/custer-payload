@@ -26,12 +26,12 @@ export async function HelpWantedBlock({ id, heading, description }: HelpWantedBl
       {(heading || description) && (
         <div className="mb-6 max-w-3xl">
           {heading && <h2 className="text-2xl font-semibold mb-2">{heading}</h2>}
-          {description && <p className="whitespace-pre-line">{description}</p>}
+          {listings.length > 0 && description && (
+            <p className="whitespace-pre-line">{description}</p>
+          )}
         </div>
       )}
-      {listings.length === 0 ? (
-        <p>No help wanted listings are currently available.</p>
-      ) : (
+      {listings.length > 0 && (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {listings.map((listing) => (
             <article key={listing.id} className="border rounded overflow-hidden">
