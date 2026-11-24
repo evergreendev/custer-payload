@@ -47,6 +47,7 @@ import sendEmail from '@/blocks/Form/hooks/sendemail'
 import associateFileWithSub from '@/blocks/Form/hooks/associateFileWithSub'
 import { Bricks } from '@/collections/Bricks'
 import { LandingPages } from '@/collections/LandingPages'
+import { exportFormSubmissions } from '@/endpoints/exportFormSubmissions'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -210,6 +211,12 @@ export default buildConfig({
         FileUpload,
       },
       formSubmissionOverrides: {
+        admin: {
+          components: {
+            beforeListTable: ['@/components/FormSubmissions/ExportCSV'],
+          },
+        },
+        endpoints: [exportFormSubmissions],
         hooks: {
           beforeChange: [(data) => sendEmail(data)],
           afterChange: [associateFileWithSub],
